@@ -23,6 +23,7 @@ public class Logement {
 	private String desc;
 	private String loca;
 	private int prix;
+	private int nbSdb;
 	
 	@ManyToOne
 	private User proprietaire;

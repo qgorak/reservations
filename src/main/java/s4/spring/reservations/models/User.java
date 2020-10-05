@@ -19,6 +19,7 @@ public class User {
 	private String password;
 	private String mail;
 	
+	
 
 	public String getLogin() {
 		return login;
