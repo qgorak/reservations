@@ -3,8 +3,10 @@
 
 
 <h1><%message%></h1>
-
-
-
-
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" />
+</form>
+{{#_csrf}}
+{{username}}
+{{/_csrf}}
 {{> include/footer}}

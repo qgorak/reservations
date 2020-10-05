@@ -1,5 +1,6 @@
 package s4.spring.reservations.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,27 @@ public class MainController {
     
 	@RequestMapping("/")
     public String index(ModelMap model) {
-
+;
 		vue.addData("message", "Hello reservations");
 	    model.put("vue", vue);
         return "index";
+        
+       }
+	
+	@RequestMapping("/register")
+    public String register(ModelMap model) {
+
+		vue.addData("message", "Hello reservations");
+	    model.put("vue", vue);
+        return "register";
+        
+       }
+	@RequestMapping("/login")
+    public String login(ModelMap model) {
+
+		vue.addData("message", "Hello reservations");
+	    model.put("vue", vue);
+        return "login";
         
        }
 	@RequestMapping("/{idLogement}")
