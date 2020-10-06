@@ -1,8 +1,10 @@
 package s4.spring.reservations.controllers;
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,10 +21,13 @@ public class MainController {
 	@Autowired
 	private VueJS vue;
     
-	@RequestMapping("/")
-    public String index(ModelMap model) {
-;
-		vue.addData("message", "Hello reservations");
+	@GetMapping("/")
+    public String index(ModelMap model,Principal principal) {
+		String username = (principal != null ? principal.getName() : "ANONYMOUS");
+		
+		vue.addData("user", username);
+		
+
 	    model.put("vue", vue);
         return "index";
         

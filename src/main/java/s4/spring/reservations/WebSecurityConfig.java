@@ -46,12 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	//access rights 
         httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
                 .authorizeRequests().antMatchers("/console/**","/register").permitAll()
-                .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()
+                .formLogin()
+                	.loginPage("/login")
                 .and()
-                .logout().permitAll();
-
+                .logout().deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/")
+                .and()
+                .csrf().disable();
         
 
         httpSecurity.headers().frameOptions().disable();

@@ -3,10 +3,14 @@
 
 
 <h1><%message%></h1>
-<form action="/logout" method="post">
-    <input type="submit" value="Logout" />
-</form>
-{{#_csrf}}
-{{username}}
-{{/_csrf}}
+
+
+<v-btn onclick="window.location.href='/login'" depressed>
+        Login
+      </v-btn>
+            <v-btn onclick="window.location.href='/logout'" depressed>
+        Logout
+      </v-btn>
+<%user%>
+
 {{> include/footer}}
