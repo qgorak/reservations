@@ -2,14 +2,20 @@ package s4.spring.reservations.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
+import s4.spring.reservations.models.User;
+import s4.spring.reservations.repositories.UserRepository;
 
 
 
@@ -22,13 +28,21 @@ public class MainController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserRepository repo;
 	
 	@Autowired
 	private VueJS vue;
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
-		
+		//instantiation d'un user
+//		User user = new User();
+//		user.setLogin("test");
+//		user.setPassword(passwordEncoder.encode("test"));
+//		user.setEnabled(true);
+//		user.setRole("ROLE_USER");
+		repo.save(user);
 		String username = (principal != null ? principal.getName() : "ANONYMOUS");
 		vue.addData("user", username);
 	    model.put("vue", vue);
@@ -47,6 +61,14 @@ public class MainController {
         return "login";
         
        }
+	@RequestMapping("/new")
+	public String displayNewOrgaModelMap(ModelMap model) {
+		model.put("vue", vue);
+		return "register";
+	}
+	
+
+	
 	@RequestMapping("/{idLogement}")
     public String index(@PathVariable int idLogement, ModelMap model) {
 
