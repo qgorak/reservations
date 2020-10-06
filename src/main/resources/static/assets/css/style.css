@@ -1,9 +1,13 @@
 
-.container--fluid {
-    padding:0;
+*{
+	
 }
 .v-bottom-navigation{
 
 	bottom:0px;
 	position:absolute;
+}
+.container{
+
+	background:WhiteSmoke;
 }
