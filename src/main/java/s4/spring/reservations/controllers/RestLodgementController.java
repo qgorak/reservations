@@ -34,6 +34,11 @@ public class RestLodgementController {
 		return repo.findById(id);
 	}
 	
+	@GetMapping("/lodgement/search/{loca}")
+	public List<Lodgement> localisation(@PathVariable String loca) {
+		return repo.search(loca);
+	}
+	
 
 	@PostMapping("/lodgement/create")
     public Lodgement create(@RequestBody Lodgement Lodgement) {
