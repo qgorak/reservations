@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int idUser;
+	private int id;
 
 	private String login;
 	private String password;
@@ -21,7 +21,7 @@ public class User {
 	private String role;
     private boolean enabled;
 	
-
+    
 	public String getLogin() {
 		return login;
 	}
@@ -46,12 +46,14 @@ public class User {
 		this.mail = mail;
 	}
 
+	
+
 	public int getId() {
-		return idUser;
+		return id;
 	}
 
 	public void setId(int id) {
-		this.idUser = id;
+		this.id = id;
 	}
 
 	public String getRole() {

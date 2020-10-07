@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import s4.spring.reservations.models.MyUserDetails;
 import s4.spring.reservations.models.User;
 import s4.spring.reservations.repositories.UserRepository;
 

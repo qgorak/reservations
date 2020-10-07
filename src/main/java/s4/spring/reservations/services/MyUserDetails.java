@@ -1,4 +1,4 @@
-package s4.spring.reservations.models;
+package s4.spring.reservations.services;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -6,6 +6,8 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import s4.spring.reservations.models.User;
  
 public class MyUserDetails implements UserDetails {
 	 

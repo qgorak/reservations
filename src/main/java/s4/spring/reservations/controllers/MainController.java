@@ -25,24 +25,14 @@ import s4.spring.reservations.repositories.UserRepository;
 @Controller
 public class MainController {
 	
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@Autowired
-	private UserRepository repo;
-	
+
 	@Autowired
 	private VueJS vue;
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
-		//instantiation d'un user
-//		User user = new User();
-//		user.setLogin("test");
-//		user.setPassword(passwordEncoder.encode("test"));
-//		user.setEnabled(true);
-//		user.setRole("ROLE_USER");
-		repo.save(user);
+
+		
 		String username = (principal != null ? principal.getName() : "ANONYMOUS");
 		vue.addData("user", username);
 	    model.put("vue", vue);

@@ -7,35 +7,41 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Photo {
+public class Type {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@ManyToOne
-	private Logement logement;
-
-	private String photo;
+	private Caracteristic typeCara;
+	private String label;
+	
+	
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	public Caracteristic getTypeCara() {
+		return typeCara;
+	}
+	public void setTypeCara(Caracteristic typeCara) {
+		this.typeCara = typeCara;
+	}
+	
+	
 
-	public Logement getLogement() {
-		return logement;
-	}
-	public void setLogement(Logement logement) {
-		this.logement = logement;
-	}
-	public String getPhoto() {
-		return photo;
-	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
+	
 	
 	
 

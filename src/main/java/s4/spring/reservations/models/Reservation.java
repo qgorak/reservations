@@ -15,12 +15,12 @@ public class Reservation {
 	private int id;
 
 	@ManyToOne
-	private User idUser;
+	private User rented;
 	@ManyToOne
-	private Logement idLogement;
+	private Lodgement lodgement;
 	
-	private Date dateDebut;
-	private Date dateFin;
+	private Date start;
+	private Date end;
 	
 	public int getId() {
 		return id;
@@ -28,30 +28,33 @@ public class Reservation {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getIdUser() {
-		return idUser;
+	
+
+	public User getRented() {
+		return rented;
 	}
-	public void setIdUser(User idUser) {
-		this.idUser = idUser;
+	public void setRented(User rented) {
+		this.rented = rented;
 	}
-	public Logement getIdLogement() {
-		return idLogement;
+	public Lodgement getLodgement() {
+		return lodgement;
 	}
-	public void setIdLogement(Logement idLogement) {
-		this.idLogement = idLogement;
+	public void setLodgement(Lodgement lodgement) {
+		this.lodgement = lodgement;
 	}
-	public Date getDateDebut() {
-		return dateDebut;
+	public Date getStart() {
+		return start;
 	}
-	public void setDateDebut(Date dateDebut) {
-		this.dateDebut = dateDebut;
+	public void setStart(Date start) {
+		this.start = start;
 	}
-	public Date getDateFin() {
-		return dateFin;
+	public Date getEnd() {
+		return end;
 	}
-	public void setDateFin(Date dateFin) {
-		this.dateFin = dateFin;
+	public void setEnd(Date end) {
+		this.end = end;
 	}
+	
 	
 	
 }
