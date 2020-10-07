@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
+import io.github.jeemv.springboot.vuejs.utilities.Http;
 import s4.spring.reservations.models.User;
 import s4.spring.reservations.repositories.UserRepository;
 
@@ -59,12 +60,14 @@ public class MainController {
 	
 
 	
-	@RequestMapping("/{idLogement}")
+	@RequestMapping("lodgement/{idLogement}")
     public String index(@PathVariable int idLogement, ModelMap model) {
-
+		vue.addData("lodgement");
+		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
 		vue.addData("message", "Hello Logement");
+		
 	    model.put("vue", vue);
-        return "logement";
+        return "lodgement";
         
        }
 }

@@ -1,0 +1,8 @@
+2020-10-07 18:18:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "'QSD' (LODGEMENT: ""NBR_ROOM"" INTEGER NOT NULL)"
+Data conversion error converting "'QSD' (LODGEMENT: ""NBR_ROOM"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."LODGEMENT"("ID","DESCRIPTION","LOCALISATION","NBR_ROOM","PRICE","TITLE","TYPE","RENT_ID")VALUES(?,?,?,?,?,?,?,?) [22018-200]
+2020-10-07 18:18:25 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "'QSD' (LODGEMENT: ""NBR_ROOM"" INTEGER NOT NULL)"
+Data conversion error converting "'QSD' (LODGEMENT: ""NBR_ROOM"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."LODGEMENT"("ID","DESCRIPTION","LOCALISATION","NBR_ROOM","PRICE","TITLE","TYPE","RENT_ID")VALUES(?,?,?,?,?,?,?,?) [22018-200]
