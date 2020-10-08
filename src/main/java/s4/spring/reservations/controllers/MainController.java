@@ -27,9 +27,32 @@ public class MainController {
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
 
-		
+		vue.addData("message", "Hello reservations");
 		String username = (principal != null ? principal.getName() : "ANONYMOUS");
 		vue.addData("user", username);
+		vue.addData("menu1", false);
+		vue.addData("date");
+
+		vue.addDataRaw("dateFormatted", "this.formatDate(new Date().toISOString().substr(0, 10))");
+		vue.addComputed("dateRangeText", "return this.dates.join(' au ')");
+		
+		
+		
+		
+		vue.addMethod("formatDate", "if (!date) return null\r\n" + 
+				"\r\n" + 
+				"      const [year, month, day] = date.split('-')\r\n" + 
+				"      return `${month}/${day}/${year}`","date");
+		
+		
+		vue.addMethod("parseDate", "      if (!date) return null\r\n" + 
+				"\r\n" + 
+				"      const [month, day, year] = date.split('/')\r\n" + 
+				"      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`","date");
+		
+		vue.onBeforeMount("this.date = new Date().toLocaleDateString(\"fr-CA\")");
+		
+		vue.addDataRaw("dates", "[]");
 	    model.put("vue", vue);
         return "index";
         

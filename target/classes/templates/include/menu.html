@@ -1,0 +1,70 @@
+<v-card class="overflow-hidden">
+      <v-app-bar
+        absolute
+        color="white"
+        elevate-on-scroll
+        scroll-target="#scrolling-techniques-7"
+       	height="80"
+        
+      >
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  
+        <v-toolbar-title>AirBnB</v-toolbar-title>
+  
+      
+      <v-btn
+        rounded
+        color="primary"
+        dark
+      >
+        Adresse
+      </v-btn>
+      
+      
+    <v-menu
+            ref="menu1"
+            v-model="menu1"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field 
+                v-model="dateRangeText"
+                label="Date"
+				
+                prepend-icon="mdi-calendar"
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker 
+              v-model="dates"
+              range
+              :min="date"
+				
+              no-title
+              
+            ></v-date-picker>
+          </v-menu>
+
+    <v-btn
+        rounded
+        color="primary"
+        dark
+      >
+        Voyageurs
+      </v-btn>
+      
+            <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </v-app-bar>
+      <v-sheet
+        id="scrolling-techniques-7"
+        class="overflow-y-auto"
+        max-height="100vh"
+     >
+        <v-container div="container" style="height: 1500px;">
