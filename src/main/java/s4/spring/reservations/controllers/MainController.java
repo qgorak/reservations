@@ -27,8 +27,62 @@ public class MainController {
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
 		
-		//breadcrub menu
+		
 		vue.addData("message", "Hello reservations");
+		
+		//breadcrub menu
+		addMenuRequiredData(principal);
+		addDatePickerRequiredData();
+	    
+	    // date picker
+
+	    model.put("vue", vue);
+        return "index";
+        
+       }
+	
+	
+
+	
+	@RequestMapping("/login")
+    public String login(ModelMap model,Principal principal) {
+
+		vue.addData("message", "Hello reservations");
+	    model.put("vue", vue);
+        return "login";
+        
+       }
+	@RequestMapping("/new")
+	public String displayNewOrga(ModelMap model,Principal principal) {
+		model.put("vue", vue);
+		return "register";
+	}
+	
+	@RequestMapping("/search/")
+	public String search(ModelMap model,@Param("loca") String loca,Principal principal) {
+		vue.addDataRaw("lodgements","[]");
+		vue.addData("lodgementsPerPage", 4);
+		vue.addData("expand",false);
+		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/search/"+loca, "self.lodgements=response.data;"));
+		model.put("vue", vue);
+		return "search";
+	}
+	
+
+	
+	@RequestMapping("lodgement/{idLogement}")
+    public String lodgementPage(@PathVariable int idLogement, ModelMap model,Principal principal) {
+		addMenuRequiredData(principal);
+		addDatePickerRequiredData();
+		vue.addData("lodgement");
+		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
+		vue.addData("message", "Hello Logement");
+		
+	    model.put("vue", vue);
+        return "lodgement";
+        
+       }
+	public void addMenuRequiredData(Principal principal) {
 		String username;
 		if (principal != null) {
 			username = principal.getName();
@@ -52,9 +106,11 @@ public class MainController {
 				"                        \"title\": \"Settings\",\r\n" + 
 				"                        \"icon\": \"mdi-cog-outline \"\r\n" + 
 				"                    }]");
-	    model.put("vue", vue);
-	    
-	    // date picker
+
+		
+	}
+	
+	public void addDatePickerRequiredData() {
 		vue.addData("menu1", false);
 		vue.addData("date");
 		vue.addData("endDate","2020-10-30");
@@ -89,48 +145,6 @@ public class MainController {
 		vue.onBeforeMount("this.date = new Date().toLocaleDateString(\"fr-CA\"\r\n); ");
 		vue.addWatcher("dates", "console.log(this.dates)");
 	
-	    model.put("vue", vue);
-        return "index";
-        
-       }
-	
-	
-
-	
-	@RequestMapping("/login")
-    public String login(ModelMap model) {
-
-		vue.addData("message", "Hello reservations");
-	    model.put("vue", vue);
-        return "login";
-        
-       }
-	@RequestMapping("/new")
-	public String displayNewOrga(ModelMap model) {
-		model.put("vue", vue);
-		return "register";
 	}
 	
-	@RequestMapping("/search/")
-	public String search(ModelMap model,@Param("loca") String loca) {
-		vue.addDataRaw("lodgements","[]");
-		vue.addData("lodgementsPerPage", 4);
-		vue.addData("expand",false);
-		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/search/"+loca, "self.lodgements=response.data;"));
-		model.put("vue", vue);
-		return "search";
-	}
-	
-
-	
-	@RequestMapping("lodgement/{idLogement}")
-    public String lodgementPage(@PathVariable int idLogement, ModelMap model) {
-		vue.addData("lodgement");
-		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
-		vue.addData("message", "Hello Logement");
-		
-	    model.put("vue", vue);
-        return "lodgement";
-        
-       }
 }
