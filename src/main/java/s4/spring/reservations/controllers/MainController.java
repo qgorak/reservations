@@ -26,10 +26,35 @@ public class MainController {
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
-
+		
+		//breadcrub menu
 		vue.addData("message", "Hello reservations");
-		String username = (principal != null ? principal.getName() : "ANONYMOUS");
+		String username;
+		if (principal != null) {
+			username = principal.getName();
+			vue.addData("displayBtnLogin", "display:none");
+			vue.addData("displayBtnLogout", "display:block");
+		}
+		else {
+			username = "Anonyme";
+			vue.addData("displayBtnLogin", "display:block");
+			vue.addData("displayBtnLogout", "display:none");
+		}
 		vue.addData("user", username);
+		vue.addData("drawer", false);
+		vue.addDataRaw("items", " [{\r\n" + 
+				"                        \"title\": \"Logement\",\r\n" + 
+				"                        \"icon\": \"mdi-home-city\",\r\n" + 
+				"                    }, {\r\n" + 
+				"                        \"title\": \"Reservation\",\r\n" + 
+				"                        \"icon\": \"mdi-file-document-edit\"\r\n" + 
+				"                    }, {\r\n" + 
+				"                        \"title\": \"Settings\",\r\n" + 
+				"                        \"icon\": \"mdi-cog-outline \"\r\n" + 
+				"                    }]");
+	    model.put("vue", vue);
+	    
+	    // date picker
 		vue.addData("menu1", false);
 		vue.addData("date");
 		vue.addData("endDate","2020-10-30");
