@@ -1,17 +1,20 @@
-<v-card class="overflow-hidden">
+
+<v-card class="overflow-hidden" >
       <v-app-bar
         absolute
         color="white"
         elevate-on-scroll
         scroll-target="#scrolling-techniques-7"
-       	height="80"
+       	class="bar"
+       	height="100px"
+       	
         
       >
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
   
         <v-toolbar-title>AirBnB</v-toolbar-title>
   
-      
+       <v-spacer></v-spacer>
       <v-btn
         rounded
         color="primary"
@@ -21,7 +24,7 @@
       </v-btn>
       
       
-    <v-menu
+    <v-menu	class="test"
             ref="menu1"
             v-model="menu1"
             :close-on-content-click="false"
@@ -30,6 +33,7 @@
             max-width="290px"
             min-width="290px"
           >
+              
             <template v-slot:activator="{ on, attrs }">
               <v-text-field 
                 v-model="dateRangeText"
@@ -39,14 +43,14 @@
                 v-bind="attrs"
                 v-on="on"
               ></v-text-field>
+             
             </template>
+       
             <v-date-picker 
               v-model="dates"
               range
               :min="date"
-				
               no-title
-              
             ></v-date-picker>
           </v-menu>
 

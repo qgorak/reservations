@@ -32,27 +32,38 @@ public class MainController {
 		vue.addData("user", username);
 		vue.addData("menu1", false);
 		vue.addData("date");
+		vue.addData("endDate","2020-10-30");
+		vue.addDataRaw("dates", "[]");
+		vue.addDataRaw("allowedDates","['2020-10-08', '2020-10-09']");
 
 		vue.addDataRaw("dateFormatted", "this.formatDate(new Date().toISOString().substr(0, 10))");
 		vue.addComputed("dateRangeText", "return this.dates.join(' au ')");
 		
-		
+		vue.addMethod("getAllowedDates", "for (var i = 0; i < this.allowedDates.length; i++) {\r\n" + 
+				"         if (this.allowedDates[i] == val){\r\n" + 
+				"            return val\r\n" + 
+				"         } \r\n" + 
+				"      }","val");
 		
 		
 		vue.addMethod("formatDate", "if (!date) return null\r\n" + 
 				"\r\n" + 
 				"      const [year, month, day] = date.split('-')\r\n" + 
+		
 				"      return `${month}/${day}/${year}`","date");
 		
+		vue.addMethod("addDays", "var date = new Date(this.valueOf());\r\n" + 
+				"        date.setDate(date.getDate() + days);\r\n" + 
+				"        return date;","days");
 		
 		vue.addMethod("parseDate", "      if (!date) return null\r\n" + 
-				"\r\n" + 
+			 
 				"      const [month, day, year] = date.split('/')\r\n" + 
 				"      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`","date");
 		
-		vue.onBeforeMount("this.date = new Date().toLocaleDateString(\"fr-CA\")");
-		
-		vue.addDataRaw("dates", "[]");
+		vue.onBeforeMount("this.date = new Date().toLocaleDateString(\"fr-CA\"\r\n); ");
+		vue.addWatcher("dates", "console.log(this.dates)");
+	
 	    model.put("vue", vue);
         return "index";
         
