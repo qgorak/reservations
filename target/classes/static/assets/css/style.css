@@ -2,34 +2,30 @@
 *{
 	
 }
-.v-bottom-navigation{
 
+.v-bottom-navigation{
 	bottom:0px;
 	position:absolute;
 }
-.container{
 
+.container{
 	background:WhiteSmoke;
 }
+
 .v-input{
 
 	max-width:300px;
 }
 
 .bar{
-	        
-	    
-	        border-radius: 20px !important;
    
     
 }
+
 .v-input{
-	        
-	    
-	        color:red !important;
-   
-    
+	color:red !important; 
 }
+
 .v-toolbar-title{
 	cursor: pointer !important;
 }

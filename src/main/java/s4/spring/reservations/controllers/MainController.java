@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.utilities.Http;
 
-
-
-
-
-
 @Controller
 public class MainController {
 	
@@ -27,7 +22,6 @@ public class MainController {
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
 		
-		
 		vue.addData("message", "Hello reservations");
 		
 		//breadcrub menu
@@ -35,10 +29,8 @@ public class MainController {
 		addDatePickerRequiredData();
 	    
 	    // date picker
-
 	    model.put("vue", vue);
         return "index";
-        
        }
 	
 	
