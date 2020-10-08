@@ -19,7 +19,7 @@ public interface LodgementRepository extends JpaRepository<Lodgement, Integer> {
 	List<Lodgement> findByLocalisation(String localisation);
 	
 	@Query("SELECT DISTINCT l FROM Lodgement l  ")
-    	public List<Lodgement> search(String keyword);
+    	public List<Lodgement> search(String loca);
 	
 	  }
     
