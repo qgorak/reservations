@@ -4,6 +4,7 @@ package s4.spring.reservations.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ import s4.spring.reservations.models.Lodgement;
 import s4.spring.reservations.repositories.LodgementRepository;
 
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/rest/")
 public class RestLodgementController {
@@ -35,8 +36,8 @@ public class RestLodgementController {
 	}
 	
 	@GetMapping("/lodgement/search/{loca}")
-	public List<Lodgement> localisation(@PathVariable String loca) {
-		return repo.search(loca);
+	public String localisation(@PathVariable String loca) {
+		return loca;
 	}
 	
 
