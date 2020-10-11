@@ -77,14 +77,21 @@ public class MainController {
 		vue.addMethod("recherche","if(this.destination.name!=null && this.destination.loc!=null){"
 		+ "this.error=false;"
 		+ "if(!/^\\+?\\d+$/.test(this.nbr)){this.nbr='null';}"
-		+ "this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+this.destination.loc+'&'+this.dates[0]+'&'+this.dates[1]+'&'+this.nbr).then(function(response){console.log(response.data);})}else{this.error=true;}");
+		+ "window.location.replace('http://127.0.0.1:8080/lodgement/search/'+this.destination.loc+'&'+this.dates[0]+'&'+this.dates[1]+'&'+this.nbr)}else{this.error=true;}");
 	    model.put("vue", vue);
         return "searchForm";
        }
 	
+	@RequestMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
+	public String resultSearch(ModelMap model,Principal principal,@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) {
+		vue.addDataRaw("result", "[]");
+		vue.onBeforeMount("this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+lon+'+'&'+lat+'&'+start+'&'+end+'&'+nbr).then(function(response){this.result=reponse.data})");
+		model.put("vue", vue);
+		return "searchResult";
+	}
+	
 	@RequestMapping("/login")
     public String login(ModelMap model,Principal principal) {
-
 		vue.addData("message", "Hello reservations");
 	    model.put("vue", vue);
         return "login";
