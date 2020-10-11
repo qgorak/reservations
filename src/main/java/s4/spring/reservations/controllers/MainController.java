@@ -20,9 +20,27 @@ public class MainController {
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
-		
+		vue.addDataRaw("nb","[1,2,3,4,5]");
 		vue.addData("message", "Hello reservations");
-		
+		vue.addDataRaw("search","[]");
+		vue.addDataRaw("destination","{name:null,loc:null}");
+		vue.addDataRaw("error", "false");
+		vue.addMethod("destinationSelected","let name=i.properties.name+', '+i.properties.postcode;this.destination.name=name;this.destination.loc=i.geometry.coordinates.join('&').replaceAll('.',',');this.search=[];","i");
+		vue.addMethod("suggestion","{\r\n"
+		+ "	if(event.key!=32 && event.target.value.length!=0){\r\n"
+		+ "		var items=event.target.value.split(' ');\r\n"
+		+ "		let url = \"https://api-adresse.data.gouv.fr/search/?q=\"+items.join(\"+\")+\"&limit=8\";\r\n"
+		+ "		fetch(url)\r\n"
+		+ "		.then(res => res.json())\r\n"
+		+ "		.then((out) => {\r\n"
+		+ "		this.search=out.features;\r\n"
+		+ "		})\r\n"
+		+ "	}\r\n"
+		+ " else{\r\n"
+		+ "	this.search=[];\r\n"
+		+ "	}\r\n"
+		+ "}");
+		vue.addMethod("recherche","if(this.destination.name!='' && this.destination.loc!=''){this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+this.destination.loc).then(function(response){console.log(response.data);})}else{this.error=true;}");
 		//breadcrub menu
 		addMenuRequiredData(principal);
 		addDatePickerRequiredData();
@@ -95,6 +113,7 @@ public class MainController {
         return "lodgement";
         
        }
+	
 	public void addMenuRequiredData(Principal principal) {
 		String username;
 		if (principal != null) {
