@@ -12,13 +12,25 @@
         <v-toolbar-title class="v-toolbar-title" onclick="window.location.href='/'">AirBnB</v-toolbar-title>
   
        <v-spacer></v-spacer>
-      <v-btn
-        rounded
-        color="primary"
-        dark
-      >
-        Adresse
-      </v-btn>
+        <v-text-field
+      label="Destination"
+      prepend-icon="mdi-map"
+      v-bind:value="destination.name"
+      name="location"
+      v-on:keyup="suggestion"
+      autocomplete="new-password"
+    ></v-text-field>
+            <div class="autoSuggest">
+<v-simple-table>
+    <template v-slot:default>
+      <tbody>
+        <tr v-for="i in search">
+			<td v-on:click="destinationSelected(i)"><%i.properties.name%> , <%i.properties.postcode%></td>
+        </tr>
+      </tbody>
+    </template>
+</v-simple-table>
+</div>
       
       
     <v-menu	class="test"
@@ -34,7 +46,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field 
                 v-model="dateRangeText"
-                label="Date"
+                label="Dates"
 				
                 prepend-icon="mdi-calendar"
                 v-bind="attrs"
@@ -51,13 +63,14 @@
             ></v-date-picker>
           </v-menu>
 
-    <v-btn
-        rounded
-        color="primary"
-        dark
-      >
-        Voyageurs
-      </v-btn>
+ <v-select    
+            :items="nb"
+            prepend-icon="mdi-calendar"
+           	dense
+            label="Voyageurs"
+ 
+
+          ></v-select>
        <v-spacer></v-spacer>
             <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
