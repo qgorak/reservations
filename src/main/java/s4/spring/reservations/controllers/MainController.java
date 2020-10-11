@@ -34,12 +34,15 @@ public class MainController {
 	
 	@GetMapping("/search")
     public String search(ModelMap model,Principal principal) {
+		addMenuRequiredData(principal);
+		addDatePickerRequiredData();
 		vue.addDataRaw("search","[]");
 		vue.addDataRaw("destination","{name:null,loc:null}");
+		vue.addDataRaw("nbr","''");
 		vue.addDataRaw("error", "false");
-		vue.addMethod("destinationSelected","let name=i.properties.name+', '+i.properties.postcode;this.destination.name=name;this.destination.loc=i.geometry.coordinates.join('&').replaceAll('.',',');this.search=[];","i");
+		vue.addMethod("destinationSelected","let name=i.properties.name+', '+i.properties.postcode;this.destination.name=name;this.destination.loc=i.geometry.coordinates.join('&');this.search=[];","i");
 		vue.addMethod("suggestion","{\r\n"
-		+ "	if(event.key!=32 && event.target.value.length!=0){\r\n"
+		+ "	if(event.target.value.length!=0){\r\n"
 		+ "		var items=event.target.value.split(' ');\r\n"
 		+ "		let url = \"https://api-adresse.data.gouv.fr/search/?q=\"+items.join(\"+\")+\"&limit=8\";\r\n"
 		+ "		fetch(url)\r\n"
@@ -49,10 +52,14 @@ public class MainController {
 		+ "		})\r\n"
 		+ "	}\r\n"
 		+ " else{\r\n"
+		+ " this.destination={name:null,loc:null};"
 		+ "	this.search=[];\r\n"
 		+ "	}\r\n"
 		+ "}");
-		vue.addMethod("recherche","if(this.destination.name!='' && this.destination.loc!=''){this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+this.destination.loc).then(function(response){console.log(response.data);})}else{this.error=true;}");
+		vue.addMethod("recherche","if(this.destination.name!=null && this.destination.loc!=null){"
+		+ "this.error=false;"
+		+ "if(!/^\\+?\\d+$/.test(this.nbr)){this.nbr='null';}"
+		+ "this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+this.destination.loc+'&'+this.dates[0]+'&'+this.dates[1]+'&'+this.nbr).then(function(response){console.log(response.data);})}else{this.error=true;}");
 	    model.put("vue", vue);
         return "searchForm";
        }

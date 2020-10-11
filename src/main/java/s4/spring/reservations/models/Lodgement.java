@@ -22,15 +22,14 @@ public class Lodgement {
 	private String type;
 	private String title;
 	private String description;
-	private String localisation;
 	private int price;
 	private int nbr_room;
+	private double lat;
+	private double lon;
+	private int nbr_place;
 	
 	@ManyToOne
 	private User rent;
-	
-	
-	
 	
 	public int getId() {
 		return id;
@@ -57,12 +56,6 @@ public class Lodgement {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getLocalisation() {
-		return localisation;
-	}
-	public void setLocalisation(String localisation) {
-		this.localisation = localisation;
-	}
 	public int getPrice() {
 		return price;
 	}
@@ -81,8 +74,22 @@ public class Lodgement {
 	public void setRent(User rent) {
 		this.rent = rent;
 	}
-	
-	
-	
-
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public double getLon() {
+		return lon;
+	}
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
+	public int getNbr_place() {
+		return nbr_place;
+	}
+	public void setNbr_place(int nbr_place) {
+		this.nbr_place = nbr_place;
+	}
 }

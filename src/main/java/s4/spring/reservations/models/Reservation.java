@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,7 @@ public class Reservation {
 	private User rented;
 	@ManyToOne
 	private Lodgement lodgement;
-	
+ 
 	private Date start;
 	private Date end;
 	
@@ -29,7 +30,6 @@ public class Reservation {
 		this.id = id;
 	}
 	
-
 	public User getRented() {
 		return rented;
 	}

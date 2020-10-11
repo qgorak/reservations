@@ -1,7 +1,17 @@
 package s4.spring.reservations.controllers;
 
-
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
+import io.github.jeemv.springboot.vuejs.utilities.Http;
 import s4.spring.reservations.models.Lodgement;
+import s4.spring.reservations.models.Reservation;
 import s4.spring.reservations.repositories.LodgementRepository;
+import s4.spring.reservations.repositories.ReservationRepository;
 
 
 @CrossOrigin
@@ -24,6 +39,9 @@ public class RestLodgementController {
 	
 	@Autowired
     private LodgementRepository repo;
+	
+	@Autowired
+    private ReservationRepository repoRes;
 
 	@GetMapping("/lodgements/")
 	public List<Lodgement> read() {
@@ -35,11 +53,46 @@ public class RestLodgementController {
 		return repo.findById(id);
 	}
 	
-	@GetMapping("/lodgement/search/{loca}")
-	public String localisation(@PathVariable String loca) {
-		return loca;
+	@GetMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
+	public List<Lodgement> localisation(@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) throws ParseException{
+		double radiusOfSearch=2000; //distance en km autour de laquelle on cherche des résultats 
+		double radiusOfEarth=6371; //6371km, le rayon de la terre
+		double r=(radiusOfSearch/radiusOfEarth); 
+		double latD=Double.parseDouble(lat);
+		double lonD=Double.parseDouble(lon); 
+		double latDMax=latD+r;
+		double latDMin=latD-r;
+		double lonDMax=lonD+r;
+		double lonDMin=lonD-r;
+		List<Lodgement> result=repo.findByParamater(latDMax,latDMin,lonDMax,lonDMin);
+			for(Lodgement i : repo.findByParamater(latDMax,latDMin,lonDMax,lonDMin)) {
+				List<Reservation> reserv=repoRes.findByLodgement_id(i.getId());
+				if(!nbr.equals("null") && Integer.parseInt(nbr)>i.getNbr_place()){
+					result.remove(i);
+					continue;
+				}
+				if(!start.equals("undefined") && !end.equals("undefined")) {
+					SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+					format.setTimeZone(TimeZone.getTimeZone("UTC+2"));
+					Date startD=format.parse(start);
+					Date endD=format.parse(end);
+					for (Reservation y : reserv) {
+						if(startD.equals(y.getEnd()) || endD.equals(y.getStart())) {
+							continue;
+						}
+						if(startD.before(y.getStart()) && endD.after(y.getStart())) {
+							result.remove(i);
+							break;
+						}
+						if(startD.after(y.getStart()) && startD.before(y.getEnd())) {
+							result.remove(i);
+							break;
+						}
+					}
+				}
+			}
+		return result;
 	}
-	
 
 	@PostMapping("/lodgement/create")
     public Lodgement create(@RequestBody Lodgement Lodgement) {

@@ -1,16 +1,46 @@
 {{> include/header}}
 
 <div class="container">
-    <form
-    method="get">
+    <form>
+        <v-menu	class="test"
+            ref="menu1"
+            v-model="menu1"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+              
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field 
+                v-model="dateRangeText"
+                label="Date"
+				
+                prepend-icon="mdi-calendar"
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+             
+            </template>
+       
+            <v-date-picker 
+              v-model="dates"
+              range
+              :min="date"
+              no-title
+            ></v-date-picker>
+          </v-menu>
     <v-text-field
       label="Destination"
       v-bind:value="destination.name"
       name="location"
       v-on:keyup="suggestion"
-      autocomplete="new-password"
     ></v-text-field>
-
+    <v-text-field
+      label="Nombre de voyageurs"
+      v-model="nbr"
+    ></v-text-field>
       <v-btn
         class="mr-4"
         v-on:click="recherche"
