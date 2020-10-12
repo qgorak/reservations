@@ -85,7 +85,7 @@ public class MainController {
 	@RequestMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
 	public String resultSearch(ModelMap model,Principal principal,@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) {
 		vue.addDataRaw("result", "[]");
-		vue.onBeforeMount("this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+lon+'+'&'+lat+'&'+start+'&'+end+'&'+nbr).then(function(response){this.result=reponse.data})");
+		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search/"+lon+"&"+lat+"&"+start+"&"+end+"&"+nbr, "self.result=response.data;"));
 		model.put("vue", vue);
 		return "searchResult";
 	}
@@ -130,6 +130,8 @@ public class MainController {
 	
 	public void addMenuRequiredData(Principal principal) {
 		String username;
+		
+		//drawer datas
 		if (principal != null) {
 			username = principal.getName();
 			vue.addData("displayBtnLogin", "display:none");
@@ -152,6 +154,24 @@ public class MainController {
 				"                        \"title\": \"Settings\",\r\n" + 
 				"                        \"icon\": \"mdi-cog-outline \"\r\n" + 
 				"                    }]");
+		
+		//login modal
+		vue.addData("loginModal",false);
+		
+		//register modal data
+		vue.addData("registerModal",false);
+		vue.addData("valid",true);
+		vue.addData("passwordConfirm","");
+		vue.addDataRaw("usernameRules","[ v => !!v || 'Name is required',\r\n"
+				+ "      v => (v && v.length <= 10) || 'Name must be less than 10 characters',]");
+		vue.addDataRaw("emailRules","[ v => !!v || 'E-mail is required',\r\n"
+				+ "      v => /.+@.+\\..+/.test(v) || 'E-mail must be valid',]");
+		vue.addDataRaw("passwordRules","[]");
+		vue.addDataRaw("newUser", "{login:'',password:'',mail:''}");
+
+		vue.addMethod("registerUser", "let self=this;" + Http.post( "http://127.0.0.1:8080/rest/user/create/","self.newUser", "self.registerModal=false;"));
+		vue.addData("registerModal",false);
+		vue.addData("e1",1);
 
 		
 	}

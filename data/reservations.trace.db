@@ -1,11 +1,12 @@
-2020-10-10 15:55:47 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Erreur de syntaxe dans l'instruction SQL "SELECT * FROM LODGEMENT INNER JOIN RESERVATION ON LODGEMENT.ID=RESERVATION.LODGEMENT_ID
-WHERE  ""2020-10-11"" NOT BETWEEN(SELECT START,END FROM RESERVATION WHERE RESERVATION.LODGEMENT_ID=1)[*]"; attendu "[, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, AND"
-Syntax error in SQL statement "SELECT * FROM LODGEMENT INNER JOIN RESERVATION ON LODGEMENT.ID=RESERVATION.LODGEMENT_ID
-WHERE  ""2020-10-11"" NOT BETWEEN(SELECT START,END FROM RESERVATION WHERE RESERVATION.LODGEMENT_ID=1)[*]"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, ~, !~, AND"; SQL statement:
-SELECT * FROM lodgement INNER JOIN reservation ON lodgement.id=reservation.lodgement_id
-WHERE  "2020-10-11" NOT BETWEEN(SELECT start,end FROM reservation WHERE reservation.lodgement_id=1) [42001-200]
-2020-10-11 15:16:40 jdbc[15]: null
+2020-10-12 13:44:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "'""' (USER: ""ID"" INTEGER NOT NULL)"
+Data conversion error converting "'""' (USER: ""ID"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."USER"("ID","ENABLED","LOGIN","MAIL","PASSWORD","ROLE")VALUES(?,?,?,?,?,?) [22018-200]
+2020-10-12 13:44:53 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Erreur lors de la conversion de données "'""' (USER: ""ID"" INTEGER NOT NULL)"
+Data conversion error converting "'""' (USER: ""ID"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."USER"("ID","ENABLED","LOGIN","MAIL","PASSWORD","ROLE")VALUES(?,?,?,?,?,?) [22018-200]
+2020-10-12 13:58:53 jdbc[15]: null
 org.h2.message.DbException: La connexion n'a pas été fermée et a été récupérée par le ramasse miette.
 The connection was not closed by the application and is garbage collected [90018-200]
 	at org.h2.message.DbException.get(DbException.java:205)

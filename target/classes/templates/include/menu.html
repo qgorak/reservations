@@ -1,82 +1,70 @@
-
 <v-card class="overflow-hidden" >
-      <v-app-bar
-        absolute
-        color="white"
-        elevate-on-scroll
-        scroll-target="#scrolling-techniques-7"
-       	class="bar"
-       	height="100px">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-  
-        <v-toolbar-title class="v-toolbar-title" onclick="window.location.href='/'">AirBnB</v-toolbar-title>
-  
-       <v-spacer></v-spacer>
-        <v-text-field
+<v-app-bar
+   absolute
+   color="white"
+   elevate-on-scroll
+   scroll-target="#scrolling-techniques-7"
+   class="bar"
+   height="100px">
+   <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+   <v-toolbar-title class="v-toolbar-title" onclick="window.location.href='/'">AirBnB</v-toolbar-title>
+   <v-spacer></v-spacer>
+   <v-text-field
       label="Destination"
       prepend-icon="mdi-map"
       v-bind:value="destination.name"
       name="location"
       v-on:keyup="suggestion"
       autocomplete="new-password"
-    ></v-text-field>
-            <div class="autoSuggest">
-<v-simple-table>
-    <template v-slot:default>
-      <tbody>
-        <tr v-for="i in search">
-			<td v-on:click="destinationSelected(i)"><%i.properties.name%> , <%i.properties.postcode%></td>
-        </tr>
-      </tbody>
-    </template>
-</v-simple-table>
-</div>
-      
-      
-    <v-menu	class="test"
-            ref="menu1"
-            v-model="menu1"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            max-width="290px"
-            min-width="290px"
-          >
-              
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field 
-                v-model="dateRangeText"
-                label="Dates"
-				
-                prepend-icon="mdi-calendar"
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-             
-            </template>
-       
-            <v-date-picker 
-              v-model="dates"
-              range
-              :min="date"
-              no-title
-            ></v-date-picker>
-          </v-menu>
-
- <v-select    
-            :items="nb"
+      ></v-text-field>
+   <div class="autoSuggest">
+      <v-simple-table>
+         <template v-slot:default>
+            <tbody>
+               <tr v-for="i in search">
+                  <td v-on:click="destinationSelected(i)"><%i.properties.name%> , <%i.properties.postcode%></td>
+               </tr>
+            </tbody>
+         </template>
+      </v-simple-table>
+   </div>
+   <v-menu	class="test"
+      ref="menu1"
+      v-model="menu1"
+      :close-on-content-click="false"
+      transition="scale-transition"
+      offset-y
+      max-width="290px"
+      min-width="290px"
+      >
+      <template v-slot:activator="{ on, attrs }">
+         <v-text-field 
+            v-model="dateRangeText"
+            label="Dates"
             prepend-icon="mdi-calendar"
-           	dense
-            label="Voyageurs"
- 
-
-          ></v-select>
-       <v-spacer></v-spacer>
-            <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </v-app-bar>
-      <v-navigation-drawer
+            v-bind="attrs"
+            v-on="on"
+            ></v-text-field>
+      </template>
+      <v-date-picker 
+         v-model="dates"
+         range
+         :min="date"
+         no-title
+         ></v-date-picker>
+   </v-menu>
+   <v-select    
+      :items="nb"
+      prepend-icon="mdi-calendar"
+      dense
+      label="Voyageurs"
+      ></v-select>
+   <v-spacer></v-spacer>
+   <v-btn icon>
+      <v-icon>mdi-magnify</v-icon>
+   </v-btn>
+</v-app-bar>
+<v-navigation-drawer
    v-model="drawer"
    absolute
    left
@@ -93,8 +81,191 @@
             <%user%>
          </v-list-item-title>
          <v-list-item-subtitle>
-            <v-btn :style="displayBtnLogin" small onclick="window.location.href='/login'" depressed>Login</v-btn>
             <v-btn :style="displayBtnLogout" small onclick="window.location.href='/logout'" depressed>Logout</v-btn>
+            <v-dialog
+               v-model="loginModal"
+               persistent
+               max-width="290"
+               >
+               <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                     small
+                     :style="displayBtnLogin"
+                     depressed
+                     v-bind="attrs"
+                     v-on="on"
+                     >
+                     Login
+                  </v-btn>
+               </template>
+               <v-card>
+                  <v-card-title class="headline">
+                     Login
+                  </v-card-title>
+                  <v-card-text>
+                     <form  method="post" action="/login">
+                        <p>
+                           <label for="username" class="sr-only">Username</label>
+                           <input type="text" id="username" name="username" placeholder="Username" required autofocus>
+                        </p>
+                        <p>
+                           <label for="password" class="sr-only">Password</label>
+                           <input type="password" id="password" name="password"  placeholder="Password" required>
+                        </p>
+                  </v-card-text>
+                  <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                     color="green darken-1"
+                     text
+                     @click="loginModal = false"
+                     >
+                  Cancel
+                  </v-btn>
+                  <v-btn
+                     color="green darken-1"
+                     text
+                     type="submit"
+                     @click="loginModal = false"
+                     >
+                  Login
+                  </v-btn>
+                  </form>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
+            <v-dialog
+               v-model="registerModal"
+               persistent
+               max-width="600"
+               >
+               <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                     small
+                     :style="displayBtnLogin"
+                     depressed
+                     v-bind="attrs"
+                     v-on="on"
+                     >
+                     Register
+                  </v-btn>
+               </template>
+               <v-card>
+                  <v-card-title class="headline">
+                     Register
+                  </v-card-title>
+                  <v-card-text>
+                     <v-stepper v-model="e1">
+                        <v-stepper-header>
+                           <v-stepper-step
+                              :complete="e1 > 1"
+                              step="1"
+                              >
+                              e-mail
+                           </v-stepper-step>
+                           <v-divider></v-divider>
+                           <v-stepper-step
+                              :complete="e1 > 2"
+                              step="2"
+                              >
+                              username
+                           </v-stepper-step>
+                           <v-divider></v-divider>
+                           <v-stepper-step step="3">
+                              details
+                           </v-stepper-step>
+                        </v-stepper-header>
+                        <v-stepper-items>
+                           <v-form v-model="valid">
+                           <v-stepper-content step="1">
+                              <v-card
+                                 class="mb-12"
+                                 color="grey lighten-1"
+                                 height="200px"
+                                 >
+            <v-text-field
+              v-model="newUser.mail"
+              :rules="emailRules"
+              label="E-mail"
+              required
+            ></v-text-field>
+                              </v-card>
+                              <v-btn
+                                 color="primary"
+                                 @click="e1 = 2"
+                                 >
+                                 Continue
+                              </v-btn>
+                              <v-btn
+                              @click="registerModal = false"
+                               text>
+                                 Cancel
+                              </v-btn>
+                           </v-stepper-content>
+                           <v-stepper-content step="2">
+                              <v-card
+                                 class="mb-12"
+                                 color="grey lighten-1"
+                                 height="200px"
+                                 >
+                             <v-text-field
+                                    v-model="newUser.login"
+                                    :rules="usernameRules"
+                                    :counter="10"
+                                    label="Username"
+                                    required
+                                    ></v-text-field>
+                                    </v-card>
+                              <v-btn
+                                 color="primary"
+                                 @click="e1 = 3"
+                                 >
+                                 Continue
+                              </v-btn>
+                              <v-btn
+                              @click="registerModal = false"
+                               text>
+                                 Cancel
+                              </v-btn>
+                           </v-stepper-content>
+                           <v-stepper-content step="3">
+                              <v-card
+                                 class="mb-12"
+                                 color="grey lighten-1"
+                                 height="200px"
+                                 >
+                                 
+                                             <v-text-field
+              v-model="newUser.password"
+              :rules="passwordRules"
+              :counter="10"
+              label="Password"
+              required
+            ></v-text-field>
+                        <v-text-field
+              v-model="passwordConfirm"
+              :rules="passwordRules"
+              :counter="10"
+              label="Confirm password"
+              required
+            ></v-text-field></v-card>
+                              <v-btn
+                                 color="primary"
+                                 @click="registerUser()"
+                                 >
+                                 Continue
+                              </v-btn>
+                              <v-btn 
+                              @click="registerModal = false"
+                              text>
+                                 Cancel
+                              </v-btn>
+                           </v-stepper-content>
+                        </v-stepper-items>
+                     </v-stepper>
+                  </v-card-text>
+               </v-card>
+            </v-dialog>
          </v-list-item-subtitle>
       </v-list-item-content>
    </v-list-item>
@@ -117,10 +288,9 @@
       </v-list-item>
    </v-list>
 </v-navigation-drawer>
-      <v-sheet
-        id="scrolling-techniques-7"
-        class="overflow-y-auto"
-        max-height="100vh">
-        <v-container div="container" style="height: 1500px;">
-        
-        <div style="margin-top:90px;"></div>
+<v-sheet
+   id="scrolling-techniques-7"
+   class="overflow-y-auto"
+   max-height="100vh">
+<v-container div="container" style="height: 1500px;">
+<div style="margin-top:90px;"></div>

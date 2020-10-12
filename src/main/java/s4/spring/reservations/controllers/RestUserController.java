@@ -4,6 +4,7 @@ package s4.spring.reservations.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,8 @@ public class RestUserController {
 	
 	@Autowired
     private UserRepository repo;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/users/")
 	public List<User> read() {
@@ -35,10 +38,16 @@ public class RestUserController {
 	}
 	
 
-	@PostMapping("/user/create")
-    public User create(@RequestBody User User) {
-		repo.save(User);
-		return User;
+	@PostMapping("/user/create/")
+    public User create(@RequestBody User user) {
+	
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setEnabled(true);
+		user.setRole("ROLE_USER");
+
+		repo.save(user);
+		return user;
     }
 	
 	@DeleteMapping("/users/delete/{id}")
