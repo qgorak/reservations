@@ -1,13 +1,31 @@
 {{> include/header}}
-
-
-
-<br>
-<br>
-<br>
-<%result%> 
-   
-
-
-
+<div style="float:left;display:block;width:50%;">
+<template>
+    <v-data-iterator
+      :items="result"
+      hide-default-footer
+    >
+    <v-card
+    v-for="i in result" :key="i.id"
+    class="mx-auto"
+    width="100%"
+    elevation="0"
+  >
+    <v-list-item two-line>
+     <v-list-item-content style="padding:16px;">
+            <v-img height="100" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+      </v-list-item-content>
+      <v-list-item-content>
+        <div class="overline mb-4"><%i.type%> à <%i.city%></div>
+        <v-list-item-title class="headline mb-1">Description de la maison en question</v-list-item-title>
+        <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>
+        <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+	<v-divider></v-divider>
+  </v-card>  
+    </v-data-iterator>
+</template>
+</div>
+<div id="osm-map" style="min-height:100%;display:block;float:right;width:50%;"></div>
 {{> include/footer}}

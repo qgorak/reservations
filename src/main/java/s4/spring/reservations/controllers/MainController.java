@@ -34,8 +34,19 @@ public class MainController {
 	
 	@RequestMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
 	public String resultSearch(ModelMap model,Principal principal,@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) {
-		vue.addDataRaw("result", "[]");
-		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search/"+lon+"&"+lat+"&"+start+"&"+end+"&"+nbr, "self.result=response.data;"));
+		vue.addDataRaw("result","[]");
+		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search/"+lon+"&"+lat+"&"+start+"&"+end+"&"+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
+		+ "var element = document.getElementById('osm-map');"
+		+ "var map = L.map(element);"
+		+ "L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);"
+		+ "var center = L.latLng("+lat+","+lon+");"
+		+ "map.setView(center, 9);"
+		+ "var temp=(JSON.parse(JSON.stringify(self.$root.result)));"
+		+ "for(i=0;i<temp.length;i++){"
+		+ "console.log(temp[i].lat);"
+		+ "center=L.latLng(temp[i].lat,temp[i].lon);"
+		+ "L.marker(center).addTo(map);"
+		+ "}"));
 		model.put("vue", vue);
 		return "searchResult";
 	}

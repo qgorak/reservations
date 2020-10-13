@@ -45,7 +45,7 @@ public class RestLodgementController {
 	
 	@GetMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
 	public List<Lodgement> localisation(@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) throws ParseException{
-		double radiusOfSearch=2000; //distance en km autour de laquelle on cherche des résultats 
+		double radiusOfSearch=20; //distance en km autour de laquelle on cherche des résultats 
 		double radiusOfEarth=6371; //6371km, le rayon de la terre
 		double r=(radiusOfSearch/radiusOfEarth)*180/Math.PI; 
 		double latD=Double.parseDouble(lat);
