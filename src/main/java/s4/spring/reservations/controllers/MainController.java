@@ -21,26 +21,7 @@ public class MainController {
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
 		vue.addDataRaw("nb","[1,2,3,4,5]");
-		vue.addData("message", "Hello reservations");
-		vue.addDataRaw("search","[]");
-		vue.addDataRaw("destination","{name:null,loc:null}");
-		vue.addDataRaw("error", "false");
-		vue.addMethod("destinationSelected","let name=i.properties.name+', '+i.properties.postcode;this.destination.name=name;this.destination.loc=i.geometry.coordinates.join('&').replaceAll('.',',');this.search=[];","i");
-		vue.addMethod("suggestion","{\r\n"
-		+ "	if(event.key!=32 && event.target.value.length!=0){\r\n"
-		+ "		var items=event.target.value.split(' ');\r\n"
-		+ "		let url = \"https://api-adresse.data.gouv.fr/search/?q=\"+items.join(\"+\")+\"&limit=8\";\r\n"
-		+ "		fetch(url)\r\n"
-		+ "		.then(res => res.json())\r\n"
-		+ "		.then((out) => {\r\n"
-		+ "		this.search=out.features;\r\n"
-		+ "		})\r\n"
-		+ "	}\r\n"
-		+ " else{\r\n"
-		+ "	this.search=[];\r\n"
-		+ "	}\r\n"
-		+ "}");
-		vue.addMethod("recherche","if(this.destination.name!='' && this.destination.loc!=''){this.$http['get']('http://127.0.0.1:8080/rest/lodgement/search/'+this.destination.loc).then(function(response){console.log(response.data);})}else{this.error=true;}");
+	
 		//breadcrub menu
 		addMenuRequiredData(principal);
 		addDatePickerRequiredData();
@@ -50,37 +31,6 @@ public class MainController {
         return "index";
        }
 	
-	@GetMapping("/search")
-    public String search(ModelMap model,Principal principal) {
-		addMenuRequiredData(principal);
-		addDatePickerRequiredData();
-		vue.addDataRaw("search","[]");
-		vue.addDataRaw("destination","{name:null,loc:null}");
-		vue.addDataRaw("nbr","''");
-		vue.addDataRaw("error", "false");
-		vue.addMethod("destinationSelected","let name=i.properties.name+', '+i.properties.postcode;this.destination.name=name;this.destination.loc=i.geometry.coordinates.join('&');this.search=[];","i");
-		vue.addMethod("suggestion","{\r\n"
-		+ "	if(event.target.value.length!=0){\r\n"
-		+ "		var items=event.target.value.split(' ');\r\n"
-		+ "		let url = \"https://api-adresse.data.gouv.fr/search/?q=\"+items.join(\"+\")+\"&limit=8\";\r\n"
-		+ "		fetch(url)\r\n"
-		+ "		.then(res => res.json())\r\n"
-		+ "		.then((out) => {\r\n"
-		+ "		this.search=out.features;\r\n"
-		+ "		})\r\n"
-		+ "	}\r\n"
-		+ " else{\r\n"
-		+ " this.destination={name:null,loc:null};"
-		+ "	this.search=[];\r\n"
-		+ "	}\r\n"
-		+ "}");
-		vue.addMethod("recherche","if(this.destination.name!=null && this.destination.loc!=null){"
-		+ "this.error=false;"
-		+ "if(!/^\\+?\\d+$/.test(this.nbr)){this.nbr='null';}"
-		+ "window.location.replace('http://127.0.0.1:8080/lodgement/search/'+this.destination.loc+'&'+this.dates[0]+'&'+this.dates[1]+'&'+this.nbr)}else{this.error=true;}");
-	    model.put("vue", vue);
-        return "searchForm";
-       }
 	
 	@RequestMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
 	public String resultSearch(ModelMap model,Principal principal,@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) {
@@ -90,29 +40,8 @@ public class MainController {
 		return "searchResult";
 	}
 	
-	@RequestMapping("/login")
-    public String login(ModelMap model,Principal principal) {
-		vue.addData("message", "Hello reservations");
-	    model.put("vue", vue);
-        return "login";
-        
-       }
-	@RequestMapping("/new")
-	public String displayNewOrga(ModelMap model,Principal principal) {
-		model.put("vue", vue);
-		return "register";
-	}
-	
-	@RequestMapping("/search/")
-	public String search(ModelMap model,@Param("loca") String loca,Principal principal) {
-		vue.addDataRaw("lodgements","[]");
-		vue.addData("lodgementsPerPage", 4);
-		vue.addData("expand",false);
-		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/search/"+loca, "self.lodgements=response.data;"));
-		model.put("vue", vue);
-		return "search";
-	}
-	
+
+
 
 	
 	@RequestMapping("lodgement/{idLogement}")
@@ -170,9 +99,33 @@ public class MainController {
 		vue.addDataRaw("newUser", "{login:'',password:'',mail:''}");
 
 		vue.addMethod("registerUser", "let self=this;" + Http.post( "http://127.0.0.1:8080/rest/user/create/","self.newUser", "self.registerModal=false;"));
-		vue.addData("registerModal",false);
-		vue.addData("e1",1);
 
+		vue.addData("e1",1);
+		
+		//Search autocomplete
+		
+		vue.addDataRaw("search","[]");
+		vue.addDataRaw("destination","{name:null,loc:null}");
+		vue.addData("nbTravellers","null");
+		vue.addDataRaw("error", "false");
+		vue.addMethod("suggestion","{\r\n"
+		+ "	if(event.target.value.length!=0){\r\n"
+		+ "		var items=event.target.value.split(' ');\r\n"
+		+ "		let url = \"https://api-adresse.data.gouv.fr/search/?q=\"+items.join(\"+\")+\"&limit=8\";\r\n"
+		+ "		fetch(url)\r\n"
+		+ "		.then(res => res.json())\r\n"
+		+ "		.then((out) => {\r\n"
+		+ "		this.search=out.features;\r\n"
+		+ "		})\r\n"
+		+ "	}\r\n"
+		+ " else{\r\n"
+		+ " this.destination={name:null,loc:null};"
+		+ "	this.search=[];\r\n"
+		+ "	}\r\n"
+		+ "}");
+		vue.addMethod("recherche", "this.selected.loc = this.selected.geometry.coordinates.join('&');"
+				+"window.location.replace('http://127.0.0.1:8080/lodgement/search/'+this.selected.loc+'&'+this.dates[0]+'&'+this.dates[1]+'&'+this.nbTravellers)");
+		vue.addData("selected", "");
 		
 	}
 	

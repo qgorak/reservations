@@ -1,16 +1,9 @@
 package s4.spring.reservations.controllers;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-
-import io.github.jeemv.springboot.vuejs.utilities.Http;
 import s4.spring.reservations.models.Lodgement;
 import s4.spring.reservations.models.Reservation;
 import s4.spring.reservations.repositories.LodgementRepository;
@@ -57,7 +47,7 @@ public class RestLodgementController {
 	public List<Lodgement> localisation(@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) throws ParseException{
 		double radiusOfSearch=2000; //distance en km autour de laquelle on cherche des résultats 
 		double radiusOfEarth=6371; //6371km, le rayon de la terre
-		double r=(radiusOfSearch/radiusOfEarth); 
+		double r=(radiusOfSearch/radiusOfEarth)*180/Math.PI; 
 		double latD=Double.parseDouble(lat);
 		double lonD=Double.parseDouble(lon); 
 		double latDMax=latD+r;
