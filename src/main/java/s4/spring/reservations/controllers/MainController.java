@@ -41,7 +41,33 @@ public class MainController {
 	}
 	
 
-
+	@RequestMapping("/lodgement/")
+	public String showLodgment(ModelMap model,Principal principal) {
+		String username;
+		if (principal != null) {
+			username = principal.getName();
+			vue.addData("displayBtnLogin", "display:none");
+			vue.addData("displayBtnLogout", "display:block");
+		}
+		else {
+			username = "Anonyme";
+			vue.addData("displayBtnLogin", "display:block");
+			vue.addData("displayBtnLogout", "display:none");
+		}
+		vue.addData("text","texxt");
+		vue.addDataRaw("tabs","['Mes Logements', 'Mes Reservations']");
+		vue.addData("drawer", false);
+		vue.addData("tab",null);
+		vue.addData("user", username);
+		vue.addData("drawer", false);
+		vue.addDataRaw("items", " [{\r\n" + 
+				"                        \"title\": \"Settings\",\r\n" + 
+				"                        \"icon\": \"mdi-cog-outline \",\r\n" + 
+				"                        \"link\": \"/\",\r\n" + 
+				"                    }]");
+		model.put("vue", vue);
+		return "lodgementDashboard";
+	}
 
 	
 	@RequestMapping("lodgement/{idLogement}")
@@ -54,7 +80,6 @@ public class MainController {
 		
 	    model.put("vue", vue);
         return "lodgement";
-        
        }
 	
 	public void addMenuRequiredData(Principal principal) {
@@ -76,12 +101,15 @@ public class MainController {
 		vue.addDataRaw("items", " [{\r\n" + 
 				"                        \"title\": \"Logement\",\r\n" + 
 				"                        \"icon\": \"mdi-home-city\",\r\n" + 
+				"                        \"link\": \"/lodgement/\",\r\n" + 
 				"                    }, {\r\n" + 
 				"                        \"title\": \"Reservation\",\r\n" + 
-				"                        \"icon\": \"mdi-file-document-edit\"\r\n" + 
+				"                        \"icon\": \"mdi-file-document-edit\",\r\n" + 
+				"                        \"link\": \"/lodement/\",\r\n" + 
 				"                    }, {\r\n" + 
 				"                        \"title\": \"Settings\",\r\n" + 
-				"                        \"icon\": \"mdi-cog-outline \"\r\n" + 
+				"                        \"icon\": \"mdi-cog-outline \",\r\n" + 
+				"                        \"link\": \"/lodement/\",\r\n" + 
 				"                    }]");
 		
 		//login modal

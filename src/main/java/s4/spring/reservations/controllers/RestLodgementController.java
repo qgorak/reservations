@@ -86,7 +86,7 @@ public class RestLodgementController {
 
 	@PostMapping("/lodgement/create")
     public Lodgement create(@RequestBody Lodgement Lodgement) {
-		repo.save(Lodgement);
+		repo.saveAndFlush(Lodgement);
 		return Lodgement;
     }
 	
