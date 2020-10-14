@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import s4.spring.reservations.models.Lodgement;
@@ -43,8 +44,8 @@ public class RestLodgementController {
 		return repo.findById(id);
 	}
 	
-	@GetMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
-	public List<Lodgement> localisation(@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) throws ParseException{
+	@GetMapping("/lodgement/search")
+	public List<Lodgement> localisation(@RequestParam(name="nbr") String nbr,@RequestParam(name="start") String start,@RequestParam(name="end") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) throws ParseException{
 		double radiusOfSearch=20; //distance en km autour de laquelle on cherche des résultats 
 		double radiusOfEarth=6371; //6371km, le rayon de la terre
 		double r=(radiusOfSearch/radiusOfEarth)*180/Math.PI; 
@@ -61,7 +62,7 @@ public class RestLodgementController {
 					result.remove(i);
 					continue;
 				}
-				if(!start.equals("undefined") && !end.equals("undefined")) {
+				if(!start.equals("null") && !end.equals("null")) {
 					SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
 					format.setTimeZone(TimeZone.getTimeZone("UTC+2"));
 					Date startD=format.parse(start);

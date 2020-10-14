@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.utilities.Http;
@@ -17,10 +18,10 @@ public class LodgementController {
 	@Autowired
 	private VueJS vue;
 	
-	@RequestMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
-	public String resultSearch(ModelMap model,Principal principal,@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) {
+	@RequestMapping("/lodgement/search")
+	public String resultSearch(ModelMap model,Principal principal,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
 		vue.addDataRaw("result","[]");
-		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search/"+lon+"&"+lat+"&"+start+"&"+end+"&"+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
+		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
 		+ "var element = document.getElementById('osm-map');"
 		+ "var map = L.map(element);"
 		+ "L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);"

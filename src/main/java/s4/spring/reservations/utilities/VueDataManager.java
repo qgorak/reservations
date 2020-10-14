@@ -15,7 +15,6 @@ public class VueDataManager {
 		vue.addData("endDate","2020-10-30");
 		vue.addDataRaw("dates", "[]");
 		vue.addDataRaw("allowedDates","['2020-10-08', '2020-10-09']");
-
 		vue.addDataRaw("dateFormatted", "this.formatDate(new Date().toISOString().substr(0, 10))");
 		vue.addComputed("dateRangeText", "return this.dates.join(' au ')");
 		

@@ -30,13 +30,4 @@ public class MainController {
 	    model.put("vue", vue);
         return "index";
        }
-	
-	
-
-	
-
-	
-
-	
-
 }
