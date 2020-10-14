@@ -17,11 +17,6 @@ public class LodgementController {
 	@Autowired
 	private VueJS vue;
 	
-
-    
-
-	
-	
 	@RequestMapping("/lodgement/search/{lon}&{lat}&{start}&{end}&{nbr}")
 	public String resultSearch(ModelMap model,Principal principal,@PathVariable String nbr,@PathVariable String start,@PathVariable String end,@PathVariable String lat,@PathVariable String lon) {
 		vue.addDataRaw("result","[]");

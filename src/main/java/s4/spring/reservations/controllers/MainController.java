@@ -17,8 +17,6 @@ public class MainController {
 	
 	@Autowired
 	private VueJS vue;
-	
-
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
