@@ -19,34 +19,37 @@ public class UserController {
 	@Autowired
 	private VueJS vue;
 	
-	@RequestMapping("/user/")
-	public @ResponseBody String user(ModelMap model,Principal principal) {
-		
+	@RequestMapping("user/{userName}")
+	 public String userPage(@PathVariable String userName, ModelMap model,Principal principal) {
+		// TODO afficher les données de l'utilisateur
+		vue.addData("userData");
+		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/user/"+userName, "self.userData=response.data;"));
 	    model.put("vue", vue);
         return "test";
        }
 	
-	@RequestMapping("/user/settings/{username}")
-    public String userPage(@PathVariable String username, ModelMap model,Principal principal) {
+	@RequestMapping("/user/settings/{userName}")
+    public String userSettings(@PathVariable String userName, ModelMap model,Principal principal) {
 		VueDataManager vuemanager = new VueDataManager();
 		vue.addDataRaw("nb", "[]");
 		vue = vuemanager.addDatePickerRequiredData(vue);
 		vue = vuemanager.addMenuRequiredData(principal,vue);
 		
-		vue.addData("userData");
-		// TODO : appeler la method "defaultValue" dans le before mount ?
-		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/user/"+username, "self.userData=response.data;defaultValue();"));
-		vue.addData("message", "Hello User");
-		
 		// Form user settings
+		vue.addData("userData");
+		vue.addData("userName");
+		vue.addData("userMail");
+		vue.addData("userPassword");
+		vue.addData("action", "http://127.0.0.1:8080/rest/users/update/" + userName);
+		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/user/"+userName, ""
+				+ "self.userData=response.data;"
+				+ "self.userName=self.userData.login;"
+				+ "self.userMail=self.userData.mail;"));
+		
+		vue.addData("message", "Hello User");
 		vue.addData("valid", true);
-		vue.addData("userName", "");
-		vue.addData("userMail", "");
-		vue.addData("userPassword", "");
 		vue.addData("select", "null");
 		
-		vue.addMethod("validate", "this.$refs.form.validate()");
-		vue.addMethod("reset", "this.$refs.form.reset()");
 		vue.addMethod("defaultValue", ""
 				+ "const instance = this;"
 				+ "instance.userName = instance.userData.login;"

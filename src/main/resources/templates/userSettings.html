@@ -8,34 +8,32 @@
   <v-form
     ref="form"
     v-model="valid"
+    method="post"
+    :action="action"
     lazy-validation
   >
     <v-text-field
       v-model="userName"
-      :counter="10"
+      :counter="20"
       label="Name"
+      name="login"
       required
     ></v-text-field>
 
     <v-text-field
       v-model="userMail"
       label="E-mail"
+      name="mail"
       required
     ></v-text-field>
     
-    <v-text-field
-      v-model="userPassword"
-      label="Password"
-      required
-    ></v-text-field>
-
     <v-btn
       :disabled="!valid"
-      color="success"
+      color="primary"
       class="mr-4"
-      @click="validate"
+      type="submit"
     >
-      Validate
+      Submit
     </v-btn>
     
     <v-btn
@@ -49,5 +47,11 @@
     </v-btn>
   </v-form>
 </template>
+
+<form method="post" action="http://127.0.0.1:8080/rest/users/update/martin">
+  <input type="text" name="login" value="Quentin"><br>
+  <input type="text" name="mail" value="martin@mail.fr"><br>
+  <input type="submit" value="Submit">
+</form> 
 
 {{> include/footer}}

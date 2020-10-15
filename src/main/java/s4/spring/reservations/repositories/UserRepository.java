@@ -18,4 +18,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     
     @Query("SELECT u FROM User u WHERE u.login = :login")
     public User getUserByLogin(@Param("login") String login);
+	void saveAndFlush(User organization);
 }

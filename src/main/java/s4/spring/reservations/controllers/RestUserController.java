@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import s4.spring.reservations.models.User;
 import s4.spring.reservations.repositories.UserRepository;
@@ -32,15 +35,13 @@ public class RestUserController {
 		return repo.findAll();	
 	}
 	
-	@GetMapping("/user/{username}")
-	public User read(@PathVariable String username) {
-		return repo.getUserByLogin(username);
+	@GetMapping("/user/{userName}")
+	public User read(@PathVariable String userName) {
+		return repo.getUserByLogin(userName);
 	}
 	
 	@PostMapping("/user/create/")
     public User create(@RequestBody User user) {
-	
-		
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setEnabled(true);
 		user.setRole("ROLE_USER");
@@ -54,12 +55,15 @@ public class RestUserController {
 		repo.deleteById(id);
     }
 	
-	@PostMapping("users/update/{id}")
-    public User update(@PathVariable int id,@RequestBody User User) {
-
-	
-		return User;
-
+	@PostMapping("users/update/{userName}")
+    public @ResponseBody User update(@PathVariable String userName,@RequestParam String login,@RequestParam String mail) {
+		User user = repo.getUserByLogin(userName);
+		if((user!= null)) {
+			user.setLogin(login);
+			user.setMail(mail);
+			repo.saveAndFlush(user);
+		}
+		return user;
     }
 	
 }
