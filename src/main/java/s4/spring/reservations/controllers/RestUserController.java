@@ -32,12 +32,11 @@ public class RestUserController {
 		return repo.findAll();	
 	}
 	
-	@GetMapping("/user/{id}")
-	public User read(@PathVariable int id) {
-		return repo.findById(id);
+	@GetMapping("/user/{username}")
+	public User read(@PathVariable String username) {
+		return repo.getUserByLogin(username);
 	}
 	
-
 	@PostMapping("/user/create/")
     public User create(@RequestBody User user) {
 	

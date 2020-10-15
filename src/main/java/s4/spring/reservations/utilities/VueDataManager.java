@@ -60,11 +60,11 @@ public class VueDataManager {
 		+"                    }, {"
 		+"                        'title': 'Reservation',"
 		+"                        'icon': 'mdi-file-document-edit'," 
-		+"                        'link': '/lodement/',"
+		+"                        'link': '/reservation/',"
 		+"                    }, {"
 		+"                        'title': 'Settings'," 
 		+"                        'icon': 'mdi-cog-outline',"
-		+"                        'link': '/lodement/'," 
+		+"                        'link': '/user/settings/"+username+ "'," 
 		+"                    }]");
 		
 		//login modal

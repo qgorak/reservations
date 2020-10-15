@@ -1,0 +1,53 @@
+{{> include/header}}
+{{> include/menu}}
+
+<h1><%message%></h1>
+<p><%userData%></p>
+
+<template>
+  <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
+    <v-text-field
+      v-model="userName"
+      :counter="10"
+      label="Name"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="userMail"
+      label="E-mail"
+      required
+    ></v-text-field>
+    
+    <v-text-field
+      v-model="userPassword"
+      label="Password"
+      required
+    ></v-text-field>
+
+    <v-btn
+      :disabled="!valid"
+      color="success"
+      class="mr-4"
+      @click="validate"
+    >
+      Validate
+    </v-btn>
+    
+    <v-btn
+      color="warning"
+      class="mr-4"
+      @click="defaultValue"
+    >
+      Clear
+    </v-btn>
+
+    </v-btn>
+  </v-form>
+</template>
+
+{{> include/footer}}
