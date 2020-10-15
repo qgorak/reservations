@@ -20,12 +20,13 @@ public class MainController {
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
-		vue.addDataRaw("nb","[1,2,3,4,5]");
+
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
 		//breadcrub menu
 		VueDataManager vuemanager = new VueDataManager();
 		vue = vuemanager.addDatePickerRequiredData(vue);
-		vue = vuemanager.addMenuRequiredData(principal,vue);
+		vue = vuemanager.addSearchMenuRequiredData(vue);
+		vue = vuemanager.addDrawerRequiredData(principal, vue);
 	    // date picker
 	    model.put("vue", vue);
         return "index";

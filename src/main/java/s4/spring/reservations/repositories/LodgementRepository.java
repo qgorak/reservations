@@ -16,7 +16,7 @@ public interface LodgementRepository extends JpaRepository<Lodgement, Integer> {
 	Lodgement findById(int id);
 	@Query(value = "SELECT * FROM lodgement WHERE (lodgement.lat BETWEEN  ?2 AND ?1) AND (lodgement.lon BETWEEN ?4 and ?3)", nativeQuery = true)
 	public List<Lodgement> findByParamater(double latMax,double latMin,double lonMax,double lonMin);
-	
+
 }
     
 

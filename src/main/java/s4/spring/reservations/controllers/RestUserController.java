@@ -32,9 +32,10 @@ public class RestUserController {
 		return repo.findAll();	
 	}
 	
-	@GetMapping("/user/{id}")
-	public User read(@PathVariable int id) {
-		return repo.findById(id);
+	@GetMapping("/user/{username}")
+	public User read(@PathVariable String username) {
+		
+		return repo.getUserByLogin(username);
 	}
 	
 
@@ -56,10 +57,9 @@ public class RestUserController {
     }
 	
 	@PostMapping("users/update/{id}")
-    public User update(@PathVariable int id,@RequestBody User User) {
-
-	
-		return User;
+    public User update(@PathVariable int id,@RequestBody User user) {
+		
+		return user;
 
     }
 	

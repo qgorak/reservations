@@ -1,5 +1,6 @@
 package s4.spring.reservations.controllers;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import s4.spring.reservations.models.Lodgement;
 import s4.spring.reservations.models.Reservation;
+import s4.spring.reservations.models.User;
 import s4.spring.reservations.repositories.LodgementRepository;
 import s4.spring.reservations.repositories.ReservationRepository;
+import s4.spring.reservations.repositories.UserRepository;
 
 
 @CrossOrigin
@@ -33,6 +36,9 @@ public class RestLodgementController {
 	
 	@Autowired
     private ReservationRepository repoRes;
+	
+	@Autowired
+    private UserRepository repoUs;
 
 	@GetMapping("/lodgements/")
 	public List<Lodgement> read() {
@@ -86,9 +92,12 @@ public class RestLodgementController {
 	}
 
 	@PostMapping("/lodgement/create")
-    public Lodgement create(@RequestBody Lodgement Lodgement) {
-		repo.saveAndFlush(Lodgement);
-		return Lodgement;
+    public Lodgement create(@RequestBody Lodgement lodgement,Principal principal) {
+		User creator = new User();
+		creator = repoUs.getUserByLogin(principal.getName());
+		lodgement.setRent(creator);
+		repo.saveAndFlush(lodgement);
+		return lodgement;
     }
 	
 	@DeleteMapping("/lodgement/delete/{id}")

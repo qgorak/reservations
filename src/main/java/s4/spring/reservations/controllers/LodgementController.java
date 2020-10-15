@@ -1,7 +1,12 @@
 package s4.spring.reservations.controllers;
 import java.security.Principal;
+import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.utilities.Http;
+import s4.spring.reservations.models.User;
 import s4.spring.reservations.utilities.VueDataManager;
 
 @Controller
@@ -39,31 +45,24 @@ public class LodgementController {
 	
 
 	@RequestMapping("/lodgement/")
-	public String showLodgment(ModelMap model,Principal principal) {
-		String username;
-		if (principal != null) {
-			username = principal.getName();
-			vue.addData("displayBtnLogin", "display:none");
-			vue.addData("displayBtnLogout", "display:block");
-		}
-		else {
-			username = "Anonyme";
-			vue.addData("displayBtnLogin", "display:block");
-			vue.addData("displayBtnLogout", "display:none");
-		}
-		vue.addData("text","texxt");
-		vue.addDataRaw("tabs","['Mes Logements', 'Mes Reservations']");
-		vue.addData("drawer", false);
-		vue.addData("tab",null);
-		vue.addData("user", username);
-		vue.addData("drawer", false);
-		vue.addDataRaw("items", " [{\r\n" + 
-				"                        \"title\": \"Settings\",\r\n" + 
-				"                        \"icon\": \"mdi-cog-outline \",\r\n" + 
-				"                        \"link\": \"/\",\r\n" + 
-				"                    }]");
+	public String showLodgment(ModelMap model,Principal principal,HttpServletRequest request) {
+		vue.addDataRaw("nbr","[1,2,3,4,5]");
+		vue.addDataRaw("newLodgement","{title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null}");
+		vue.addDataRaw("type","['Maison','Appartement','Chambre']");
+		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[0];this.newLodgement.lon=this.selected.geometry.coordinates[1];" + Http.post( "http://127.0.0.1:8080/rest/lodgement/create/","self.newLodgement", "self.modalNewHost=false;"));
+		
+		VueDataManager vuemanager = new VueDataManager();
+		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
+		vue = vuemanager.addSimpleMenuRequiredData(vue);
+		vue = vuemanager.addDrawerRequiredData(principal, vue);
+		if (request.isUserInRole("ROLE_HOST")){
+			model.put("vue", vue);
+			return "lodgementDashboard";
+		}else{
+		vue.addData("modalNewHost",false);
 		model.put("vue", vue);
-		return "lodgementDashboard";
+		return "newHost";
+		}
 	}
 
 	
@@ -71,7 +70,8 @@ public class LodgementController {
     public String lodgementPage(@PathVariable int idLogement, ModelMap model,Principal principal) {
 		VueDataManager vuemanager = new VueDataManager();
 		vue = vuemanager.addDatePickerRequiredData(vue);
-		vue = vuemanager.addMenuRequiredData(principal,vue);
+		vue = vuemanager.addSearchMenuRequiredData(vue);
+		vue = vuemanager.addDrawerRequiredData(principal, vue);
 		vue.addData("lodgement");
 		vue.onBeforeMount("let self=this;" + Http.get("http://localhost:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
 		vue.addData("message", "Hello Logement");

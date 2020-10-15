@@ -8,6 +8,8 @@ import io.github.jeemv.springboot.vuejs.utilities.Http;
 import io.github.jeemv.springboot.vuejs.utilities.JavascriptResource;
 
 public class VueDataManager {
+//		JavascripMultiModulesResource js a utiliser
+	
 	
 	public VueJS addDatePickerRequiredData(VueJS vue) {
 		vue.addData("menu1", false);
@@ -36,8 +38,8 @@ public class VueDataManager {
 		return vue;
 	
 	}
-	
-	public VueJS addMenuRequiredData(Principal principal,VueJS vue) {
+	public VueJS addDrawerRequiredData(Principal principal,VueJS vue) {
+		
 		String username;
 		
 		//drawer datas
@@ -51,6 +53,7 @@ public class VueDataManager {
 			vue.addData("displayBtnLogin", "display:block");
 			vue.addData("displayBtnLogout", "display:none");
 		}
+		
 		vue.addData("user", username);
 		vue.addData("drawer", false);
 		vue.addDataRaw("items", " [{"
@@ -80,10 +83,31 @@ public class VueDataManager {
 		+ "      v => /.+@.+\\..+/.test(v) || 'E-mail must be valid',]");
 		vue.addDataRaw("passwordRules","[]");
 		vue.addDataRaw("newUser", "{login:'',password:'',mail:''}");
-
 		vue.addMethod("registerUser", "let self=this;" + Http.post( "http://127.0.0.1:8080/rest/user/create/","self.newUser", "self.registerModal=false;"));
-
 		vue.addData("e1",1);
+
+		return vue;
+		
+	}
+	
+	public VueJS addSearchMenuRequiredData(VueJS vue) {
+
+		vue.addDataRaw("nb","[1,2,3,4,5]");
+		//Search autocomplete
+		vue.addDataRaw("search","[]");
+		vue.addDataRaw("destination","{name:null,loc:null}");
+		vue.addData("nbTravellers","null");
+		vue.addDataRaw("error", "false");
+		try{vue.addMethod("suggestion",JavascriptResource.create("suggestion").parseContent());}
+		catch (IOException e) {e.printStackTrace();}
+		try {vue.addMethod("recherche",JavascriptResource.create("recherche").parseContent());}
+		catch (IOException e) {e.printStackTrace();}
+		vue.addData("selected", "");
+		return vue;
+	}
+	
+	public VueJS addSimpleMenuRequiredData(VueJS vue) {
+
 		
 		//Search autocomplete
 		vue.addDataRaw("search","[]");
