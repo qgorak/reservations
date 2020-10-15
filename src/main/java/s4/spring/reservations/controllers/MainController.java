@@ -1,15 +1,19 @@
 package s4.spring.reservations.controllers;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
-import io.github.jeemv.springboot.vuejs.utilities.Http;
 import s4.spring.reservations.utilities.VueDataManager;
 
 @Controller
@@ -20,8 +24,10 @@ public class MainController {
     
 	@GetMapping("/")
     public String index(ModelMap model,Principal principal) {
-
+		
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
+		
+
 		//breadcrub menu
 		VueDataManager vuemanager = new VueDataManager();
 		vue = vuemanager.addDatePickerRequiredData(vue);

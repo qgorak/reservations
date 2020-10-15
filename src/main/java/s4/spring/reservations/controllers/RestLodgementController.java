@@ -3,11 +3,21 @@ package s4.spring.reservations.controllers;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,12 +102,27 @@ public class RestLodgementController {
 	}
 
 	@PostMapping("/lodgement/create")
-    public Lodgement create(@RequestBody Lodgement lodgement,Principal principal) {
+    public Lodgement create(@RequestBody Lodgement lodgement,Principal principal,HttpServletRequest request) {
 		User creator = new User();
-		creator = repoUs.getUserByLogin(principal.getName());
-		lodgement.setRent(creator);
-		repo.saveAndFlush(lodgement);
-		return lodgement;
+		creator = repoUs.getUserByLogin(principal.getName());;
+		System.out.print(creator.getRole());
+        String test = creator.getRole();
+		if (creator.getRole().equals("ROLE_USER"))
+		{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
+			updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_HOST"));
+			Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+			SecurityContextHolder.getContext().setAuthentication(newAuth);
+			creator.setRole("ROLE_HOST");
+		}
+			lodgement.setRent(creator);
+			repo.saveAndFlush(lodgement);
+			
+			
+			return lodgement;
+			
+			
     }
 	
 	@DeleteMapping("/lodgement/delete/{id}")
