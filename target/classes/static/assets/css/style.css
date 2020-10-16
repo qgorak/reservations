@@ -37,7 +37,11 @@ html{
 	color:red !important; 
 }
 
-.v-toolbar-title{
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
+#navigation_drawer {
 	cursor: pointer !important;
 }
 

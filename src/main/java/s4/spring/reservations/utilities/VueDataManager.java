@@ -52,18 +52,23 @@ public class VueDataManager {
 			vue.addData("displayBtnLogout", "display:none");
 		}
 		vue.addData("user", username);
+		vue.addData("userDashboard", "window.location.href='/user/dashboard/"+ username +"'");
 		vue.addData("drawer", false);
-		vue.addDataRaw("items", " [{"
+		vue.addDataRaw("currentUsers", " [{"
+		+"                        'title': 'Dashboard',"
+		+"                        'icon': 'mdi-account-arrow-right',"
+		+"                        'link': '/user/dashboard/"+ username + "'," 
+		+"                    }, {"
 		+"                        'title': 'Logement',"
-		+"                        'icon': 'mdi-home-city',"
+		+"                        'icon': 'mdi-home-city'," 
 		+"                        'link': '/user/lodgement/"+ username + "'," 
 		+"                    }, {"
-		+"                        'title': 'Reservation',"
-		+"                        'icon': 'mdi-file-document-edit'," 
+		+"                        'title': 'Reservation'," 
+		+"                        'icon': 'mdi-file-document-edit',"
 		+"                        'link': '/user/reservation/"+ username + "'," 
 		+"                    }, {"
-		+"                        'title': 'Settings'," 
-		+"                        'icon': 'mdi-cog-outline',"
+		+"                        'title': 'Settings',"
+		+"                        'icon': 'mdi-cog-outline'," 
 		+"                        'link': '/user/settings/"+ username + "'," 
 		+"                    }]");
 		

@@ -63,7 +63,7 @@ public class RestUserController {
 			user.setMail(mail);
 			repo.saveAndFlush(user);
 		}
-		return new RedirectView("http://127.0.0.1:8080/rest/user/" + user.getLogin());
+		return new RedirectView("http://127.0.0.1:8080/user/" + user.getLogin());
     }
 	
 }

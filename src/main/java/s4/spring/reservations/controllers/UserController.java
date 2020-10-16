@@ -45,7 +45,7 @@ public class UserController {
 				+ "self.userName=self.userData.login;"
 				+ "self.userMail=self.userData.mail;"));
 		
-		vue.addData("message", "Hello User");
+		vue.addData("message", "Hello " + userName +" !");
 		vue.addData("valid", true);
 		vue.addData("select", "null");
 		
