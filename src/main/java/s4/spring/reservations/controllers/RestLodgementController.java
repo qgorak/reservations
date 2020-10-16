@@ -54,6 +54,10 @@ public class RestLodgementController {
 	public List<Lodgement> read() {
 		return repo.findAll();	
 	}
+	@GetMapping("/lodgements/{idUser}")
+	public List<Lodgement> getLodgementByIdUser(@PathVariable int idUser) {
+		return repo.findByRentId(idUser);	
+	}
 	
 	@GetMapping("/lodgement/{id}")
 	public Lodgement read(@PathVariable int id) {

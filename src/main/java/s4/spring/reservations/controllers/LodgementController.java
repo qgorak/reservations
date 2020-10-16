@@ -56,6 +56,8 @@ public class LodgementController {
 		vue = vuemanager.addSimpleMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(principal, vue);
 		if (request.isUserInRole("ROLE_HOST")){
+			vue.addDataRaw("Lodgements", "[]");
+			vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/6","self.lodgements=response.data"));
 			model.put("vue", vue);
 			return "lodgementDashboard";
 		}else{
