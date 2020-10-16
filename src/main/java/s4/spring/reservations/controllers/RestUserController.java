@@ -50,20 +50,20 @@ public class RestUserController {
 		return user;
     }
 	
-	@DeleteMapping("/users/delete/{id}")
+	@DeleteMapping("/user/delete/{id}")
     public void delete(@PathVariable int id) {
 		repo.deleteById(id);
     }
 	
-	@PostMapping("users/update/{userName}")
-    public @ResponseBody User update(@PathVariable String userName,@RequestParam String login,@RequestParam String mail) {
+	@PostMapping("user/update/{userName}")
+    public RedirectView update(@PathVariable String userName,@RequestParam String login,@RequestParam String mail) {
 		User user = repo.getUserByLogin(userName);
 		if((user!= null)) {
 			user.setLogin(login);
 			user.setMail(mail);
 			repo.saveAndFlush(user);
 		}
-		return user;
+		return new RedirectView("http://127.0.0.1:8080/rest/user/" + user.getLogin());
     }
 	
 }

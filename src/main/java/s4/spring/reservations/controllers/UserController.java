@@ -21,11 +21,10 @@ public class UserController {
 	
 	@RequestMapping("user/{userName}")
 	 public String userPage(@PathVariable String userName, ModelMap model,Principal principal) {
-		// TODO afficher les données de l'utilisateur
 		vue.addData("userData");
 		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/user/"+userName, "self.userData=response.data;"));
 	    model.put("vue", vue);
-        return "test";
+        return "userDashboard";
        }
 	
 	@RequestMapping("/user/settings/{userName}")
@@ -40,7 +39,7 @@ public class UserController {
 		vue.addData("userName");
 		vue.addData("userMail");
 		vue.addData("userPassword");
-		vue.addData("action", "http://127.0.0.1:8080/rest/users/update/" + userName);
+		vue.addData("action", "http://127.0.0.1:8080/rest/user/update/" + userName);
 		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/user/"+userName, ""
 				+ "self.userData=response.data;"
 				+ "self.userName=self.userData.login;"
@@ -50,7 +49,7 @@ public class UserController {
 		vue.addData("valid", true);
 		vue.addData("select", "null");
 		
-		vue.addMethod("defaultValue", ""
+		vue.addMethod("clear", ""
 				+ "const instance = this;"
 				+ "instance.userName = instance.userData.login;"
 				+ "instance.userMail = instance.userData.mail;");

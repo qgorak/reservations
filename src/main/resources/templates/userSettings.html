@@ -2,7 +2,6 @@
 {{> include/menu}}
 
 <h1><%message%></h1>
-<p><%userData%></p>
 
 <template>
   <v-form
@@ -39,7 +38,7 @@
     <v-btn
       color="warning"
       class="mr-4"
-      @click="defaultValue"
+      @click="clear"
     >
       Clear
     </v-btn>
@@ -47,11 +46,5 @@
     </v-btn>
   </v-form>
 </template>
-
-<form method="post" action="http://127.0.0.1:8080/rest/users/update/martin">
-  <input type="text" name="login" value="Quentin"><br>
-  <input type="text" name="mail" value="martin@mail.fr"><br>
-  <input type="submit" value="Submit">
-</form> 
 
 {{> include/footer}}

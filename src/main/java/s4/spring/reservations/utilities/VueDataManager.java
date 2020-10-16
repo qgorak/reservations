@@ -47,7 +47,7 @@ public class VueDataManager {
 			vue.addData("displayBtnLogout", "display:block");
 		}
 		else {
-			username = "Anonyme";
+			username = "Not connected";
 			vue.addData("displayBtnLogin", "display:block");
 			vue.addData("displayBtnLogout", "display:none");
 		}
@@ -56,15 +56,15 @@ public class VueDataManager {
 		vue.addDataRaw("items", " [{"
 		+"                        'title': 'Logement',"
 		+"                        'icon': 'mdi-home-city',"
-		+"                        'link': '/lodgement/'," 
+		+"                        'link': '/user/lodgement/"+ username + "'," 
 		+"                    }, {"
 		+"                        'title': 'Reservation',"
 		+"                        'icon': 'mdi-file-document-edit'," 
-		+"                        'link': '/reservation/',"
+		+"                        'link': '/user/reservation/"+ username + "'," 
 		+"                    }, {"
 		+"                        'title': 'Settings'," 
 		+"                        'icon': 'mdi-cog-outline',"
-		+"                        'link': '/user/settings/"+username+ "'," 
+		+"                        'link': '/user/settings/"+ username + "'," 
 		+"                    }]");
 		
 		//login modal
