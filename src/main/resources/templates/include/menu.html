@@ -98,23 +98,11 @@
             <%user%>
          </v-list-item-title>
          <v-list-item-subtitle>
-            <v-btn :style="displayBtnLogout" small onclick="window.location.href='/logout'" depressed>Logout</v-btn>
             <v-dialog
                v-model="loginModal"
                persistent
                max-width="290"
                >
-               <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                     small
-                     :style="displayBtnLogin"
-                     depressed
-                     v-bind="attrs"
-                     v-on="on"
-                     >
-                     Login
-                  </v-btn>
-               </template>
                <v-card>
                   <v-card-title class="headline">
                      Login
@@ -157,15 +145,6 @@
                max-width="600"
                >
                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                     small
-                     :style="displayBtnLogin"
-                     depressed
-                     v-bind="attrs"
-                     v-on="on"
-                     >
-                     Register
-                  </v-btn>
                </template>
                <v-card>
                   <v-card-title class="headline">
@@ -295,6 +274,7 @@
          v-for="item in items"
          :key="item.title"
          :href="item.link"
+         @click="triggerModal(item.action)"
          link
          >
          <v-list-item-icon>

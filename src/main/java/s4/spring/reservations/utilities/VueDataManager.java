@@ -41,35 +41,50 @@ public class VueDataManager {
 	public VueJS addDrawerRequiredData(MyUserDetails user,VueJS vue) {
 		
 		String username;
+		vue.addMethod("triggerModal", "switch (number) {\r\n"
+				+ "  case '1':\r\n"
+				+ "    this.loginModal = !this.loginModal;\r\n"
+				+ "    break;\r\n"
+				+ "  case '2':\r\n"
+				+ "this.registerModal = !this.registerModal;"
+				+ "    break;\r\n"
+				+ "  case '3':\r\n"
+				+ "window.location.href='/logout';"
+				+ "	   break;"
+				+ "  default:}","number");
 		
 		//drawer datas
 		if (user != null) {
 			username = user.getUsername();
-			vue.addData("displayBtnLogin", "display:none");
-			vue.addData("displayBtnLogout", "display:block");
 			if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
-			vue.addDataRaw("items", " [{"
+			vue.addDataRaw("items", " [{     'title': 'Logout',        "
+					+ "                       'icon': 'mdi-logout', "
+					+ "                        'action': '3',"
+					+ "                   }, {"
 					+"                        'title': 'Mes Logements',"
 					+"                        'icon': 'mdi-home-city',"
 					+"                        'link': '/lodgement/'," 
 					+"                    }, {"
 					+"                        'title': 'Reservation',"
 					+"                        'icon': 'mdi-file-document-edit'," 
-					+"                        'link': '/lodement/',"
+					+"                        'action': '1',"
 					+"                    }, {"
 					+"                        'title': 'Settings'," 
 					+"                        'icon': 'mdi-cog-outline',"
 					+"                        'link': '/lodement/'," 
 					+"                    }]");
 			}else {
-				vue.addDataRaw("items", " [{"
+				vue.addDataRaw("items", " [{     'title': 'Logout',        "
+						+ "                       'icon': 'mdi-logout', "
+						+ "                        'action': '3',"
+						+ "                   }, {"
 						+"                        'title': 'Devenir Hôte',"
 						+"                        'icon': 'mdi-home-city',"
 						+"                        'link': '/lodgement/'," 
 						+"                    }, {"
-						+"                        'title': 'Reservation',"
+						+"                        'title': 'mes Reservations',"
 						+"                        'icon': 'mdi-file-document-edit'," 
-						+"                        'link': '/lodement/',"
+						+"                        'action': 'FormLogin($event)',"
 						+"                    }, {"
 						+"                        'title': 'Settings'," 
 						+"                        'icon': 'mdi-cog-outline',"
@@ -80,16 +95,14 @@ public class VueDataManager {
 		else {
 			username = "Anonyme";
 			vue.addDataRaw("items", " [{"
-					+"                        'title': 'Reservation',"
-					+"                        'icon': 'mdi-file-document-edit'," 
-					+"                        'link': '/lodement/',"
+					+"                        'title': 'Se Connecter',"
+					+"                        'icon': 'mdi-login-variant',"
+					+"                        'action': '1'," 
 					+"                    }, {"
-					+"                        'title': 'Settings'," 
-					+"                        'icon': 'mdi-cog-outline',"
-					+"                        'link': '/lodement/'," 
+					+"                        'title': 'Inscription',"
+					+"                        'icon': 'mdi-account-plus'," 
+					+"                        'action': '2',"
 					+"                    }]");
-			vue.addData("displayBtnLogin", "display:block");
-			vue.addData("displayBtnLogout", "display:none");
 		}
 		
 		vue.addData("user", username);

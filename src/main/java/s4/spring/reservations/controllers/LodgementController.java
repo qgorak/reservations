@@ -63,7 +63,7 @@ public class LodgementController {
 		
 		
 		if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
-			vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgements/\"+item.id;","item");
+			vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id;","item");
 			vue.addDataRaw("lodgements", "[]");
 			vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+user.getId(),"self.lodgements=response.data"));
 			model.put("vue", vue);
