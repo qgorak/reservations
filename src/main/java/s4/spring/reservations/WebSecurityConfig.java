@@ -3,11 +3,13 @@ package s4.spring.reservations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.*;
-import org.springframework.security.config.annotation.web.builders.*;
-import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import s4.spring.reservations.services.UserDetailsServiceImpl;
@@ -19,6 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
+    }
+    
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
+        handler.setUseReferer(true);
+        return handler;
     }
     
      
@@ -50,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 	.loginPage("/login")
+                	.successHandler(successHandler())
                 .and()
                 .logout().deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/")
                 .and()

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +35,7 @@ import s4.spring.reservations.models.User;
 import s4.spring.reservations.repositories.LodgementRepository;
 import s4.spring.reservations.repositories.ReservationRepository;
 import s4.spring.reservations.repositories.UserRepository;
+import s4.spring.reservations.services.MyUserDetails;
 
 
 @CrossOrigin
@@ -109,8 +111,6 @@ public class RestLodgementController {
     public Lodgement create(@RequestBody Lodgement lodgement,Principal principal,HttpServletRequest request) {
 		User creator = new User();
 		creator = repoUs.getUserByLogin(principal.getName());;
-		System.out.print(creator.getRole());
-        String test = creator.getRole();
 		if (creator.getRole().equals("ROLE_USER"))
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -122,11 +122,7 @@ public class RestLodgementController {
 		}
 			lodgement.setRent(creator);
 			repo.saveAndFlush(lodgement);
-			
-			
-			return lodgement;
-			
-			
+			return lodgement;		
     }
 	
 	@DeleteMapping("/lodgement/delete/{id}")

@@ -1,11 +1,11 @@
 package s4.spring.reservations.utilities;
 
 import java.io.IOException;
-import java.security.Principal;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.utilities.Http;
 import io.github.jeemv.springboot.vuejs.utilities.JavascriptResource;
+import s4.spring.reservations.services.MyUserDetails;
 
 public class VueDataManager {
 //		JavascripMultiModulesResource js a utiliser
@@ -38,37 +38,63 @@ public class VueDataManager {
 		return vue;
 	
 	}
-	public VueJS addDrawerRequiredData(Principal principal,VueJS vue) {
+	public VueJS addDrawerRequiredData(MyUserDetails user,VueJS vue) {
 		
 		String username;
 		
 		//drawer datas
-		if (principal != null) {
-			username = principal.getName();
+		if (user != null) {
+			username = user.getUsername();
 			vue.addData("displayBtnLogin", "display:none");
 			vue.addData("displayBtnLogout", "display:block");
+			if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
+			vue.addDataRaw("items", " [{"
+					+"                        'title': 'Mes Logements',"
+					+"                        'icon': 'mdi-home-city',"
+					+"                        'link': '/lodgement/'," 
+					+"                    }, {"
+					+"                        'title': 'Reservation',"
+					+"                        'icon': 'mdi-file-document-edit'," 
+					+"                        'link': '/lodement/',"
+					+"                    }, {"
+					+"                        'title': 'Settings'," 
+					+"                        'icon': 'mdi-cog-outline',"
+					+"                        'link': '/lodement/'," 
+					+"                    }]");
+			}else {
+				vue.addDataRaw("items", " [{"
+						+"                        'title': 'Devenir Hôte',"
+						+"                        'icon': 'mdi-home-city',"
+						+"                        'link': '/lodgement/'," 
+						+"                    }, {"
+						+"                        'title': 'Reservation',"
+						+"                        'icon': 'mdi-file-document-edit'," 
+						+"                        'link': '/lodement/',"
+						+"                    }, {"
+						+"                        'title': 'Settings'," 
+						+"                        'icon': 'mdi-cog-outline',"
+						+"                        'link': '/lodement/'," 
+						+"                    }]");
+			}
 		}
 		else {
 			username = "Anonyme";
+			vue.addDataRaw("items", " [{"
+					+"                        'title': 'Reservation',"
+					+"                        'icon': 'mdi-file-document-edit'," 
+					+"                        'link': '/lodement/',"
+					+"                    }, {"
+					+"                        'title': 'Settings'," 
+					+"                        'icon': 'mdi-cog-outline',"
+					+"                        'link': '/lodement/'," 
+					+"                    }]");
 			vue.addData("displayBtnLogin", "display:block");
 			vue.addData("displayBtnLogout", "display:none");
 		}
 		
 		vue.addData("user", username);
 		vue.addData("drawer", false);
-		vue.addDataRaw("items", " [{"
-		+"                        'title': 'Logement',"
-		+"                        'icon': 'mdi-home-city',"
-		+"                        'link': '/lodgement/'," 
-		+"                    }, {"
-		+"                        'title': 'Reservation',"
-		+"                        'icon': 'mdi-file-document-edit'," 
-		+"                        'link': '/lodement/',"
-		+"                    }, {"
-		+"                        'title': 'Settings'," 
-		+"                        'icon': 'mdi-cog-outline',"
-		+"                        'link': '/lodement/'," 
-		+"                    }]");
+
 		
 		//login modal
 		vue.addData("loginModal",false);

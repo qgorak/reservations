@@ -18,7 +18,58 @@
          </v-list-item-title>
          <v-list-item-subtitle>
             <v-btn :style="displayBtnLogout" small onclick="window.location.href='/logout'" depressed>Logout</v-btn>
-            
+            <v-dialog
+               v-model="loginModal"
+               persistent
+               max-width="290"
+               >
+               <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                     small
+                     :style="displayBtnLogin"
+                     depressed
+                     v-bind="attrs"
+                     v-on="on"
+                     >
+                     Login
+                  </v-btn>
+               </template>
+               <v-card>
+                  <v-card-title class="headline">
+                     Login
+                  </v-card-title>
+                  <v-card-text>
+                     <form  method="post" action="/login">
+                        <p>
+                           <label for="username" class="sr-only">Username</label>
+                           <input type="text" id="username" name="username" placeholder="Username" required autofocus>
+                        </p>
+                        <p>
+                           <label for="password" class="sr-only">Password</label>
+                           <input type="password" id="password" name="password"  placeholder="Password" required>
+                        </p>
+                  </v-card-text>
+                  <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                     color="green darken-1"
+                     text
+                     @click="loginModal = false"
+                     >
+                  Cancel
+                  </v-btn>
+                  <v-btn
+                     color="green darken-1"
+                     text
+                     type="submit"
+                     @click="loginModal = false"
+                     >
+                  Login
+                  </v-btn>
+                  </form>
+                  </v-card-actions>
+               </v-card>
+            </v-dialog>
          </v-list-item-subtitle>
       </v-list-item-content>
    </v-list-item>
@@ -48,7 +99,7 @@
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
   
-        <v-toolbar-title>Dashboard</v-toolbar-title>
+        <v-toolbar-title class="v-toolbar-title" onclick="window.location.href='/'">AirBnB</v-toolbar-title>
   
         <v-spacer></v-spacer>
   
@@ -60,4 +111,3 @@
    class="overflow-y-auto"
    max-height="100vh">
 <v-container div="container" style="height: 1500px;">
-<div style="margin-top:90px;"></div>
