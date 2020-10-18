@@ -86,12 +86,12 @@ public class LodgementController {
 		VueDataManager vuemanager = new VueDataManager();
 		vue.addData("reservationModal",false);
 		vue.addDataRaw("reservation","{start:'',end:''}");
-		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservation/","self.reservation", "self.reservationModal=false;"));
+		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservation/"+idLogement,"self.reservation", "self.reservationModal=false;"));
 		vue = vuemanager.addDatePickerRequiredData(vue);
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue.addData("lodgement");
-		vue.onBeforeMount("let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://localhost:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
+		vue.onBeforeMount("let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
 		vue.addData("message", "Hello Logement");
 	    model.put("vue", vue);
         return "lodgement";
