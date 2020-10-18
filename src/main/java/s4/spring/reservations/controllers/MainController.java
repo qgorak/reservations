@@ -20,7 +20,7 @@ public class MainController {
 	@GetMapping(value = "/")
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user,Principal principal) {
 		
-		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
+		
 		
 
 		//breadcrub menu

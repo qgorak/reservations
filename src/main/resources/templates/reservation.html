@@ -1,5 +1,10 @@
 {{> include/header}}
 {{> include/menuLodgementDashboard}}
+    <v-sheet
+   id="scrolling-techniques-7"
+   class="overflow-y-auto"
+   max-height="100vh">
+<v-container div="container" style="height: 1500px;">
 <v-simple-table>
       <template v-slot:default>
         <thead>
@@ -24,5 +29,6 @@
       </template>
     </v-simple-table>
 <%reservations%>
-
+</v-container>
+</v-sheet>
 {{> include/footer}}

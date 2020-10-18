@@ -25,10 +25,34 @@ public class LodgementController {
 
 	
 	@RequestMapping("/lodgement/search")
-	public String resultSearch(ModelMap model,Principal principal,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
+	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,Principal principal,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
 		vue.addDataRaw("result","[]");
-		vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+id;","id");
-		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
+		
+		VueDataManager vuemanager = new VueDataManager();
+		vue = vuemanager.addSearchMenuRequiredData(vue);
+		vue = vuemanager.addDrawerRequiredData(user, vue);
+		vue = vuemanager.addDatePickerRequiredData(vue);
+		vue.addMethod("redirect", "if(this.nbTravellers!=\"null\" && this.dates.length!=0){\r\n"
+				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1]+'&nbr='+this.nbTravellers);\r\n"
+				+ "}\r\n"
+				+ "else if(this.nbTravellers!=\"null\"){\r\n"
+				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id+'?nbr='+this.nbTravellers);\r\n"
+				+ "}\r\n"
+				+ "else if(this.dates.length!=0){\r\n"
+				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1]);\r\n"
+				+ "}\r\n"
+				+ "else{\r\n"
+				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id);\r\n"
+				+ "}","id");
+		vue.onBeforeMount("let self=this;"		
+				+ "var urlParams = new URLSearchParams(window.location.search);"
+				+ "var start = urlParams.get('start');"
+				+ "self.dates[0]=start;"
+				+ "var end = urlParams.get('end');"
+				+ "self.dates[1]=end;"
+				+ "var nbr = urlParams.get('nbr');"
+				+ "self.nbTravellers=parseInt(nbr);"
+				+ Http.get("http://127.0.0.1:8080/rest/lodgement/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
 		+ "var element = document.getElementById('osm-map');"
 		+ "var map = L.map(element);"
 		+ "L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);"
@@ -92,7 +116,14 @@ public class LodgementController {
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue.addData("lodgement");
-		vue.onBeforeMount("let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
+		vue.onBeforeMount("var urlParams = new URLSearchParams(window.location.search);"
+				+ "var start = urlParams.get('start');"
+				+ "this.dates[0]=start;"
+				+ "var end = urlParams.get('end');"
+				+ "this.dates[1]=end;"
+				+ "var nbr = urlParams.get('nbr');"
+				+ "this.nbTravellers=parseInt(nbr);"
+				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
 		vue.addData("message", "Hello Logement");
 	    model.put("vue", vue);
         return "lodgement";
