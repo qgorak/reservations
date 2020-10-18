@@ -52,7 +52,7 @@ public class LodgementController {
 				+ "self.dates[1]=end;"
 				+ "var nbr = urlParams.get('nbr');"
 				+ "self.nbTravellers=parseInt(nbr);"
-				+ Http.get("http://127.0.0.1:8080/rest/lodgement/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
+				+ Http.get("http://127.0.0.1:8080/rest/lodgements/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
 		+ "var element = document.getElementById('osm-map');"
 		+ "var map = L.map(element);"
 		+ "L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);"
@@ -79,7 +79,7 @@ public class LodgementController {
 		vue.addDataRaw("nbr","[1,2,3,4,5]");
 		vue.addDataRaw("newLodgement","{title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null}");
 		vue.addDataRaw("type","['Maison','Appartement','Chambre']");
-		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[1];this.newLodgement.lon=this.selected.geometry.coordinates[0];" + Http.post( "http://127.0.0.1:8080/rest/lodgement/create/","self.newLodgement", "self.modalNewHost=false; document.location.reload(true);"));
+		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[1];this.newLodgement.lon=this.selected.geometry.coordinates[0];" + Http.post( "http://127.0.0.1:8080/rest/lodgements/","self.newLodgement", "self.modalNewHost=false; document.location.reload(true);"));
 		
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
 
@@ -90,7 +90,7 @@ public class LodgementController {
 		if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
 			vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id;","item");
 			vue.addDataRaw("lodgements", "[]");
-			vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+user.getId(),"self.lodgements=response.data"));
+			vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/","self.lodgements=response.data"));
 			model.put("vue", vue);
 			return "lodgementDashboard";
 		}else{
@@ -110,8 +110,8 @@ public class LodgementController {
     public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		VueDataManager vuemanager = new VueDataManager();
 		vue.addData("reservationModal",false);
-		vue.addDataRaw("reservation","{start:'',end:''}");
-		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservation/"+idLogement,"self.reservation", "self.reservationModal=false;"));
+		vue.addDataRaw("reservation","{start:'',end:'',lodgement:''}");
+		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];this.reservation.lodgement=this.lodgement;let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservations/","self.reservation", "self.reservationModal=false;"));
 		vue = vuemanager.addDatePickerRequiredData(vue);
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
@@ -127,7 +127,7 @@ public class LodgementController {
 				+ "if(nbr!=null){"
 				+ "this.nbTravellers=parseInt(nbr);"
 				+ "}"
-				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
+				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;"));
 		vue.addData("message", "Hello Logement");
 	    model.put("vue", vue);
         return "lodgement";

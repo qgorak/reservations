@@ -14,55 +14,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import s4.spring.reservations.models.Reservation;
 import s4.spring.reservations.models.User;
+import s4.spring.reservations.repositories.ReservationRepository;
 import s4.spring.reservations.repositories.UserRepository;
+import s4.spring.reservations.services.MyUserDetails;
 
 
 
 @RestController
-@RequestMapping("/rest/")
-public class RestUserController {
+@RequestMapping("/rest/users")
+public class RestUserController extends AbstractRestController<User>{
 	
-	@Autowired
-    private UserRepository repo;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@GetMapping("/users/")
-	public List<User> read() {
-		return repo.findAll();	
+	@Autowired
+	public RestUserController(UserRepository repo) {
+		super(repo);
 	}
-	
+
 	@GetMapping("/user/{username}")
 	public User read(@PathVariable String username) {
 		
-		return repo.getUserByLogin(username);
+		return ((UserRepository) repo).getUserByLogin(username);
+	}
+		
+	@Override
+	protected void addObject(User newuser,MyUserDetails user) {
+		newuser.setPassword(passwordEncoder.encode(newuser.getPassword()));
+		newuser.setEnabled(true);
+		newuser.setRole("ROLE_USER");
+		repo.saveAndFlush(newuser);
 	}
 	
+	@Override
+	protected void updateObject(User toUpdateObject, User originalObject) {
 
-	@PostMapping("/user/create/")
-    public User create(@RequestBody User user) {
-	
-		
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setEnabled(true);
-		user.setRole("ROLE_USER");
 
-		repo.save(user);
-		return user;
-    }
+	}
 	
-	@DeleteMapping("/users/delete/{id}")
-    public void delete(@PathVariable int id) {
-		repo.deleteById(id);
-    }
-	
-	@PostMapping("users/update/{id}")
-    public User update(@PathVariable int id,@RequestBody User user) {
-		
-		return user;
-
-    }
 
 	
 }

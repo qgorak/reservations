@@ -5,12 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +18,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,33 +37,27 @@ import s4.spring.reservations.services.MyUserDetails;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/rest/")
-public class RestLodgementController {
+@RequestMapping("/rest/lodgements")
+public class RestLodgementController extends AbstractRestController<Lodgement>{
 	
 	@Autowired
-    private LodgementRepository repo;
-	
+	public RestLodgementController(LodgementRepository repo) {
+		super(repo);
+	}
+
 	@Autowired
     private ReservationRepository repoRes;
 	
 	@Autowired
     private UserRepository repoUs;
 
-	@GetMapping("/lodgements/")
-	public List<Lodgement> read() {
-		return repo.findAll();	
+
+	@GetMapping("/my")
+	public List<Lodgement> getLodgementByIdUser(@AuthenticationPrincipal MyUserDetails user) {
+		return ((LodgementRepository) repo).findByRentId(user.getId());	
 	}
-	@GetMapping("/lodgements/{idUser}")
-	public List<Lodgement> getLodgementByIdUser(@PathVariable int idUser) {
-		return repo.findByRentId(idUser);	
-	}
-	
-	@GetMapping("/lodgement/{id}")
-	public Lodgement read(@PathVariable int id) {
-		return repo.findById(id);
-	}
-	
-	@GetMapping("/lodgement/search")
+		
+	@GetMapping("/search")
 	public List<Lodgement> localisation(@RequestParam(name="nbr") String nbr,@RequestParam(name="start") String start,@RequestParam(name="end") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) throws ParseException{
 		double radiusOfSearch=20; //distance en km autour de laquelle on cherche des résultats 
 		double radiusOfEarth=6371; //6371km, le rayon de la terre
@@ -77,8 +68,8 @@ public class RestLodgementController {
 		double latDMin=latD-r;
 		double lonDMax=lonD+r;
 		double lonDMin=lonD-r;
-		List<Lodgement> result=repo.findByParamater(latDMax,latDMin,lonDMax,lonDMin);
-			for(Lodgement i : repo.findByParamater(latDMax,latDMin,lonDMax,lonDMin)) {
+		List<Lodgement> result=((LodgementRepository) repo).findByParamater(latDMax,latDMin,lonDMax,lonDMin);
+			for(Lodgement i : ((LodgementRepository) repo).findByParamater(latDMax,latDMin,lonDMax,lonDMin)) {
 				List<Reservation> reserv=repoRes.findByLodgement_id(i.getId());
 				if(!nbr.equals("null") && Integer.parseInt(nbr)>i.getNbr_place()){
 					result.remove(i);
@@ -107,10 +98,14 @@ public class RestLodgementController {
 		return result;
 	}
 
-	@PostMapping("/lodgement/create")
-    public Lodgement create(@RequestBody Lodgement lodgement,Principal principal,HttpServletRequest request) {
+
+	
+	
+
+	@Override
+	protected void addObject(Lodgement lodgement,MyUserDetails user) {
 		User creator = new User();
-		creator = repoUs.getUserByLogin(principal.getName());;
+		creator = repoUs.findById(user.getId());;
 		if (creator.getRole().equals("ROLE_USER"))
 		{
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -122,20 +117,12 @@ public class RestLodgementController {
 		}
 			lodgement.setRent(creator);
 			repo.saveAndFlush(lodgement);
-			return lodgement;		
-    }
+	}
 	
-	@DeleteMapping("/lodgement/delete/{id}")
-    public void delete(@PathVariable int id) {
-		repo.deleteById(id);
-    }
-	
-	@PostMapping("lodgement/update/{id}")
-    public Lodgement update(@PathVariable int id,@RequestBody Lodgement Lodgement) {
+	@Override
+	protected void updateObject(Lodgement toUpdateObject, Lodgement originalObject) {
 
-	
-		return Lodgement;
 
-    }
+	}
 	
 }

@@ -123,7 +123,7 @@ public class VueDataManager {
 		+ "      v => /.+@.+\\..+/.test(v) || 'E-mail must be valid',]");
 		vue.addDataRaw("passwordRules","[]");
 		vue.addDataRaw("newUser", "{login:'',password:'',mail:''}");
-		vue.addMethod("registerUser", "let self=this;" + Http.post( "http://127.0.0.1:8080/rest/user/create/","self.newUser", "self.registerModal=false;"));
+		vue.addMethod("registerUser", "let self=this;" + Http.post( "http://127.0.0.1:8080/rest/users/","self.newUser", "self.registerModal=false;"));
 		vue.addData("e1",1);
 
 		return vue;
