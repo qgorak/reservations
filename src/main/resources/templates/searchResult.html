@@ -1,5 +1,14 @@
 {{> include/header}}
-<div style="float:left;display:block;width:50%;">
+{{> include/menu}}
+
+             <v-row
+        class="mb-6"
+        style="height:100vh;"
+        no-gutters
+      >
+             <v-col
+          cols="6"
+          >
 <template>
     <v-data-iterator
       :items="result"
@@ -8,8 +17,8 @@
     <v-card
     v-for="i in result" :key="i.id"
     class="mx-auto"
-    width="100%"
     elevation="0"
+    @click="redirect(i.id)"
   >
     <v-list-item two-line>
      <v-list-item-content style="padding:16px;">
@@ -25,7 +34,19 @@
 	<v-divider></v-divider>
   </v-card>  
     </v-data-iterator>
+    
 </template>
-</div>
-<div id="osm-map" style="min-height:100%;display:block;float:right;width:50%;"></div>
+</v-col>
+       <v-col
+          cols="6"
+          >
+       
+          <div id="osm-map" style="min-height:100%;display:block;z-index:0;"></div>
+        
+          </v-col>
+</v-row>
+
+
+
+
 {{> include/footer}}

@@ -27,6 +27,7 @@ public class LodgementController {
 	@RequestMapping("/lodgement/search")
 	public String resultSearch(ModelMap model,Principal principal,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
 		vue.addDataRaw("result","[]");
+		vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+id;","id");
 		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgement/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,"self.result=response.data;console.log(JSON.parse(JSON.stringify(self.$root.result)));"
 		+ "var element = document.getElementById('osm-map');"
 		+ "var map = L.map(element);"
@@ -54,7 +55,7 @@ public class LodgementController {
 		vue.addDataRaw("nbr","[1,2,3,4,5]");
 		vue.addDataRaw("newLodgement","{title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null}");
 		vue.addDataRaw("type","['Maison','Appartement','Chambre']");
-		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[0];this.newLodgement.lon=this.selected.geometry.coordinates[1];" + Http.post( "http://127.0.0.1:8080/rest/lodgement/create/","self.newLodgement", "self.modalNewHost=false; document.location.reload(true);"));
+		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[1];this.newLodgement.lon=this.selected.geometry.coordinates[0];" + Http.post( "http://127.0.0.1:8080/rest/lodgement/create/","self.newLodgement", "self.modalNewHost=false; document.location.reload(true);"));
 		
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
 

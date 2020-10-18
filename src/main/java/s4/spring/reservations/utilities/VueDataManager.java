@@ -39,6 +39,7 @@ public class VueDataManager {
 	
 	}
 	public VueJS addDrawerRequiredData(MyUserDetails user,VueJS vue) {
+		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
 		
 		String username;
 		vue.addMethod("triggerModal", "switch (number) {\r\n"

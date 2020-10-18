@@ -1,6 +1,10 @@
 {{> include/header}}
 {{> include/menu}}
-
+    <v-sheet
+   id="scrolling-techniques-7"
+   class="overflow-y-auto"
+   max-height="100vh">
+<v-container div="container" style="height: 1500px;">
 <h1><%lodgement.title%></h1>
 
    <v-carousel v-model="model">
@@ -154,5 +158,6 @@
           
         </v-card>
       </v-dialog>
-
+ </v-container>
+ </v-sheet>
 {{> include/footer}}
