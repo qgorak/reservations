@@ -32,17 +32,17 @@ public class LodgementController {
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue = vuemanager.addDatePickerRequiredData(vue);
-		vue.addMethod("redirect", "if(this.nbTravellers!=\"null\" && this.dates.length!=0){\r\n"
-				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1]+'&nbr='+this.nbTravellers);\r\n"
+		vue.addMethod("redirect", "if(this.nbTravellers!=null && this.dates.length!=0){\r\n"
+				+ "window.location.href='/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1]+'&nbr='+this.nbTravellers;\r\n"
 				+ "}\r\n"
 				+ "else if(this.nbTravellers!=\"null\"){\r\n"
-				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id+'?nbr='+this.nbTravellers);\r\n"
+				+ "window.location.href='/lodgement/'+id+'?nbr='+this.nbTravellers;\r\n"
 				+ "}\r\n"
 				+ "else if(this.dates.length!=0){\r\n"
-				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1]);\r\n"
+				+ "window.location.href='/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1];\r\n"
 				+ "}\r\n"
 				+ "else{\r\n"
-				+ "window.location.replace('http://127.0.0.1:8080/lodgement/'+id);\r\n"
+				+ "window.location.href='/lodgement/'+id;\r\n"
 				+ "}","id");
 		vue.onBeforeMount("let self=this;"		
 				+ "var urlParams = new URLSearchParams(window.location.search);"
@@ -118,11 +118,15 @@ public class LodgementController {
 		vue.addData("lodgement");
 		vue.onBeforeMount("var urlParams = new URLSearchParams(window.location.search);"
 				+ "var start = urlParams.get('start');"
+				+ "if(start!=null){"
 				+ "this.dates[0]=start;"
 				+ "var end = urlParams.get('end');"
 				+ "this.dates[1]=end;"
+				+ "}"
 				+ "var nbr = urlParams.get('nbr');"
+				+ "if(nbr!=null){"
 				+ "this.nbTravellers=parseInt(nbr);"
+				+ "}"
 				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgement/"+idLogement, "self.lodgement=response.data;"));
 		vue.addData("message", "Hello Logement");
 	    model.put("vue", vue);
