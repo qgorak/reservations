@@ -1,4 +1,5 @@
 <v-card class="overflow-hidden" >
+<div style="z-index:10;">
 <v-app-bar
    absolute
    color="white"
@@ -43,7 +44,7 @@
                   </template>
                 </template>
    </v-autocomplete>
-   <v-menu	class="test"
+   <v-menu	
       ref="menu1"
       v-model="menu1"
       :close-on-content-click="false"
@@ -81,6 +82,7 @@
       <v-icon >mdi-magnify</v-icon>
    </v-btn>
 </v-app-bar>
+</div>
 <v-navigation-drawer
    v-model="drawer"
    absolute
