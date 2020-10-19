@@ -1,10 +1,14 @@
 package s4.spring.reservations.controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +55,21 @@ public class RestImageController {
 		        String uploadDir = "user-photos/"+user.getUsername()+"/lodgement/"+id+"/" ;
 		        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 			}	         
+	    }
+	    
+	    @GetMapping("/lodgement/{id}")
+	    public List<String> saveLodgementPhoto(@PathVariable int id) {
+			Lodgement l = new Lodgement();
+			l = repoL.findById(id);
+			User creator = l.getRent();
+	    	List<String> results = new ArrayList<String>();
+	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+creator.getLogin()+"/lodgement/"+id).listFiles();
+	    	for (File file : files) {
+	    	    if (file.isFile()) {
+	    	        results.add(file.getName());
+	    	    }
+	    	}
+	    	return results;
 	    }
 	    
 

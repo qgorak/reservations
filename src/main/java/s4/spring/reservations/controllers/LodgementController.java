@@ -108,7 +108,8 @@ public class LodgementController {
 				+ "     headers: {\r\n"
 				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
 				+ "      }})");
-		
+		vue.addDataRaw("images", "[]");
+		vue.addDataRaw("imagestest", "[]");
 		vue.addData("reservationModal",false);
 		vue.addDataRaw("reservation","{start:'',end:'',lodgement:''}");
 		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];this.reservation.lodgement=this.lodgement;let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservations/","self.reservation", "self.reservationModal=false;"));
@@ -127,7 +128,10 @@ public class LodgementController {
 				+ "if(nbr!=null){"
 				+ "this.nbTravellers=parseInt(nbr);"
 				+ "}"
-				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;"));
+				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;")
+				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, "response.data.forEach(element => self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+element}));")
+				+"this.imagestest.push({src:'test'});"
+				+"this.imagestest.push({src:'test'});");
 		vue.addData("message", "Hello Logement");
 	    model.put("vue", vue);
         return "lodgement";
