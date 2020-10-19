@@ -32,18 +32,11 @@ public class LodgementController {
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue = vuemanager.addDatePickerRequiredData(vue);
-		vue.addMethod("redirect", "if(this.nbTravellers!=null && this.dates.length!=0){\r\n"
-				+ "window.location.href='/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1]+'&nbr='+this.nbTravellers;\r\n"
-				+ "}\r\n"
-				+ "else if(this.nbTravellers!=\"null\"){\r\n"
-				+ "window.location.href='/lodgement/'+id+'?nbr='+this.nbTravellers;\r\n"
-				+ "}\r\n"
-				+ "else if(this.dates.length!=0){\r\n"
-				+ "window.location.href='/lodgement/'+id+'?start='+this.dates[0]+'&end='+this.dates[1];\r\n"
-				+ "}\r\n"
-				+ "else{\r\n"
-				+ "window.location.href='/lodgement/'+id;\r\n"
-				+ "}","id");
+		vue.addMethod("redirect", 
+				"var url = new URL(window.location.href);"
+				+ "let params = new URLSearchParams(url.search.slice(1));"
+				+"window.location.href='/lodgement/'+id+'?'+params;"
+				,"id");
 		vue.onBeforeMount("let self=this;"		
 				+ "var urlParams = new URLSearchParams(window.location.search);"
 				+ "var start = urlParams.get('start');"
@@ -80,7 +73,6 @@ public class LodgementController {
 		vue.addDataRaw("newLodgement","{title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null}");
 		vue.addDataRaw("type","['Maison','Appartement','Chambre']");
 		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[1];this.newLodgement.lon=this.selected.geometry.coordinates[0];" + Http.post( "http://127.0.0.1:8080/rest/lodgements/","self.newLodgement", "self.modalNewHost=false; document.location.reload(true);"));
-		
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
 
 		Collection<? extends GrantedAuthority> list =user.getAuthorities();
