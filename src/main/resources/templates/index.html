@@ -1,5 +1,13 @@
 {{> include/header}}
 {{> include/menu}}
 <v-container div="container" style="height: 1500px;">
+changer son avatar (il faut être log)
+<v-file-input
+  truncate-length="15"
+  v-model="file"
+></v-file-input>
+<v-btn @click="postAvatar()">post</v-btn>
+
+<%file%>
  </v-container>
 {{> include/footer}}

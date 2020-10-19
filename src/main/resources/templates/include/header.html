@@ -23,12 +23,12 @@
    <v-list-item>
       <v-list-item-content>
          <v-list-item-title class="title">
-            <v-icon
-               large
-               color="blue darken-2"
-               >
-               mdi-account-box
-            </v-icon>
+		<v-avatar
+  		color="primary"
+  		size="56">        <img
+          v-bind:src="'/user-photos/'+user+'/avatar/avatar.png'"
+          alt="John"
+        ></v-avatar>
             <%user%>
          </v-list-item-title>
          <v-list-item-subtitle>

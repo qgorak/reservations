@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
+import io.github.jeemv.springboot.vuejs.utilities.Http;
 import s4.spring.reservations.services.MyUserDetails;
 import s4.spring.reservations.utilities.VueDataManager;
 
@@ -21,7 +22,12 @@ public class MainController {
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user,Principal principal) {
 		
 		
-		
+		vue.addData("file");
+		vue.addMethod("postAvatar", "let self=this;let formData = new FormData();formData.append('file', this.file);"
+				+"this.$http['post'](\"/rest/image/saveAvatar\", formData, {\r\n"
+				+ "      headers: {\r\n"
+				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
+				+ "      }})");
 
 		//breadcrub menu
 		VueDataManager vuemanager = new VueDataManager();

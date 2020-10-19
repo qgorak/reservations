@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import io.github.jeemv.springboot.vuejs.VueJS;
 import io.github.jeemv.springboot.vuejs.utilities.Http;
@@ -101,6 +102,13 @@ public class LodgementController {
 	@RequestMapping("lodgement/{idLogement}")
     public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		VueDataManager vuemanager = new VueDataManager();
+		vue.addData("file");
+		vue.addMethod("postPhotoLodgement", "let self=this;let formData = new FormData();formData.append('file', this.file);"
+				+ "		this.$http['post'](\"/rest/image/saveLodgementPhoto/\"+this.lodgement.id, formData, {\r\n"
+				+ "     headers: {\r\n"
+				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
+				+ "      }})");
+		
 		vue.addData("reservationModal",false);
 		vue.addDataRaw("reservation","{start:'',end:'',lodgement:''}");
 		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];this.reservation.lodgement=this.lodgement;let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservations/","self.reservation", "self.reservationModal=false;"));

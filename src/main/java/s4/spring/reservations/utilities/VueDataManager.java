@@ -150,9 +150,7 @@ public class VueDataManager {
 
 		
 		//Search autocomplete
-		vue.addDataRaw("search","[]");
-		vue.addDataRaw("destination","{name:null,loc:null}");
-		vue.addData("nbTravellers","null");
+
 		vue.addDataRaw("error", "false");
 		try{vue.addMethod("suggestion",JavascriptResource.create("suggestion").parseContent());}
 		catch (IOException e) {e.printStackTrace();}
