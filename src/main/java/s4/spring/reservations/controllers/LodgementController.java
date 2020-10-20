@@ -129,9 +129,7 @@ public class LodgementController {
 				+ "this.nbTravellers=parseInt(nbr);"
 				+ "}"
 				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;")
-				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, "response.data.forEach(element => self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+element}));")
-				+"this.imagestest.push({src:'test'});"
-				+"this.imagestest.push({src:'test'});");
+				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, "response.data.forEach(element => self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+element}));"));
 		vue.addData("message", "Hello Logement");
 	    model.put("vue", vue);
         return "lodgement";
