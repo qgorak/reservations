@@ -1,5 +1,6 @@
 {{> include/header}}
 {{> include/menu}}
+<%result%>
 <v-row
    class="mb-6"
    no-gutters
@@ -28,8 +29,13 @@
                            cols="6"
                            style="padding:0;"
                            >
+                           
                            <v-carousel hide-delimiters height="200" width="auto">
+       						  <v-carousel-item
+         					   src="src"
+          				  ></v-carousel-item>
                            </v-carousel>
+                           
                         </v-col>
                         <v-col
                            cols="6"

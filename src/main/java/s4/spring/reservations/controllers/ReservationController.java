@@ -28,7 +28,6 @@ public class ReservationController {
 	@RequestMapping("/reservation")
     public String lodgementPage( ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		VueDataManager vuemanager = new VueDataManager();
-
 		vue.addDataRaw("reservations","[]");
 		vue = vuemanager.addSimpleMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);

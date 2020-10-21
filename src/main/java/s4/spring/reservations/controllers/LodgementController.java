@@ -57,6 +57,11 @@ public class LodgementController {
 		+ "console.log(temp[i].lat);"
 		+ "center=L.latLng(temp[i].lat,temp[i].lon);"
 		+ "L.marker(center).addTo(map);"
+		+ "self.$http['get']('http://127.0.0.1:8080/rest/image/lodgement/'+temp[i].id).then(function(response) {"
+		+"for(y=0;y<response.data.length;y++){"
+		//TO DO put an array of images src in our result lodgement
+		+ "response.data.forEach(element => self.result.src({src: '/user-photos/'+self.result[y].rent.login+'/lodgement/'+self.result[y].id+'/'+element}));"
+		+ ";}})"
 		+ "}"));
 		model.put("vue", vue);
 		return "searchResult";
@@ -83,7 +88,7 @@ public class LodgementController {
 		if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
 			vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id;","item");
 			vue.addDataRaw("lodgements", "[]");
-			vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/","self.lodgements=response.data"));
+			vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/my","self.lodgements=response.data"));
 			model.put("vue", vue);
 			return "lodgementDashboard";
 		}else{
