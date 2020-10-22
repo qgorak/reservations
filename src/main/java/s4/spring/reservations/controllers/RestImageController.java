@@ -2,6 +2,9 @@ package s4.spring.reservations.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +40,16 @@ public class RestImageController {
 	    @PostMapping("/saveAvatar")
 	    public String saveAvatar(
 	            @RequestParam("file") MultipartFile multipartFile,@AuthenticationPrincipal MyUserDetails user) throws IOException {
-	        String fileName = "avatar.png";
+	    	
+	    	String fileName = multipartFile.getOriginalFilename();
 	        String uploadDir = "user-photos/"+user.getUsername()+"/avatar/" ;
+	        File index = new File("user-photos/"+user.getUsername()+"/avatar/");
+	        Path uploadPath = Paths.get(uploadDir);  
+	        String[]entries = index.list();
+	        for(String s: entries){
+	        	File currentFile = new File(index.getPath(),s);
+	        	currentFile.delete();
+	        }
 	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	        return user.getUsername();
 	    }
@@ -58,7 +69,7 @@ public class RestImageController {
 	    }
 	    
 	    @GetMapping("/lodgement/{id}")
-	    public List<String> saveLodgementPhoto(@PathVariable int id) {
+	    public List<String> getLodgementPhotos(@PathVariable int id) {
 			Lodgement l = new Lodgement();
 			l = repoL.findById(id);
 			User creator = l.getRent();
@@ -74,6 +85,23 @@ public class RestImageController {
 	    	results.add(Integer.toString(id));
 	    	return results;
 	    }
+	    
+	    @GetMapping("/user/{id}")
+	    public List<String> getUserAvatar(@PathVariable int id) {
+			User u = repoUs.findById(id);
+	    	List<String> results = new ArrayList<String>();
+	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+u.getLogin()+"/avatar/").listFiles();
+	    	if (files != null) {
+	    	for (File file : files) {
+	    	    if (file.isFile()) {
+	    	        results.add(file.getName());
+	    	    }
+	    	}
+	    	}
+	    	results.add(Integer.toString(id));
+	    	return results;
+	    }
+	    
 	    
 
 

@@ -15,6 +15,7 @@ public class VueDataManager {
 		vue.addData("menu1", false);
 		vue.addData("date");
 		vue.addData("endDate","2020-10-30");
+		vue.addData("avatar");
 		vue.addDataRaw("dates", "[]");
 		vue.addDataRaw("allowedDates","['2020-10-08', '2020-10-09']");
 		vue.addDataRaw("dateFormatted", "this.formatDate(new Date().toISOString().substr(0, 10))");
@@ -40,7 +41,7 @@ public class VueDataManager {
 	}
 	public VueJS addDrawerRequiredData(MyUserDetails user,VueJS vue) {
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
-		
+		vue.addData("avatar");
 		String username;
 		vue.addMethod("triggerModal", "switch (number) {\r\n"
 				+ "  case '1':\r\n"
@@ -54,8 +55,20 @@ public class VueDataManager {
 				+ "	   break;"
 				+ "  default:}","number");
 		
+		vue.addMethod("getMyAvatar",""
+				+ "self = this;"
+				+ "if(this.user.id != 0){"
+				+ "this.$http['get']('http://127.0.0.1:8080/rest/image/user/'+this.user.id, {}).then(function(response,i) {"
+				+ "self.avatar='/user-photos/'+self.user.login+'/avatar/'+response.data[0];"
+				+ "});"
+				+ "}else{"
+				+ "self.avatar='/user-photos/Anonyme/avatar/avatar.png';"
+				+ "}");
+
+		
 		//drawer datas
 		if (user != null) {
+			vue.addData("user", user.getUser());
 			username = user.getUsername();
 			if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
 			vue.addDataRaw("items", " [{     'title': 'Logout',        "
@@ -94,7 +107,7 @@ public class VueDataManager {
 			}
 		}
 		else {
-			username = "Anonyme";
+			vue.addDataRaw("user", "{id: 0,login: 'Anonyme'}");
 			vue.addDataRaw("items", " [{"
 					+"                        'title': 'Se Connecter',"
 					+"                        'icon': 'mdi-login-variant',"
@@ -105,8 +118,6 @@ public class VueDataManager {
 					+"                        'action': '2',"
 					+"                    }]");
 		}
-		
-		vue.addData("user", username);
 		vue.addData("drawer", false);
 
 		

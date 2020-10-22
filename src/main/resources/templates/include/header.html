@@ -24,12 +24,12 @@
       <v-list-item-content>
          <v-list-item-title class="title">
 		<v-avatar
-  		color="primary"
+  		color="white"
   		size="56">        <img
-          v-bind:src="'/user-photos/'+user+'/avatar/avatar.png'"
+          v-bind:src="avatar"
           alt="John"
         ></v-avatar>
-            <%user%>
+            <%user.login%>
          </v-list-item-title>
          <v-list-item-subtitle>
             <v-dialog

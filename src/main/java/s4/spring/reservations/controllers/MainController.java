@@ -20,7 +20,8 @@ public class MainController {
     
 	@GetMapping(value = "/")
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user,Principal principal) {
-		
+
+
 		
 		vue.addData("file",null);
 		vue.addMethod("postAvatar", "let self=this;let formData = new FormData();formData.append('file', this.file);"
@@ -34,7 +35,7 @@ public class MainController {
 		vue = vuemanager.addDatePickerRequiredData(vue);
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
-	    // date picker
+		vue.onBeforeMount("this.getMyAvatar();");
 	    model.put("vue", vue);
         return "index";
        }

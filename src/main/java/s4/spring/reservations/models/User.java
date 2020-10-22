@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -16,9 +17,12 @@ public class User {
 	private int id;
 
 	private String login;
+	@JsonIgnore
 	private String password;
 	private String mail;
+	@JsonIgnore
 	private String role;
+	@JsonIgnore
     private boolean enabled;
 	
     

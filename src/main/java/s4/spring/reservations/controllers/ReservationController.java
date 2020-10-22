@@ -31,7 +31,9 @@ public class ReservationController {
 		vue.addDataRaw("reservations","[]");
 		vue = vuemanager.addSimpleMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
-		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/reservations/my", "self.reservations=response.data;"));
+		vue.onBeforeMount(""
+				+ "this.getMyAvatar();"
+				+ "let self=this;" + Http.get("http://127.0.0.1:8080/rest/reservations/my", "self.reservations=response.data;"));
 	    model.put("vue", vue);
         return "reservation";
        }
