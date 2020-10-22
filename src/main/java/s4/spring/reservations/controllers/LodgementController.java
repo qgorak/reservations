@@ -95,7 +95,7 @@ public class LodgementController {
 		vue.addDataRaw("type","['Maison','Appartement','Chambre']");
 		vue.addMethod("postLodgement", "let self=this; this.newLodgement.lat=this.selected.geometry.coordinates[1];this.newLodgement.lon=this.selected.geometry.coordinates[0];" + Http.post( "http://127.0.0.1:8080/rest/lodgements/","self.newLodgement", "self.modalNewHost=false; document.location.reload(true);"));
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
-
+		vue.addData("modalLodgement",false);
 		Collection<? extends GrantedAuthority> list =user.getAuthorities();
 		System.out.print(list.toString());
 		
@@ -107,7 +107,6 @@ public class LodgementController {
 			model.put("vue", vue);
 			return "lodgementDashboard";
 		}else{
-		vue.addData("modalNewHost",false);
 		model.put("vue", vue);
 		return "newHost";
 		}
