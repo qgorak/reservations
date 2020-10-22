@@ -1,6 +1,5 @@
 {{> include/header}}
 {{> include/menu}}
-<%result%>
 <v-row
    class="mb-6"
    no-gutters
@@ -8,52 +7,57 @@
    <v-col
       cols="6"
       >
-      <template>
-         <v-data-iterator
-            :items="result"
-            hide-default-footer
-            >
-            <v-row
-               class="mb-6"
-               no-gutters
+      <v-sheet
+         id="scrolling-techniques-6"
+         class="overflow-y-auto"
+         max-height="800"
+         >
+         <template>
+            <v-data-iterator
+               :items="result"
+               hide-default-footer
                >
-               <v-card
-                  v-for="i in result" :key="i.id"
-                  class="mx-auto"
-                  elevation="0"
-                  style="margin:0!important;width:100%"
+               <v-row
+                  class="mb-6"
+                  no-gutters
                   >
-                  <v-list-item two-line>
-                     <v-list-item-content >
-                        <v-col
-                           cols="6"
-                           style="padding:0;"
-                           >
-                           
-                           <v-carousel hide-delimiters height="200" width="auto">
-       						  <v-carousel-item
-         					   src="src"
-          				  ></v-carousel-item>
-                           </v-carousel>
-                           
-                        </v-col>
-                        <v-col
-                           cols="6"
-                           @click="redirect(i.id)"
-                           style="cursor: pointer;"
-                           >
-                           <v-list-item-title class="headline mb-1">Description de la maison</v-list-item-title>
-                           <div class="overline mb-4"><%i.type%> à <%i.city%></div>
-                           <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>
-                           <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>
-                        </v-col>
-                     </v-list-item-content>
-                  </v-list-item>
-                  <v-divider></v-divider>
-               </v-card>
-            </v-row>
-         </v-data-iterator>
-      </template>
+                  <v-card
+                     v-for="i in result" :key="i.id"
+                     class="mx-auto"
+                     elevation="0"
+                     style="margin:0!important;width:100%"
+                     >
+                     <v-list-item two-line>
+                        <v-list-item-content >
+                           <v-col
+                              cols="6"
+                              style="padding:0;"
+                              >
+                              <v-carousel hide-delimiters height="200" width="auto">
+                                 <v-carousel-item
+                                    v-for="item in i.images"
+                                    :src="item.src"
+                                    ></v-carousel-item>
+                              </v-carousel>
+                           </v-col>
+                           <v-col
+                              cols="6"
+                              @click="redirect(i.id)"
+                              style="cursor: pointer;"
+                              >
+                              <v-list-item-title class="headline mb-1">Description de la maison</v-list-item-title>
+                              <div class="overline mb-4"><%i.type%> à <%i.city%></div>
+                              <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>
+                              <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>
+                           </v-col>
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-divider></v-divider>
+                  </v-card>
+               </v-row>
+            </v-data-iterator>
+         </template>
+      </v-sheet>
    </v-col>
    <v-col
       cols="6"

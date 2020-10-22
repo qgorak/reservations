@@ -33,6 +33,23 @@ public class LodgementController {
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue = vuemanager.addDatePickerRequiredData(vue);
+		vue.addDataRaw("images", "[]");
+		vue.addMethod("getImages", ""
+				+ "self = this;"
+				+ "this.$http['get']('http://127.0.0.1:8080/rest/image/lodgement/'+this.result[i].id, {}).then(function(response,i) {"
+				+ "for(y=0;y<self.result.length;y++){"
+					+ "id = response.data.slice(-1)[0];"
+					+ "if(self.result[y].id == id){"
+					+ "self.images=[];"
+					+ "for(k=0;k<response.data.length-1;k++){"
+					+ "src={src: '/user-photos/'+self.result[y].rent.login+'/lodgement/'+self.result[y].id+'/'+response.data[k]};"
+					+ "self.images.push(src);"
+					+ "}"
+					+ "self.$set(self.result[y], 'images', self.images)"
+					+ "}"
+				+ "}"
+				+ "})"
+				);
 		vue.addMethod("redirect", 
 				"var url = new URL(window.location.href);"
 				+ "let params = new URLSearchParams(url.search.slice(1));"
@@ -57,12 +74,10 @@ public class LodgementController {
 		+ "console.log(temp[i].lat);"
 		+ "center=L.latLng(temp[i].lat,temp[i].lon);"
 		+ "L.marker(center).addTo(map);"
-		+ "self.$http['get']('http://127.0.0.1:8080/rest/image/lodgement/'+temp[i].id).then(function(response) {"
-		+"for(y=0;y<response.data.length;y++){"
-		//TO DO put an array of images src in our result lodgement
-		+ "response.data.forEach(element => self.result.src({src: '/user-photos/'+self.result[y].rent.login+'/lodgement/'+self.result[y].id+'/'+element}));"
-		+ ";}})"
-		+ "}"));
+		+ "self.getImages(i);"
+		+ "}"
+		));
+
 		model.put("vue", vue);
 		return "searchResult";
 	}
@@ -107,14 +122,14 @@ public class LodgementController {
 	@RequestMapping("lodgement/{idLogement}")
     public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		VueDataManager vuemanager = new VueDataManager();
-		vue.addData("file");
+		vue.addDataRaw("file","[]");
+		vue.addData("host");
 		vue.addMethod("postPhotoLodgement", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+ "		this.$http['post'](\"/rest/image/saveLodgementPhoto/\"+this.lodgement.id, formData, {\r\n"
 				+ "     headers: {\r\n"
 				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
 				+ "      }})");
 		vue.addDataRaw("images", "[]");
-		vue.addDataRaw("imagestest", "[]");
 		vue.addData("reservationModal",false);
 		vue.addDataRaw("reservation","{start:'',end:'',lodgement:''}");
 		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];this.reservation.lodgement=this.lodgement;let self=this;" + Http.post( "http://127.0.0.1:8080/rest/reservations/","self.reservation", "self.reservationModal=false;"));
@@ -133,9 +148,10 @@ public class LodgementController {
 				+ "if(nbr!=null){"
 				+ "this.nbTravellers=parseInt(nbr);"
 				+ "}"
-				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;")
-				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, "response.data.forEach(element => self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+element}));"));
-		vue.addData("message", "Hello Logement");
+				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent.login")
+				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, ""
+						+ "for(k=0;k<response.data.length-1;k++){"
+						+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})};"));
 	    model.put("vue", vue);
         return "lodgement";
        }

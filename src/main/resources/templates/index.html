@@ -3,8 +3,9 @@
 <v-container div="container" style="height: 1500px;">
 changer son avatar (il faut être log)
 <v-file-input
-  truncate-length="15"
   v-model="file"
+  accept="image/*"
+  label="File input"
 ></v-file-input>
 <v-btn @click="postAvatar()">post</v-btn>
 

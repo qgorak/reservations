@@ -22,7 +22,7 @@ public class MainController {
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user,Principal principal) {
 		
 		
-		vue.addData("file");
+		vue.addData("file",null);
 		vue.addMethod("postAvatar", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+"this.$http['post'](\"/rest/image/saveAvatar\", formData, {\r\n"
 				+ "      headers: {\r\n"

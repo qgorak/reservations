@@ -64,11 +64,14 @@ public class RestImageController {
 			User creator = l.getRent();
 	    	List<String> results = new ArrayList<String>();
 	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+creator.getLogin()+"/lodgement/"+id).listFiles();
+	    	if (files != null) {
 	    	for (File file : files) {
 	    	    if (file.isFile()) {
 	    	        results.add(file.getName());
 	    	    }
 	    	}
+	    	}
+	    	results.add(Integer.toString(id));
 	    	return results;
 	    }
 	    

@@ -10,6 +10,7 @@
       <v-file-input
          truncate-length="15"
          v-model="file"
+         accept="image/*"
          ></v-file-input>
       <v-btn @click="postPhotoLodgement()">Post</v-btn>
       <v-carousel hide-delimiters>
@@ -21,7 +22,7 @@
       </v-carousel>
       <v-divider></v-divider>
       <H2><%lodgement.type%></H2>
-      <H2>Hote: <%lodgement.rent.login%></H2>
+      <H2>Hote: <%host%></H2>
       <H3><%lodgement.nbr_place%> voyageurs, <%lodgement.nbr_room%> pièce(s)</H3>
       <v-divider></v-divider>
       <v-row
