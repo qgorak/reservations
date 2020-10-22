@@ -92,7 +92,7 @@ public class LodgementController {
 
 	@RequestMapping("/lodgement")
 	
-	public String showLodgment(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
+	public String lodgementDashboard(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		VueDataManager vuemanager = new VueDataManager();
 		vue = vuemanager.addSimpleMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
@@ -108,7 +108,8 @@ public class LodgementController {
 		
 		
 		if (user.getAuthorities().toString().equals("[ROLE_HOST]")){
-			vue.addMethod("redirect", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id;","item");
+			vue.addMethod("redirectView", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id;","item");
+			vue.addMethod("redirectEdit", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id+\"/edit\";","item");
 			vue.addDataRaw("lodgements", "[]");
 			vue.onBeforeMount("this.getMyAvatar();let self=this;" + Http.get("http://127.0.0.1:8080/rest/lodgements/my","self.lodgements=response.data"));
 			model.put("vue", vue);
@@ -170,5 +171,30 @@ public class LodgementController {
 						+ "};"));
 	    model.put("vue", vue);
         return "lodgement";
+       }
+	@RequestMapping("lodgement/{idLogement}/edit")
+    public String lodgementEditPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
+		VueDataManager vuemanager = new VueDataManager();
+		vue.addDataRaw("file","[]");
+		vue.addData("host");
+		vue.addMethod("postPhotoLodgement", "let self=this;let formData = new FormData();formData.append('file', this.file);"
+				+ "		this.$http['post'](\"/rest/image/saveLodgementPhoto/\"+this.lodgement.id, formData, {\r\n"
+				+ "     headers: {\r\n"
+				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
+				+ "      }})");
+		vue.addDataRaw("images", "[]");
+		vue = vuemanager.addDatePickerRequiredData(vue);
+		vue = vuemanager.addSearchMenuRequiredData(vue);
+		vue = vuemanager.addDrawerRequiredData(user, vue);
+		vue.addData("lodgement");
+		vue.onBeforeMount(""
+				+ "this.getMyAvatar();"
+				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;")
+				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, ""
+						+ "for(k=0;k<response.data.length-1;k++){"
+						+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})"
+						+ "};"));
+	    model.put("vue", vue);
+        return "lodgementEdit";
        }
 }
