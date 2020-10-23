@@ -2,7 +2,6 @@ package s4.spring.reservations.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +55,7 @@ public class RestImageController {
 	    }
 	    
 	    @PostMapping("/saveLodgementPhoto/{id}")
-	    public void saveLodgementPhoto(
+	    public String saveLodgementPhoto(
 	            @RequestParam("file") MultipartFile multipartFile,@PathVariable int id,@AuthenticationPrincipal MyUserDetails user) throws IOException {
 			User creator = new User();
 			Lodgement l = new Lodgement();
@@ -65,8 +65,31 @@ public class RestImageController {
 		        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		        String uploadDir = "user-photos/"+user.getUsername()+"/lodgement/"+id+"/" ;
 		        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-			}	         
+		        return fileName;
+			}
+			return null;
 	    }
+	    
+		@DeleteMapping("/deleteLodgementPhoto/{id}/{name}/")
+		public String deleteLodgementPhoto(@PathVariable int id,@PathVariable String name,@AuthenticationPrincipal MyUserDetails user) {
+			
+			User creator = new User();
+			Lodgement l = new Lodgement();
+			creator = repoUs.findById(user.getId());
+			l = repoL.findById(id);
+			if(l.getRent().getId() == creator.getId()) {
+		        File index = new File("user-photos/"+user.getUsername()+"/lodgement/"+id+"/"); 
+		        String[]entries = index.list();
+		        for(String s: entries){
+		        	File currentFile = new File(index.getPath(),s);
+		        	if(currentFile.getName().equals(name)) {
+			        	currentFile.delete();
+			        	return name;
+		        	}
+		        }
+			}
+			return null;
+		}
 	    
 	    @GetMapping("/lodgement/{id}")
 	    public List<String> getLodgementPhotos(@PathVariable int id) {

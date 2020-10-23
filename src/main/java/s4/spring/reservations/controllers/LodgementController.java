@@ -175,13 +175,29 @@ public class LodgementController {
 	@RequestMapping("lodgement/{idLogement}/edit")
     public String lodgementEditPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		VueDataManager vuemanager = new VueDataManager();
-		vue.addDataRaw("file","[]");
+		vue.addData("file",null);
+		vue.addDataRaw("editedPhoto","{name:'',src:''}");
+		vue.addData("confirmDeletePhotoModal",false);
+		vue.addMethod("confirmDelete", "this.confirmDeletePhotoModal=true;"
+				+ "this.editedPhoto=item","item");
 		vue.addData("host");
 		vue.addMethod("postPhotoLodgement", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+ "		this.$http['post'](\"/rest/image/saveLodgementPhoto/\"+this.lodgement.id, formData, {\r\n"
 				+ "     headers: {\r\n"
 				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
-				+ "      }})");
+				+ "      }}).then(function(response, i) {"
+				+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+response.data, name: response.data});"
+				+ "self.file=null;"
+				+ "})");
+		vue.addMethod("deletePhotoLodgement", "let self=this;"
+				+Http.delete("'/rest/image/deleteLodgementPhoto/'+this.lodgement.id+'/'+item.name+'/'", ""
+				+ "for(k=0;k<self.images.length;k++){"
+					+ "if(self.images[k].name==response.data){"
+						+ "self.images.splice(k,1);"
+						+ "self.confirmDeletePhotoModal = false;"
+					+ "}"
+				+ "}"
+				+ ""),"item");
 		vue.addDataRaw("images", "[]");
 		vue = vuemanager.addDatePickerRequiredData(vue);
 		vue = vuemanager.addSearchMenuRequiredData(vue);
@@ -192,7 +208,7 @@ public class LodgementController {
 				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("http://127.0.0.1:8080/rest/lodgements/"+idLogement, "self.lodgement=response.data;")
 				+Http.get("http://127.0.0.1:8080/rest/image/lodgement/"+idLogement, ""
 						+ "for(k=0;k<response.data.length-1;k++){"
-						+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})"
+						+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.login+'/lodgement/'+self.lodgement.id+'/'+response.data[k], name: response.data[k]});"
 						+ "};"));
 	    model.put("vue", vue);
         return "lodgementEdit";

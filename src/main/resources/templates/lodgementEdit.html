@@ -1,102 +1,119 @@
 {{> include/header}}
 {{> include/menuLodgementDashboard}}
-<v-sheet
-   id="scrolling-techniques-7"
-   class="overflow-y-auto"
-   max-height="100vh">
-   <v-container div="container" style="height: 1500px;">
-      <h1><%lodgement.title%></h1>
-      <H2><%lodgement.type%>.
-       </H2>
-
-  	 <H3><%lodgement.nbr_place%> voyageurs, <%lodgement.nbr_room%> pièce(s)</H3>
-            		
-	
-
-            
-     
-     
-   
-   
-      <v-divider></v-divider>
-      <v-row
-         class="mb-6"
-         no-gutters
-         >
-         <v-col
-            cols="8"
-            >
-            <%lodgement.description%>
-         </v-col>
-
-      </v-row>
-     
-   <v-data-iterator
-        :items="images"
-        hide-default-footer
+<v-container div="container" style="height: 1500px;">
+   <h1><%lodgement.title%></h1>
+   <H4>Type:</H4>
+   <H2><%lodgement.type%>.
+   </H2>
+   <H4>Caractéristiques:</H4>
+   <H3><%lodgement.nbr_place%> voyageurs, <%lodgement.nbr_room%> pièce(s)</H3>
+   <v-row
+      no-gutters
       >
-        <template v-slot:header>
-          <v-toolbar
+      <H4>Prix par nuit: </H4>
+      <%lodgement.price%> €
+   </v-row>
+   <v-divider></v-divider>
+   <v-row
+      class="mb-6"
+      no-gutters
+      >
+      <%lodgement.description%>
+   </v-row>
+   <v-data-iterator
+      :items="images"
+      hide-default-footer
+      >
+      <template v-slot:header>
+         <v-toolbar
             class="mb-2"
             color="indigo darken-5"
             dark
             flat
-          >
-            <v-toolbar-title>Photos de l'annonce</v-toolbar-title>
-          </v-toolbar>
-        </template>
-  
-        <template v-slot:default="props">
-          <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.name"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
             >
-              <v-card>
-                <v-img
- 					 max-height="auto"
-  					max-width="auto"
- 				 :src=item.src
-				></v-img>
-  
-                <v-divider></v-divider>
-  
-                <v-list dense>
-  				   <v-list-item>
-                    <v-list-item-content class="align-end">
-                      <v-btn  small @click="delImage(item)" depressed>Supprimer</v-btn>
-                    </v-list-item-content>
-                  </v-list-item>
-
-                </v-list>
-              </v-card>
+            <v-toolbar-title>Photos de l'annonce</v-toolbar-title>
+         </v-toolbar>
+      </template>
+      <template v-slot:default="props">
+         <v-row>
+            <v-col
+               v-for="item in props.items"
+               :key="item.name"
+               cols="12"
+               sm="6"
+               md="4"
+               lg="3"
+               >
+               <v-card>
+                  <v-img
+                     max-height="auto"
+                     max-width="auto"
+                     :src=item.src
+                     ></v-img>
+                  <v-divider></v-divider>
+                  <v-list dense>
+                     <v-list-item>
+                        <%item.name%>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content class="align-end">
+                           <v-btn  small @click="confirmDelete(item)" depressed>Supprimer</v-btn>
+                        </v-list-item-content>
+                     </v-list-item>
+                  </v-list>
+               </v-card>
             </v-col>
-          </v-row>
-        </template>
-  
-        <template v-slot:footer>
-          <v-toolbar
+         </v-row>
+      </template>
+      <template v-slot:footer>
+         <v-toolbar
             class="mt-2"
             color="indigo"
             dark
             flat
-          >
-                  post image
-      <v-file-input
-         v-model="file"
-         accept="image/*"
-         ></v-file-input>
-      <v-btn @click="postPhotoLodgement()">Post</v-btn>
-          </v-toolbar>
-        </template>
-      </v-data-iterator>
-   
-
-
+            >
+            Ajouter une photo
+            <v-file-input
+               v-model="file"
+               accept="image/*"
+               ></v-file-input>
+            <v-btn v-if="file != null" @click="postPhotoLodgement()">Ajouter</v-btn>
+         </v-toolbar>
+      </template>
+   </v-data-iterator>
 </v-container>
-</v-sheet>
+<v-dialog
+   v-model="confirmDeletePhotoModal"
+   persistent
+   max-width="290"
+   >
+   <v-card>
+      <v-card-title class="headline">
+         Supprimer 
+      </v-card-title>
+      <v-card-text>
+         confirmez vous la suppression de:
+         <v-row>
+            ' <%editedPhoto.name%> '
+         </v-row>
+      </v-card-text>
+      <v-card-actions>
+         <v-spacer></v-spacer>
+         <v-btn
+            color="green darken-1"
+            text
+            @click="confirmDeletePhotoModal = false"
+            >
+            Cancel
+         </v-btn>
+         <v-btn
+            color="red"
+            @click="deletePhotoLodgement(editedPhoto)"
+            >
+            delete
+         </v-btn>
+         </form>
+      </v-card-actions>
+   </v-card>
+</v-dialog>
 {{> include/footer}}

@@ -1,5 +1,7 @@
 {{> include/header}}
 {{> include/menuLodgementDashboard}}
+<v-container div="container" style="min-height: 1500px;">
+
  <v-row justify="center">
       <v-dialog
         v-model="modalLodgement"
@@ -281,5 +283,8 @@
           </v-toolbar>
         </template>
       </v-data-iterator>
+      </v-container>
+      
+       
 
 {{> include/footer}}
