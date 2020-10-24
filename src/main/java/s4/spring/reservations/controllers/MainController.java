@@ -20,21 +20,16 @@ public class MainController {
     
 	@GetMapping(value = "/")
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user,Principal principal) {
-
-
-		
+		VueDataManager vuemanager = new VueDataManager();
+		vue = vuemanager.addDatePickerRequiredData(vue);
+		vue = vuemanager.addSearchMenuRequiredData(vue);
+		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue.addData("file",null);
 		vue.addMethod("postAvatar", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+"this.$http['post'](\"/rest/image/saveAvatar\", formData, {\r\n"
 				+ "      headers: {\r\n"
 				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
 				+ "      }})");
-
-		//breadcrub menu
-		VueDataManager vuemanager = new VueDataManager();
-		vue = vuemanager.addDatePickerRequiredData(vue);
-		vue = vuemanager.addSearchMenuRequiredData(vue);
-		vue = vuemanager.addDrawerRequiredData(user, vue);
 		vue.onBeforeMount("this.getMyAvatar();");
 	    model.put("vue", vue);
         return "index";

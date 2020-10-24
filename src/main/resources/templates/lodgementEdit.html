@@ -1,5 +1,6 @@
 {{> include/header}}
-{{> include/menuLodgementDashboard}}
+{{> include/menu/menuLodgementDashboard}}
+{{> include/modals/confirmDeletePhotoModal}}
 <v-container div="container" style="height: 1500px;">
    <h1><%lodgement.title%></h1>
    <H4>Type:</H4>
@@ -82,38 +83,4 @@
       </template>
    </v-data-iterator>
 </v-container>
-<v-dialog
-   v-model="confirmDeletePhotoModal"
-   persistent
-   max-width="290"
-   >
-   <v-card>
-      <v-card-title class="headline">
-         Supprimer 
-      </v-card-title>
-      <v-card-text>
-         confirmez vous la suppression de:
-         <v-row>
-            ' <%editedPhoto.name%> '
-         </v-row>
-      </v-card-text>
-      <v-card-actions>
-         <v-spacer></v-spacer>
-         <v-btn
-            color="green darken-1"
-            text
-            @click="confirmDeletePhotoModal = false"
-            >
-            Cancel
-         </v-btn>
-         <v-btn
-            color="red"
-            @click="deletePhotoLodgement(editedPhoto)"
-            >
-            delete
-         </v-btn>
-         </form>
-      </v-card-actions>
-   </v-card>
-</v-dialog>
 {{> include/footer}}

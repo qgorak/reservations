@@ -1,290 +1,96 @@
 {{> include/header}}
-{{> include/menuLodgementDashboard}}
+{{> include/menu/menuLodgementDashboard}}
+{{> include/modals/newLodgementModal}}
 <v-container div="container" style="min-height: 1500px;">
-
- <v-row justify="center">
-      <v-dialog
-        v-model="modalLodgement"
-        persistent
+   <v-row justify="center">
+      <v-btn
+         color="primary"
+         dark
+         @click="modalLodgement = true"
+         >
+         Ajouter un logement
+      </v-btn>
+   </v-row>
+   <v-data-iterator
+      :items="lodgements"
+      hide-default-footer
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="primary"
-            dark
-            v-bind="attrs"
-            v-on="on"
-          >
-            Ajouter un logement
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title class="headline">
-            Ajoutons ensemble un logement
-          </v-card-title>
-           <v-stepper v-model="e1" >
-      <v-stepper-header>
-        <v-stepper-step
-          :complete="e1 > 1"
-          step="1"
-        >
-          Type de logement
-        </v-stepper-step>
-  
-        <v-divider></v-divider>
-  
-        <v-stepper-step
-          :complete="e1 > 2"
-          step="2"
-        >
-          Description
-        </v-stepper-step>
-  
-        <v-divider></v-divider>
-  		<v-stepper-step
-          :complete="e1 > 3"
-          step="3"
-        >
-                  localisation
-        </v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step step="4">
-          Capacité
-        </v-stepper-step>
-        
-       	
-      </v-stepper-header>
-  
-      <v-stepper-items>
-        <v-stepper-content step="1">
-          <v-card
-            class="mb-12"
-            color="grey lighten-1"
-			height="200px"
-          >
-          <v-row justify="center">
-		          <v-select
-            :items="type"
-            v-model="newLodgement.type"
-            label="Type"
-          ></v-select>
-          </v-row>
-          </v-card>
-  
-          <v-btn
-            color="primary"
-            @click="e1 = 2"
-          >
-            Continue
-          </v-btn>
-  
-          <v-btn text>
-            Cancel
-          </v-btn>
-        </v-stepper-content>
-  
-        <v-stepper-content step="2">
-          <v-card
-            class="mb-12"
-            color="grey lighten-1"
-            height="400px"
-          >
-                    <v-row justify="center">
-          	            <v-text-field
-              v-model="newLodgement.title"
-              :counter="10"
-              label="Title"
-              required
-            ></v-text-field>
-          </v-row>
-          <v-divider></v-divider>
-          <v-row justify="center">
-          <v-textarea
-            v-model="newLodgement.description"
-            label="Description"
-            value="Parlez nous un peu du logement"
-            hint="Hint text"
-          ></v-textarea>
-		</v-row>
-          </v-card>
-  
-          <v-btn
-            color="primary"
-            @click="e1 = 3"
-          >
-            Continue
-          </v-btn>
-  
-          <v-btn text>
-            Cancel
-          </v-btn>
-        </v-stepper-content>
-  
-        <v-stepper-content step="3">
-          <v-card
-            class="mb-12"
-            color="grey lighten-1"
-            height="200px"
-          > <v-row justify="center"><v-autocomplete
-	  v-model="selected"
-      label="Adresse"
-      name="location"
-      v-on:keyup="suggestion"
-      :items="search"
-	  item-text="properties.name"
-	  return-object
-   >
- <template v-slot:selection="data">
-                  <v-chip
-                    v-bind="data.attrs"
-                    :input-value="data.selected"
-                    close
-                    @click="data.select"
-                    @click:close="remove(data.item)"
-                  >
-
-                    <% data.item.properties.name %>
-                  </v-chip>
-                </template>
-                <template v-slot:item="data">
-                  <template v-if="typeof data.item !== 'object'">
-                    <v-list-item-content v-text="data.item"></v-list-item-content>
-                  </template>
-                  <template v-else>
-
-                    <v-list-item-content>
-                      <v-list-item-title v-html="data.item.properties.name"></v-list-item-title>
-                      <v-list-item-subtitle v-html="data.item.properties.postcode"></v-list-item-subtitle>
-                    </v-list-item-content>
-                  </template>
-                </template>
-   </v-autocomplete>
-   </v-row></v-card>
-  
-          <v-btn
-            color="primary"
-            @click="e1 = 4"
-          >
-            Continue
-          </v-btn>
-  
-          <v-btn text>
-            Cancel
-          </v-btn>
-        </v-stepper-content>
-                <v-stepper-content step="4">
-          <v-card
-            class="mb-12"
-            color="grey lighten-1"
-            height="200px"
-          >  <v-row justify="center">  <v-select
-            :items="nbr"
-            v-model="newLodgement.nbr_room"
-            label="Nombre de chambre"
-          ></v-select></v-row><v-row justify="center">  <v-select
-            :items="nbr"
-            v-model="newLodgement.nbr_place"
-            label="nombre de place"
-          ></v-select></v-row></v-card>
-  
-          <v-btn
-            color="primary"
-           @click="postLodgement()"
-          >
-           Post
-          </v-btn>
-  
-          <v-btn text>
-            Cancel
-          </v-btn>
-        </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
-
-
-        </v-card>
-      </v-dialog>
-    </v-row>
- <v-data-iterator
-        :items="lodgements"
-        hide-default-footer
-      >
-        <template v-slot:header>
-          <v-toolbar
+      <template v-slot:header>
+         <v-toolbar
             class="mb-2"
             color="indigo darken-5"
             dark
             flat
-          >
-            <v-toolbar-title>Mes Logements</v-toolbar-title>
-          </v-toolbar>
-        </template>
-  
-        <template v-slot:default="props">
-          <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.name"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
             >
-              <v-card>
-                <v-card-title class="subheading font-weight-bold">
-                  <% item.title %>
-                </v-card-title>
-  
-                <v-divider></v-divider>
-  
-                <v-list dense>
-                  <v-list-item>
-                    <v-list-item-content>Type:</v-list-item-content>
-                    <v-list-item-content class="align-end">
-                      <% item.type %>
-                    </v-list-item-content>
-                  </v-list-item>
-  
-                  <v-list-item>
-                    <v-list-item-content>Description:</v-list-item-content>
-                    <v-list-item-content class="align-end">
-                      <% item.description %>
-                    </v-list-item-content>
-                  </v-list-item>
-  
-                  <v-list-item>
-                    <v-list-item-content>Prix</v-list-item-content>
-                    <v-list-item-content class="align-end">
-                      <% item.price %> €
-                    </v-list-item-content>
-                  </v-list-item>
-  				   <v-list-item>
-                    <v-list-item-content><v-btn  small @click="redirectView(item)" depressed>Voir Annonce</v-btn></v-list-item-content>
-                    <v-list-item-content class="align-end">
-                      <v-btn  small @click="redirectEdit(item)" depressed>Editer</v-btn>
-                    </v-list-item-content>
-                  </v-list-item>
-
-                </v-list>
-              </v-card>
+            <v-toolbar-title>Mes Logements</v-toolbar-title>
+         </v-toolbar>
+      </template>
+      <template v-slot:default="props">
+         <v-row>
+            <v-col
+               v-for="item in props.items"
+               :key="item.name"
+               cols="12"
+               sm="6"
+               md="4"
+               lg="3"
+               >
+               <v-card>
+                  <v-card-title class="subheading font-weight-bold">
+                     <% item.title %>
+                  </v-card-title>
+                  <v-divider></v-divider>
+                  <v-list dense>
+                     <v-list-item>
+                        <v-list-item-content>Type:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <% item.type %>
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content>Description:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <% item.description %>
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-carousel hide-delimiters height="200" width="auto">
+                           <v-carousel-item
+                              v-for="item in item.images"
+                              :src="item.src"
+                              ></v-carousel-item>
+                        </v-carousel>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content>Prix</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <% item.price %> €
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content>
+                           <v-btn  small @click="redirectView(item)" depressed>Voir Annonce</v-btn>
+                        </v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <v-btn  small @click="redirectEdit(item)" depressed>Editer</v-btn>
+                        </v-list-item-content>
+                     </v-list-item>
+                  </v-list>
+               </v-card>
             </v-col>
-          </v-row>
-        </template>
-  
-        <template v-slot:footer>
-          <v-toolbar
+         </v-row>
+      </template>
+      <template v-slot:footer>
+         <v-toolbar
             class="mt-2"
             color="indigo"
             dark
             flat
-          >
+            >
             <v-toolbar-title class="subheading">
-   
             </v-toolbar-title>
-          </v-toolbar>
-        </template>
-      </v-data-iterator>
-      </v-container>
-      
-       
-
+         </v-toolbar>
+      </template>
+   </v-data-iterator>
+</v-container>
 {{> include/footer}}

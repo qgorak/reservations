@@ -20,24 +20,28 @@ public class VueDataManager {
 		vue.addDataRaw("allowedDates","['2020-10-08', '2020-10-09']");
 		vue.addDataRaw("dateFormatted", "this.formatDate(new Date().toISOString().substr(0, 10))");
 		vue.addComputed("dateRangeText", "return this.dates.join(' au ')");
-		
 		try {vue.addMethod("getAllowedDates",JavascriptResource.create("getAllowedDates").parseContent(),"val");}
 		catch (IOException e) {e.printStackTrace();}
-		
 		try {vue.addMethod("formatDate",JavascriptResource.create("formatDate").parseContent(),"date");}
 		catch (IOException e) {e.printStackTrace();}
-		
 		try {vue.addMethod("addDays",JavascriptResource.create("addDays").parseContent(),"days");}
 		catch (IOException e) {e.printStackTrace();}
-		
 		try {vue.addMethod("parseDate",JavascriptResource.create("parseDate").parseContent(),"date");}
 		catch (IOException e) {e.printStackTrace();}
-		
 		vue.onBeforeMount("this.date = new Date().toLocaleDateString('fr-CA');");
 		vue.addWatcher("dates", "console.log(this.dates)");
-		
 		return vue;
-	
+	}
+	public VueJS addSearchAdressRequiredData(VueJS vue) {
+		vue.addDataRaw("search","[]");
+		vue.addDataRaw("destination","{name:null,loc:null}");
+		vue.addDataRaw("error", "false");
+		try{vue.addMethod("suggestion",JavascriptResource.create("suggestion").parseContent());}
+		catch (IOException e) {e.printStackTrace();}
+		try {vue.addMethod("recherche",JavascriptResource.create("recherche").parseContent());}
+		catch (IOException e) {e.printStackTrace();}
+		vue.addData("selected", "");
+		return vue;
 	}
 	public VueJS addDrawerRequiredData(MyUserDetails user,VueJS vue) {
 		vue.onMounted("document.getElementById(\"application\").style.visibility = \"visible\";");
@@ -59,10 +63,10 @@ public class VueDataManager {
 				+ "self = this;"
 				+ "if(this.user.id != 0){"
 				+ "this.$http['get']('http://127.0.0.1:8080/rest/image/user/'+this.user.id, {}).then(function(response,i) {"
-				+ "self.avatar='/user-photos/'+self.user.login+'/avatar/'+response.data[0];"
+				+ "self.avatar='/user-photos/'+self.user.id+'/avatar/'+response.data[0];"
 				+ "});"
 				+ "}else{"
-				+ "self.avatar='/user-photos/Anonyme/avatar/avatar.png';"
+				+ "self.avatar='/user-photos/0/avatar/avatar.png';"
 				+ "}");
 
 		
@@ -144,30 +148,13 @@ public class VueDataManager {
 	public VueJS addSearchMenuRequiredData(VueJS vue) {
 
 		vue.addDataRaw("nb","[1,2,3,4,5]");
-		//Search autocomplete
-		vue.addDataRaw("search","[]");
-		vue.addDataRaw("destination","{name:null,loc:null}");
 		vue.addData("nbTravellers","null");
-		vue.addDataRaw("error", "false");
-		try{vue.addMethod("suggestion",JavascriptResource.create("suggestion").parseContent());}
-		catch (IOException e) {e.printStackTrace();}
-		try {vue.addMethod("recherche",JavascriptResource.create("recherche").parseContent());}
-		catch (IOException e) {e.printStackTrace();}
-		vue.addData("selected", "");
+		vue = this.addSearchAdressRequiredData(vue);
 		return vue;
 	}
 	
 	public VueJS addSimpleMenuRequiredData(VueJS vue) {
-
-		
-		//Search autocomplete
-
-		vue.addDataRaw("error", "false");
-		try{vue.addMethod("suggestion",JavascriptResource.create("suggestion").parseContent());}
-		catch (IOException e) {e.printStackTrace();}
-		try {vue.addMethod("recherche",JavascriptResource.create("recherche").parseContent());}
-		catch (IOException e) {e.printStackTrace();}
-		vue.addData("selected", "");
+		//placeHolder
 		return vue;
 	}
 }

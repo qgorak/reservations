@@ -42,13 +42,15 @@ public class RestImageController {
 	            @RequestParam("file") MultipartFile multipartFile,@AuthenticationPrincipal MyUserDetails user) throws IOException {
 	    	
 	    	String fileName = multipartFile.getOriginalFilename();
-	        String uploadDir = "user-photos/"+user.getUsername()+"/avatar/" ;
-	        File index = new File("user-photos/"+user.getUsername()+"/avatar/");
+	        String uploadDir = "user-photos/"+user.getId()+"/avatar/" ;
+	        File index = new File("user-photos/"+user.getId()+"/avatar/");
 	        Path uploadPath = Paths.get(uploadDir);  
 	        String[]entries = index.list();
+	        if(entries!=null) {
 	        for(String s: entries){
 	        	File currentFile = new File(index.getPath(),s);
 	        	currentFile.delete();
+	        }
 	        }
 	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	        return user.getUsername();
@@ -63,7 +65,7 @@ public class RestImageController {
 			l = repoL.findById(id);
 			if(l.getRent().getId() == creator.getId()) {
 		        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		        String uploadDir = "user-photos/"+user.getUsername()+"/lodgement/"+id+"/" ;
+		        String uploadDir = "user-photos/"+user.getId()+"/lodgement/"+id+"/" ;
 		        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		        return fileName;
 			}
@@ -78,7 +80,7 @@ public class RestImageController {
 			creator = repoUs.findById(user.getId());
 			l = repoL.findById(id);
 			if(l.getRent().getId() == creator.getId()) {
-		        File index = new File("user-photos/"+user.getUsername()+"/lodgement/"+id+"/"); 
+		        File index = new File("user-photos/"+user.getId()+"/lodgement/"+id+"/"); 
 		        String[]entries = index.list();
 		        for(String s: entries){
 		        	File currentFile = new File(index.getPath(),s);
@@ -97,7 +99,7 @@ public class RestImageController {
 			l = repoL.findById(id);
 			User creator = l.getRent();
 	    	List<String> results = new ArrayList<String>();
-	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+creator.getLogin()+"/lodgement/"+id).listFiles();
+	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+creator.getId()+"/lodgement/"+id).listFiles();
 	    	if (files != null) {
 	    	for (File file : files) {
 	    	    if (file.isFile()) {
@@ -113,7 +115,7 @@ public class RestImageController {
 	    public List<String> getUserAvatar(@PathVariable int id) {
 			User u = repoUs.findById(id);
 	    	List<String> results = new ArrayList<String>();
-	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+u.getLogin()+"/avatar/").listFiles();
+	    	File[] files = new File(System.getProperty("user.dir")+"/user-photos/"+u.getId()+"/avatar/").listFiles();
 	    	if (files != null) {
 	    	for (File file : files) {
 	    	    if (file.isFile()) {
