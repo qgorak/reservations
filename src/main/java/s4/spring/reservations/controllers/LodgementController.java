@@ -196,8 +196,12 @@ public class LodgementController {
 		vue.addMethod("getHostAvatar",""
 				+ "self = this;"
 				+ "this.$http['get']('/rest/image/user/'+self.host.id, {}).then(function(response,i) {"
-				+"src='/user-photos/'+self.host.id+'/avatar/'+response.data[0];"
+				+"if(response.data[0]!=self.host.id){"
+				+ "src='/user-photos/'+self.host.id+'/avatar/'+response.data[0];"
 				+ "self.$set(self.host, 'avatar', src)"
+				+ "}else{"
+				+ "self.$set(self.host, 'initials',self.host.login.charAt(0));"
+				+ "}"
 				+ "});"				
 				);
 		vue.addMethod("postReservation", "this.reservation.start=this.dates[0];this.reservation.end=this.dates[1];this.reservation.lodgement=this.lodgement;let self=this;" + Http.post( "/rest/reservations/","self.reservation", "self.reservationModal=false;"));

@@ -24,11 +24,19 @@
       <v-list-item-content>
          <v-list-item-title class="title">
 		<v-avatar
+		v-if="avatar.src!=null"
   		color="white"
   		size="56">        <img
-          v-bind:src="avatar"
+          v-bind:src="avatar.src"
           alt="John"
         ></v-avatar>
+         <v-avatar
+         		v-if="avatar.initials!=null"
+                color="brown"
+                size="48"
+              >
+                <span class="white--text headline"><% avatar.initials%> </span>
+              </v-avatar>
             <%user.login%>
          </v-list-item-title>
       </v-list-item-content>

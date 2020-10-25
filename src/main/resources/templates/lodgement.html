@@ -13,11 +13,19 @@
    <H2>
       <%lodgement.type%>. Hote: <%host.login%>                      
       <v-avatar
+      	 v-if="host.avatar!=null"
          color="WhiteSmoke"
          size="56">        <img
          v-bind:src="host.avatar"
          alt="John"
          ></v-avatar>
+         <v-avatar
+         		v-if="host.initials!=null"
+                color="brown"
+                size="48"
+              >
+                <span class="white--text headline"><% host.initials%> </span>
+              </v-avatar>
    </H2>
    <H3><%lodgement.nbr_place%> voyageurs, <%lodgement.nbr_room%> pièce(s)</H3>
    <v-divider></v-divider>
