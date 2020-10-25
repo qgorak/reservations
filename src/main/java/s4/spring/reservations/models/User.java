@@ -7,6 +7,8 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -15,9 +17,8 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
 	private String login;
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	private String mail;
 	@JsonIgnore
@@ -33,6 +34,7 @@ public class User {
 	public void setLogin(String login) {
 		this.login = login;
 	}
+	
 
 	public String getPassword() {
 		return password;

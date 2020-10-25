@@ -187,7 +187,7 @@
                   color="grey lighten-1"
                   >
                   <v-data-iterator
-                     :items="images"
+                     :items="draftImages"
                      hide-default-footer
                      >
                      <template v-slot:header>
@@ -223,7 +223,7 @@
                                     </v-list-item>
                                     <v-list-item>
                                        <v-list-item-content class="align-end">
-                                          <v-btn  small @click="confirmDelete(item)" depressed>Supprimer</v-btn>
+                                          <v-btn  small @click="deleteDraftImage(item)" depressed>Supprimer</v-btn>
                                        </v-list-item-content>
                                     </v-list-item>
                                  </v-list>
@@ -238,7 +238,7 @@
                            dark
                            flat
                            >
-                           Ajouter une photo
+                           Ajouter une photo (minimum 2 pour poster l'annonce)
                            <v-file-input
                               v-model="file"
                               accept="image/*"
@@ -249,8 +249,9 @@
                   </v-data-iterator>
                </v-card>
                <v-btn
+               	  v-if="draftImages.length>1"
                   color="primary"
-                  @click="modalLodgement=false;"
+                  @click="submitLodgement();modalLodgement=false;"
                   >
                   Post
                </v-btn>

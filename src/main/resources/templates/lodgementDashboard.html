@@ -3,15 +3,33 @@
 {{> include/modals/newLodgementModal}}
 <v-container div="container" style="min-height: 1500px;">
    <v-row justify="center">
+         <v-btn
+      	 v-if="newLodgement.status==null && lodgements.length==0"
+         color="primary"
+         dark
+         @click="modalLodgement = true"
+         >
+         Devenir Hôte
+      </v-btn>
       <v-btn
+      	 v-if="newLodgement.status==null && lodgements.length>0"
          color="primary"
          dark
          @click="modalLodgement = true"
          >
          Ajouter un logement
       </v-btn>
+      <v-btn
+      	 v-if="newLodgement.status=='DRAFT'"
+         color="primary"
+         dark
+         @click="modalLodgement = true"
+         >
+         Finir l'ajout du logement <%newLodgement.name%>
+      </v-btn>
    </v-row>
    <v-data-iterator
+   	  v-if="lodgements.length>0"
       :items="lodgements"
       hide-default-footer
       >
@@ -22,7 +40,7 @@
             dark
             flat
             >
-            <v-toolbar-title>Mes Logements</v-toolbar-title>
+            <v-toolbar-title>Mes Logements en ligne</v-toolbar-title>
          </v-toolbar>
       </template>
       <template v-slot:default="props">
