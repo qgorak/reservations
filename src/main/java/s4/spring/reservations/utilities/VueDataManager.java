@@ -65,7 +65,7 @@ public class VueDataManager {
 				+ "if(response.data[0]!=self.user.id){"
 				+ "self.avatar.src='/user-photos/'+self.user.id+'/avatar/'+response.data[0];"
 				+ "}else{"
-				+ "self.avatar.initials=self.user.login.charAt(0);"
+				+ "self.avatar.initials=self.user.login.charAt(0).toUpperCase();"
 				+ "}"
 				+ "});"
 				+ "}else{"
@@ -92,7 +92,7 @@ public class VueDataManager {
 					+"                    }, {"
 					+"                        'title': 'Settings'," 
 					+"                        'icon': 'mdi-cog-outline',"
-					+"                        'link': '/lodement/'," 
+					+"                        'link': '/user/me'," 
 					+"                    }]");
 			}else {
 				vue.addDataRaw("items", " [{     'title': 'Logout',        "
@@ -109,7 +109,7 @@ public class VueDataManager {
 						+"                    }, {"
 						+"                        'title': 'Settings'," 
 						+"                        'icon': 'mdi-cog-outline',"
-						+"                        'link': '/lodement/'," 
+						+"                        'link': '/user/me'," 
 						+"                    }]");
 			}
 		}

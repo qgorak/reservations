@@ -1,26 +1,22 @@
 {{> include/header}}
-{{> include/menu}}
+{{> include/menu/menuLodgementDashboard}}
+<v-container>
+<h1>Hello <%user.login%></h1>
 
-<h1><%message%></h1>
-
-<template>
-  <v-form
-    ref="form"
-    v-model="valid"
-    method="post"
-    :action="action"
-    lazy-validation
-  >
+<v-row>
+      <v-col
+         cols="6"
+         >
+         
     <v-text-field
-      v-model="userName"
+      v-model="user.login"
       :counter="20"
-      label="Name"
-      name="login"
+      label="login"
       required
     ></v-text-field>
 
     <v-text-field
-      v-model="userMail"
+      v-model="user.mail"
       label="E-mail"
       name="mail"
       required
@@ -30,21 +26,37 @@
       :disabled="!valid"
       color="primary"
       class="mr-4"
-      type="submit"
+      @click="updateUser()"
     >
       Submit
     </v-btn>
+    </v-col>
+          <v-col
+         cols="6"
+         >
+         <v-avatar
+		v-if="avatar.src!=null"
+  		color="white"
+  		size="260">        <img
+          v-bind:src="avatar.src"
+          alt="John"
+        ></v-avatar>
+         <v-avatar
+         		v-if="avatar.initials!=null"
+                color="brown"
+                size="260"
+                            >
+                <span style="font-size: 123px;"class="white--text"><% avatar.initials%> </span>
+              </v-avatar>
+              <v-file-input
+  v-model="file"
+  accept="image/*"
+  label="Ajouter un avatar"
+></v-file-input>
+<v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
+         </v-col>
     
-    <v-btn
-      color="warning"
-      class="mr-4"
-      @click="clear"
-    >
-      Clear
-    </v-btn>
 
-    </v-btn>
-  </v-form>
-</template>
-
+ </v-row>
+</v-container>
 {{> include/footer}}

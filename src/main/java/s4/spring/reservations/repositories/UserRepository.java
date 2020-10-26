@@ -19,5 +19,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     
     @Query("SELECT u FROM User u WHERE u.login = :login")
     public User getUserByLogin(@Param("login") String login);
-	void saveAndFlush(User organization);
+
 }

@@ -4,6 +4,7 @@ package s4.spring.reservations.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,11 @@ public class RestUserController extends AbstractRestController<User>{
 		
 		return ((UserRepository) repo).getUserByLogin(username);
 	}
+	@GetMapping("/me")
+	public User me(@AuthenticationPrincipal MyUserDetails user) {
+		
+		return ((UserRepository) repo).findById(user.getId());
+	}
 		
 	@Override
 	protected void addObject(User newuser,MyUserDetails user) {
@@ -51,7 +57,8 @@ public class RestUserController extends AbstractRestController<User>{
 	
 	@Override
 	protected void updateObject(User toUpdateObject, User originalObject) {
-
+		toUpdateObject.setMail(originalObject.getMail());
+		toUpdateObject.setLogin(originalObject.getLogin());
 
 	}
 	
