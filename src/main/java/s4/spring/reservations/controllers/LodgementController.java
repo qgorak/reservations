@@ -76,7 +76,7 @@ public class LodgementController {
 		+ "var map = L.map(element);"
 		+ "L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);"
 		+ "var center = L.latLng("+lat+","+lon+");"
-		+ "map.setView(center, 9);"
+		+ "map.setView(center, 13);"
 		+ "var temp=(JSON.parse(JSON.stringify(self.$root.result)));"
 		+ "for(i=0;i<temp.length;i++){"
 		+ "console.log(temp[i].lat);"

@@ -27,7 +27,6 @@ public class VueDataManager {
 		catch (IOException e) {e.printStackTrace();}
 		try {vue.addMethod("parseDate",JavascriptResource.create("parseDate").parseContent(),"date");}
 		catch (IOException e) {e.printStackTrace();}
-		vue.onBeforeMount("this.date = new Date().toLocaleDateString('fr-CA');");
 		vue.addWatcher("dates", "console.log(this.dates)");
 		return vue;
 	}

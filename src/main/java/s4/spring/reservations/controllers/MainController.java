@@ -24,7 +24,8 @@ public class MainController {
 		vue = vuemanager.addDatePickerRequiredData(vue);
 		vue = vuemanager.addSearchMenuRequiredData(vue);
 		vue = vuemanager.addDrawerRequiredData(user, vue);
-		vue.onBeforeMount("this.getMyAvatar();");
+		vue.onBeforeMount("this.getMyAvatar();"
+						+ "this.date = new Date().toLocaleDateString('fr-CA');");
 	    model.put("vue", vue);
         return "index";
        }

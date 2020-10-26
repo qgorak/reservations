@@ -10,4 +10,4 @@ if(event.target.value.length!=0){
 else{
 	this.destination={name:null,loc:null};
 	this.search=[];
-	}
+}
