@@ -107,6 +107,7 @@ public class LodgementController {
 		vue.addDataRaw("newLodgement","{title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null,status:null}");
 		vue.addDataRaw("type","['Maison','Appartement','Chambre']");
 		vue.addDataRaw("lodgements", "[]");
+		vue.addDataRaw("disabledLodgements", "[]");
 		vue.addMethod("postPhotoLodgement", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+ "		this.$http['post'](\"/rest/image/saveLodgementPhoto/\"+this.newLodgement.id, formData, {\r\n"
 				+ "     headers: {\r\n"
@@ -161,6 +162,10 @@ public class LodgementController {
 					  "for(i=0;i<response.data.length;i++){"
 							  + "switch(response.data[i].status){"
 							  + "case 'ONLINE':"
+							  + "self.lodgements.push(response.data[i]);"
+							  + "self.getImages(response.data[i].id);"
+							  + "break;"
+							  + "case 'OFFLINE':"
 							  + "self.lodgements.push(response.data[i]);"
 							  + "self.getImages(response.data[i].id);"
 							  + "break;"
@@ -238,7 +243,7 @@ public class LodgementController {
 		vue.addData("lodgement");
 		vue.addDataRaw("editedPhoto","{name:'',src:''}");
 		vue.addDataRaw("images", "[]");
-		vue.addMethod("updateLodgement", "let self=this;" + Http.patch("'" + restURL + "lodgements/'+self.lodgement.id", "self.lodgement", "", "console.log(response);"), "lodgement");
+		vue.addMethod("updateLodgement", "let self=this;" + Http.patch("'" + restURL + "rest/lodgements/'+self.lodgement.id", "self.lodgement", "alert(self.lodgement.title+'a bien été mis a jour');", ""), "lodgement");
 		vue.addMethod("confirmDelete", "this.confirmDeletePhotoModal=true;"
 				+ "this.editedPhoto=item","item");
 		vue.addMethod("postPhotoLodgement", "let self=this;let formData = new FormData();formData.append('file', this.file);"

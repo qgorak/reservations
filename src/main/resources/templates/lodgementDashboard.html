@@ -1,10 +1,11 @@
 {{> include/header}}
 {{> include/menu/menuLodgementDashboard}}
 {{> include/modals/newLodgementModal}}
-<v-container div="container" style="min-height: 1500px;">
+<v-row></v-row>
+<v-container>
    <v-row justify="center">
-         <v-btn
-      	 v-if="newLodgement.status==null && lodgements.length==0"
+      <v-btn
+         v-if="newLodgement.status==null && lodgements.length==0"
          color="primary"
          dark
          @click="modalLodgement = true"
@@ -12,7 +13,7 @@
          Devenir Hôte
       </v-btn>
       <v-btn
-      	 v-if="newLodgement.status==null && lodgements.length>0"
+         v-if="newLodgement.status==null && lodgements.length>0"
          color="primary"
          dark
          @click="modalLodgement = true"
@@ -20,7 +21,7 @@
          Ajouter un logement
       </v-btn>
       <v-btn
-      	 v-if="newLodgement.status=='DRAFT'"
+         v-if="newLodgement.status=='DRAFT'"
          color="primary"
          dark
          @click="modalLodgement = true"
@@ -28,8 +29,10 @@
          Finir l'ajout du logement <%newLodgement.name%>
       </v-btn>
    </v-row>
+</v-container>
+<v-container>
    <v-data-iterator
-   	  v-if="lodgements.length>0"
+      v-if="lodgements.length>0"
       :items="lodgements"
       hide-default-footer
       >
@@ -48,6 +51,92 @@
             <v-col
                v-for="item in props.items"
                :key="item.name"
+               v-if="item.status=='ONLINE'"
+               cols="12"
+               sm="6"
+               md="4"
+               lg="3"
+               >
+               <v-card>
+                  <v-card-title class="subheading font-weight-bold">
+                     <% item.title %>
+                  </v-card-title>
+                  <v-divider></v-divider>
+                  <v-list dense>
+                     <v-list-item>
+                        <v-list-item-content>Type:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <% item.type %>
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content>Description:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <% item.description %>
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-carousel hide-delimiters height="200" width="auto">
+                           <v-carousel-item
+                              v-for="item in item.images"
+                              :src="item.src"
+                              ></v-carousel-item>
+                        </v-carousel>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content>Prix</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <% item.price %> €
+                        </v-list-item-content>
+                     </v-list-item>
+                     <v-list-item>
+                        <v-list-item-content>
+                           <v-btn  small @click="redirectView(item)" depressed>Voir Annonce</v-btn>
+                        </v-list-item-content>
+                        <v-list-item-content class="align-end">
+                           <v-btn  small @click="redirectEdit(item)" depressed>Editer</v-btn>
+                        </v-list-item-content>
+                     </v-list-item>
+                  </v-list>
+               </v-card>
+            </v-col>
+         </v-row>
+      </template>
+      <template v-slot:footer>
+         <v-toolbar
+            class="mt-2"
+            color="indigo"
+            dark
+            flat
+            >
+            <v-toolbar-title class="subheading">
+            </v-toolbar-title>
+         </v-toolbar>
+      </template>
+   </v-data-iterator>
+</v-container>
+<v-container>
+   <v-data-iterator
+      v-if="lodgements.length>0"
+      :items="lodgements"
+      hide-default-footer
+      >
+      <template v-slot:header>
+         <v-toolbar
+            class="mb-2"
+            color="indigo darken-5"
+            dark
+            flat
+            >
+            <v-toolbar-title>Mes Logements Désactivés</v-toolbar-title>
+         </v-toolbar>
+      </template>
+      <template v-slot:default="props">
+         <v-row>
+            <v-col
+               v-for="item in props.items"
+               :key="item.name"
+               v-if="item.status=='OFFLINE'"
                cols="12"
                sm="6"
                md="4"

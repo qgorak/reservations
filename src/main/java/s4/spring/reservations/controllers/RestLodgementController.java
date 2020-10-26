@@ -121,7 +121,10 @@ public class RestLodgementController extends AbstractRestController<Lodgement>{
 	
 	@Override
 	protected void updateObject(Lodgement toUpdateObject, Lodgement originalObject) {
-		toUpdateObject.setStatus("ONLINE");
+		toUpdateObject.setStatus(originalObject.getStatus());
+		toUpdateObject.setDescription(originalObject.getDescription());
+		toUpdateObject.setTitle(originalObject.getTitle());
+		toUpdateObject.setPrice(originalObject.getPrice());
 	}
 	
 }
