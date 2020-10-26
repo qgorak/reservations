@@ -7,63 +7,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
+import s4.spring.reservations.models.Reservation;
 import s4.spring.reservations.models.User;
+import s4.spring.reservations.repositories.ReservationRepository;
 import s4.spring.reservations.repositories.UserRepository;
+import s4.spring.reservations.services.MyUserDetails;
 
 
 
 @RestController
-@RequestMapping("/rest/")
-public class RestUserController {
+@RequestMapping("/rest/users")
+public class RestUserController extends AbstractRestController<User>{
 	
-	@Autowired
-    private UserRepository repo;
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@GetMapping("/users/")
-	public List<User> read() {
-		return repo.findAll();	
+	@Autowired
+	public RestUserController(UserRepository repo) {
+		super(repo);
 	}
-	
-	@GetMapping("/user/{userName}")
-	public User read(@PathVariable String userName) {
-		return repo.getUserByLogin(userName);
-	}
-	
-	@PostMapping("/user/create/")
-    public User create(@RequestBody User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setEnabled(true);
-		user.setRole("ROLE_USER");
 
-		repo.save(user);
-		return user;
-    }
+	@GetMapping("/user/{username}")
+	public User read(@PathVariable String username) {
+		
+		return ((UserRepository) repo).getUserByLogin(username);
+	}
+		
+	@Override
+	protected void addObject(User newuser,MyUserDetails user) {
+		newuser.setPassword(passwordEncoder.encode(newuser.getPassword()));
+		newuser.setEnabled(true);
+		newuser.setRole("ROLE_USER");
+		repo.saveAndFlush(newuser);
+	}
 	
-	@DeleteMapping("/user/delete/{id}")
-    public void delete(@PathVariable int id) {
-		repo.deleteById(id);
-    }
+	@Override
+	protected void updateObject(User toUpdateObject, User originalObject) {
+
+
+	}
 	
-	@PostMapping("user/update/{userName}")
-    public RedirectView update(@PathVariable String userName,@RequestParam String login,@RequestParam String mail) {
-		User user = repo.getUserByLogin(userName);
-		if((user!= null)) {
-			user.setLogin(login);
-			user.setMail(mail);
-			repo.saveAndFlush(user);
-		}
-		return new RedirectView("http://127.0.0.1:8080/user/" + user.getLogin());
-    }
+
 	
 }

@@ -1,6 +1,6 @@
 package s4.spring.reservations.models;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,12 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
 @Entity
-public class Lodgement {
+public class Lodgement implements Serializable{
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,6 +28,7 @@ public class Lodgement {
 	private double lat;
 	private double lon;
 	private int nbr_place;
+	private String status;
 	
 	@ManyToOne
 	private User rent;
@@ -92,4 +94,11 @@ public class Lodgement {
 	public void setNbr_place(int nbr_place) {
 		this.nbr_place = nbr_place;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

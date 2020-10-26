@@ -2,3 +2,6 @@
 .settings/
 bin/
 .project
+/target
+/data
+

@@ -1,6 +1,6 @@
 
 html{
-	overflow:hidden;
+
 }
 #application{
 	visibility:hidden;
@@ -20,16 +20,7 @@ html{
 	max-width:300px;
 }
 
-.bar{
- 
-    
-}
-.autoSuggest {
-	z-index: 1;
-	position: absolute;
 
-	top:60px;
-}
 
 
 

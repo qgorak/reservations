@@ -1,0 +1,29 @@
+{{> include/header}}
+{{> include/menu/menuLodgementDashboard}}
+<v-container div="container" style="height: 1500px;">
+<v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">
+             	Debut
+            </th>
+            <th class="text-left">
+              Fin
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="item in reservations"
+            :key="item.id"
+          >
+            <td><% item.start %></td>
+            <td><% item.end %></td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+<%reservations%>
+</v-container>
+{{> include/footer}}
