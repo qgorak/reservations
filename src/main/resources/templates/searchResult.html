@@ -1,19 +1,20 @@
 {{> include/header}}
 {{> include/menu/menu}}
-
+<v-container fluid style="
+  padding:0;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;"
+  align:top;>
 <v-row
    class="mb-6"
    no-gutters
-   fill-height
+   style="height:2000px"
    >
    <v-col
-      cols="6"
+      cols="7"
       >
-      <v-sheet
-         id="scrolling-techniques-6"
-         class="overflow-y-auto"
-         max-height="800"
-         >
+
          <template>
             <v-data-iterator
                :items="result"
@@ -28,45 +29,53 @@
                      class="mx-auto"
                      elevation="0"
                      style="margin:0!important;width:100%"
+                     align="top"
                      >
                      <v-list-item two-line>
-                        <v-list-item-content >
                            <v-col
-                              cols="6"
+                              cols="4"
                               style="padding:0;"
                               >
-                              <v-carousel hide-delimiters height="200" width="auto">
+                            <v-list-item-content >
+                              <v-carousel style="border-radius:5px;width:300px;"hide-delimiters height="200" >
                                  <v-carousel-item
                                     v-for="item in i.images"
                                     :src="item.src"
                                     ></v-carousel-item>
                               </v-carousel>
+                             </v-list-item-content>
                            </v-col>
+
+
                            <v-col
-                              cols="6"
+                              cols="8"
                               @click="redirect(i.id)"
                               style="cursor: pointer;"
+                              
                               >
+                               <v-list-item-content>
                               <v-list-item-title class="headline mb-1">Description de la maison</v-list-item-title>
                               <div class="overline mb-4"><%i.type%> à <%i.city%></div>
                               <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>
                               <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>
+                           </v-list-item-content>
                            </v-col>
-                        </v-list-item-content>
                      </v-list-item>
                      <v-divider></v-divider>
                   </v-card>
                </v-row>
             </v-data-iterator>
          </template>
-      </v-sheet>
    </v-col>
    <v-col
-      cols="6"
+      cols="5"
       >
-      <div id="osm-map" style="height:calc(100vh - 64px);display:block;z-index:0;"></div>
+      <div id="osm-map" ></div>
  
    </v-col>
 </v-row>
-
+</v-container>
+<v-container fluid style="height:2000px;display:flex;">
+la
+</v-container>
 {{> include/footer}}
