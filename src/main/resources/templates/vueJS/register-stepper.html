@@ -1,15 +1,3 @@
-<v-dialog
-   v-model="registerModal"
-   persistent
-   max-width="600"
-   >
-   <template v-slot:activator="{ on, attrs }">
-   </template>
-   <v-card>
-      <v-card-title class="headline">
-         Register
-      </v-card-title>
-      <v-card-text>
          <v-stepper v-model="e1">
             <v-stepper-header>
                <v-stepper-step
@@ -31,7 +19,6 @@
                </v-stepper-step>
             </v-stepper-header>
             <v-stepper-items>
-               <v-form v-model="valid">
                <v-stepper-content step="1">
                   <v-card
                      class="mb-12"
@@ -40,8 +27,8 @@
                      >
                      <v-text-field
                         v-model="newUser.mail"
-                        :rules="emailRules"
                         label="E-mail"
+                        :rules="emailRules"
                         required
                         ></v-text-field>
                   </v-card>
@@ -51,11 +38,7 @@
                      >
                      Continue
                   </v-btn>
-                  <v-btn
-                     @click="registerModal = false"
-                     text>
-                     Cancel
-                  </v-btn>
+
                </v-stepper-content>
                <v-stepper-content step="2">
                   <v-card
@@ -65,7 +48,6 @@
                      >
                      <v-text-field
                         v-model="newUser.login"
-                        :rules="usernameRules"
                         :counter="10"
                         label="Username"
                         required
@@ -77,11 +59,7 @@
                      >
                      Continue
                   </v-btn>
-                  <v-btn
-                     @click="registerModal = false"
-                     text>
-                     Cancel
-                  </v-btn>
+
                </v-stepper-content>
                <v-stepper-content step="3">
                   <v-card
@@ -91,14 +69,12 @@
                      >
                      <v-text-field
                         v-model="newUser.password"
-                        :rules="passwordRules"
                         :counter="10"
                         label="Password"
                         required
                         ></v-text-field>
                      <v-text-field
                         v-model="passwordConfirm"
-                        :rules="passwordRules"
                         :counter="10"
                         label="Confirm password"
                         required
@@ -110,14 +86,6 @@
                      >
                      Continue
                   </v-btn>
-                  <v-btn 
-                     @click="registerModal = false"
-                     text>
-                     Cancel
-                  </v-btn>
                </v-stepper-content>
             </v-stepper-items>
          </v-stepper>
-      </v-card-text>
-   </v-card>
-</v-dialog>

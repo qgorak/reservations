@@ -1,0 +1,61 @@
+                  <v-data-iterator
+                     :items="images"
+                     hide-default-footer
+                     >
+                     <template v-slot:header>
+                        <v-toolbar
+                           class="mb-2"
+                           color="indigo darken-5"
+                           dark
+                           flat
+                           >
+                           <v-toolbar-title>Photos de l'annonce</v-toolbar-title>
+                        </v-toolbar>
+                     </template>
+                     <template v-slot:default="props">
+                        <v-row>
+                           <v-col
+                              v-for="item in props.items"
+                              :key="item.name"
+                              cols="12"
+                              sm="6"
+                              md="4"
+                              lg="3"
+                              >
+                              <v-card>
+                                 <v-img
+                                    max-height="auto"
+                                    max-width="auto"
+                                    :src=item.src
+                                    ></v-img>
+                                 <v-divider></v-divider>
+                                 <v-list dense>
+                                    <v-list-item>
+                                       {{item.name}}
+                                    </v-list-item>
+                                    <v-list-item>
+                                       <v-list-item-content class="align-end">
+                                          <v-btn  small @click="deleteImage(item)" depressed>Supprimer</v-btn>
+                                       </v-list-item-content>
+                                    </v-list-item>
+                                 </v-list>
+                              </v-card>
+                           </v-col>
+                        </v-row>
+                     </template>
+                     <template v-slot:footer>
+                        <v-toolbar
+                           class="mt-2"
+                           color="indigo"
+                           dark
+                           flat
+                           >
+                           Ajouter une photo (minimum 2 pour poster l'annonce)
+                           <v-file-input
+                              v-model="file"
+                              accept="image/*"
+                              ></v-file-input>
+                           <v-btn v-if="file != null" @click="postImage()">Ajouter</v-btn>
+                        </v-toolbar>
+                     </template>
+                  </v-data-iterator>

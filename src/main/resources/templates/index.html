@@ -1,5 +1,6 @@
 {{> include/header}}
-{{> include/menu/menu}}
-<v-container div="container" style="height: 1500px;">
- </v-container>
+<drawer :user="user" ref="drawer"></drawer>
+<bar-search @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer" app></bar-search>
+<v-content>
+ </v-content>
 {{> include/footer}}

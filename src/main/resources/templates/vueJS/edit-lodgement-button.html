@@ -1,7 +1,18 @@
-{{> include/header}}
-{{> include/menu/menuLodgementDashboard}}
-{{> include/modals/confirmDeletePhotoModal}}
-<v-container div="container" style="height: 1500px;">
+   <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      >
+        <template v-slot:activator="{ on }">
+    <v-btn color="red lighten-2" dark v-on="on"><slot></slot></v-btn>
+  </template>
+<v-card>
+         <v-btn
+            icon
+            @click="dialog = false"
+            >
+            <v-icon>mdi-close</v-icon>
+         </v-btn>
    <v-row dense>
       <v-col cols="12">
          <v-card
@@ -39,7 +50,7 @@
                </v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-               <%lodgement.type%>
+               {{lodgement.type}}
             </v-card-text>
             <v-toolbar
                flat
@@ -50,7 +61,7 @@
                </v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-               <%lodgement.nbr_place%> voyageurs, <%lodgement.nbr_room%> pièce(s)
+               {{lodgement.nbr_place}} voyageurs, {{lodgement.nbr_room}} pièce(s)
             </v-card-text>
          </v-card>
       </v-col>
@@ -136,68 +147,9 @@
    </v-row>
    <v-row dense>
    </v-row>
-   <v-data-iterator
-      :items="images"
-      hide-default-footer
-      >
-      <template v-slot:header>
-         <v-toolbar
-            class="mb-2"
-            color="indigo darken-5"
-            dark
-            flat
-            >
-            <v-toolbar-title>Photos de l'annonce</v-toolbar-title>
-         </v-toolbar>
-      </template>
-      <template v-slot:default="props">
-         <v-row>
-            <v-col
-               v-for="item in props.items"
-               :key="item.name"
-               cols="12"
-               sm="6"
-               md="4"
-               lg="3"
-               >
-               <v-card>
-                  <v-img
-                     max-height="auto"
-                     max-width="auto"
-                     :src=item.src
-                     ></v-img>
-                  <v-divider></v-divider>
-                  <v-list dense>
-                     <v-list-item>
-                        <%item.name%>
-                     </v-list-item>
-                     <v-list-item>
-                        <v-list-item-content class="align-end">
-                           <v-btn  small @click="confirmDelete(item)" depressed>Supprimer</v-btn>
-                        </v-list-item-content>
-                     </v-list-item>
-                  </v-list>
-               </v-card>
-            </v-col>
-         </v-row>
-      </template>
-      <template v-slot:footer>
-         <v-toolbar
-            class="mt-2"
-            color="indigo"
-            dark
-            flat
-            >
-            Ajouter une photo
-            <v-file-input
-               v-model="file"
-               accept="image/*"
-               ></v-file-input>
-            <v-btn v-if="file != null" @click="postPhotoLodgement()">Ajouter</v-btn>
-         </v-toolbar>
-      </template>
-   </v-data-iterator>
+      <images-manager v-if="lodgement!==null" :lodgement="lodgement"></images-manager>
    <v-btn v-if="lodgement.status=='ONLINE'" color="green" @click="lodgement.status='OFFLINE';updateLodgement(lodgement)" >Desactiver l'annonce</v-btn>
    <v-btn v-if="lodgement.status=='OFFLINE'" color="green" @click="lodgement.status='ONLINE';updateLodgement(lodgement)" >Mettre l'annonce en ligne</v-btn>
-</v-container>
-{{> include/footer}}
+</v-card>
+
+   </v-dialog>

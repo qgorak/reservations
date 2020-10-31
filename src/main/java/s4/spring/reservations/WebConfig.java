@@ -15,6 +15,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	       registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/assets/js/");
 	       registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/assets/css/");
+	       registry.addResourceHandler("/vueJS/**").addResourceLocations("classpath:/static/vueJS/");
            registry.addResourceHandler("/user-photos/**").addResourceLocations("file:user-photos/");
        }    
 	    

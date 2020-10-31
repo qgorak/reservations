@@ -3,12 +3,13 @@
    persistent
    max-width="290"
    >
+               <form  method="post" action="/login">
    <v-card>
+
       <v-card-title class="headline">
          Login
       </v-card-title>
       <v-card-text>
-         <form  method="post" action="/login">
             <p>
                <label for="username" class="sr-only">Username</label>
                <input type="text" id="username" name="username" placeholder="Username" required autofocus>
@@ -35,7 +36,8 @@
          >
       Login
       </v-btn>
-      </form>
+
       </v-card-actions>
    </v-card>
+          </form>
 </v-dialog>

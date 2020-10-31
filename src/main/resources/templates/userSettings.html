@@ -1,5 +1,6 @@
 {{> include/header}}
-{{> include/menu/menuLodgementDashboard}}
+<drawer :user="user" ref="drawer"></drawer>
+<bar @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer"></bar>
 <v-container>
 <h1>Hello <%user.login%></h1>
 
@@ -34,20 +35,6 @@
           <v-col
          cols="6"
          >
-         <v-avatar
-		v-if="avatar.src!=null"
-  		color="white"
-  		size="260">        <img
-          v-bind:src="avatar.src"
-          alt="John"
-        ></v-avatar>
-         <v-avatar
-         		v-if="avatar.initials!=null"
-                color="brown"
-                size="260"
-                            >
-                <span style="font-size: 123px;"class="white--text"><% avatar.initials%> </span>
-              </v-avatar>
               <v-file-input
   v-model="file"
   accept="image/*"
@@ -56,7 +43,6 @@
 <v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
          </v-col>
     
-
  </v-row>
 </v-container>
 {{> include/footer}}

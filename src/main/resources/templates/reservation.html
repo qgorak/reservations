@@ -1,5 +1,7 @@
 {{> include/header}}
-{{> include/menu/menuLodgementDashboard}}
+<drawer :user="user" ref="drawer"></drawer>
+<bar @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer"></bar>
+<v-content>
 <v-container div="container" style="height: 1500px;">
 <v-simple-table>
       <template v-slot:default>
@@ -26,4 +28,5 @@
     </v-simple-table>
 <%reservations%>
 </v-container>
+</v-content>
 {{> include/footer}}

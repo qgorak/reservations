@@ -104,19 +104,12 @@ public class RestLodgementController extends AbstractRestController<Lodgement>{
 
 	@Override
 	protected void addObject(Lodgement lodgement,MyUserDetails user) {
+		if(user != null) {
 		User creator = new User();
 		creator = repoUs.findById(user.getId());;
-		if (creator.getRole().equals("ROLE_USER"))
-		{
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
-			updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_HOST"));
-			Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
-			SecurityContextHolder.getContext().setAuthentication(newAuth);
-			creator.setRole("ROLE_HOST");
+		lodgement.setRent(creator);
+		repo.saveAndFlush(lodgement);
 		}
-			lodgement.setRent(creator);
-			repo.saveAndFlush(lodgement);
 	}
 	
 	@Override

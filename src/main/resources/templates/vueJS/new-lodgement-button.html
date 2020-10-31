@@ -1,9 +1,12 @@
-<v-dialog
-   v-model="modalLodgement"
-   persistent
-   fullscreen
-   >
-   <v-card>
+   <v-dialog
+      v-model="dialog"
+      fullscreen
+      hide-overlay
+      >
+        <template v-slot:activator="{ on }">
+    <v-btn color="red lighten-2" dark v-on="on"><slot></slot></v-btn>
+  </template>
+  <v-card>
       <v-card-title class="headline">
          Ajoutons ensemble un logement
       </v-card-title>
@@ -61,7 +64,7 @@
                   >
                   Continue
                </v-btn>
-               <v-btn  @click="modalLodgement = false" text>
+               <v-btn  @click="dialog = false" text>
                   Cancel
                </v-btn>
             </v-stepper-content>
@@ -106,36 +109,7 @@
                   height="200px"
                   >
                   <v-row justify="center">
-                     <v-autocomplete
-                        v-model="selected"
-                        :items="search"
-                        v-on:keyup="suggestion"
-                        label="Select"
-                        no-filter
-                        hide-details
-                        return-object
-                        item-text="properties.name"
-                        item-value="properties.id"
-                        >
-                        <template v-slot:selection="data">
-                           <v-chip
-                              v-bind="data.attrs"
-                              close
-                              @click="data.select"
-                              @click:close="remove(data.item)"
-                              >
-                              <% data.item.properties.name %>
-                           </v-chip>
-                        </template>
-                        <template v-slot:item="data">
-                           <v-list-item-content>
-                              <v-list-item-title v-html="data.item.properties.name"></v-list-item-title>
-                              <v-list-item-subtitle v-if="data.item.properties.label!=data.item.properties.city" v-html="data.item.properties.city"></v-list-item-subtitle>
-                              <v-list-item-subtitle v-html="data.item.properties.postcode"></v-list-item-subtitle>
-                           </v-list-item-content>
-                        </template>
-                        </template>
-                     </v-autocomplete>
+                     <adress-autocomplete ref="adress"></adress-autocomplete>
                   </v-row>
                </v-card>
                <v-btn
@@ -184,82 +158,18 @@
                   class="mb-12"
                   color="grey lighten-1"
                   >
-                  <v-data-iterator
-                     :items="draftImages"
-                     hide-default-footer
-                     >
-                     <template v-slot:header>
-                        <v-toolbar
-                           class="mb-2"
-                           color="indigo darken-5"
-                           dark
-                           flat
-                           >
-                           <v-toolbar-title>Photos de l'annonce</v-toolbar-title>
-                        </v-toolbar>
-                     </template>
-                     <template v-slot:default="props">
-                        <v-row>
-                           <v-col
-                              v-for="item in props.items"
-                              :key="item.name"
-                              cols="12"
-                              sm="6"
-                              md="4"
-                              lg="3"
-                              >
-                              <v-card>
-                                 <v-img
-                                    max-height="auto"
-                                    max-width="auto"
-                                    :src=item.src
-                                    ></v-img>
-                                 <v-divider></v-divider>
-                                 <v-list dense>
-                                    <v-list-item>
-                                       <%item.name%>
-                                    </v-list-item>
-                                    <v-list-item>
-                                       <v-list-item-content class="align-end">
-                                          <v-btn  small @click="deleteDraftImage(item)" depressed>Supprimer</v-btn>
-                                       </v-list-item-content>
-                                    </v-list-item>
-                                 </v-list>
-                              </v-card>
-                           </v-col>
-                        </v-row>
-                     </template>
-                     <template v-slot:footer>
-                        <v-toolbar
-                           class="mt-2"
-                           color="indigo"
-                           dark
-                           flat
-                           >
-                           Ajouter une photo (minimum 2 pour poster l'annonce)
-                           <v-file-input
-                              v-model="file"
-                              accept="image/*"
-                              ></v-file-input>
-                           <v-btn v-if="file != null" @click="postPhotoLodgement()">Ajouter</v-btn>
-                        </v-toolbar>
-                     </template>
-                  </v-data-iterator>
-               </v-card>
-               <v-btn
-                  v-if="draftImages.length>1"
+			<images-manager ref="images" :lodgement="newLodgement"></images-manager>
+			               <v-btn
                   color="primary"
-                  @click="submitLodgement();modalLodgement=false;"
+                  @click="submitLodgement();dialog=false;"
                   >
                   Post
                </v-btn>
-               <v-btn 
-                  @click="modalLodgement=false;"
-                  text>
-                  Cancel
-               </v-btn>
+               </v-card>
+
             </v-stepper-content>
          </v-stepper-items>
       </v-stepper>
    </v-card>
-</v-dialog>
+
+   </v-dialog>
