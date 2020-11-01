@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -25,8 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
-        handler.setUseReferer(true);
+        CustomAuthenticationSuccessHandler handler = new CustomAuthenticationSuccessHandler();
         return handler;
     }
     
@@ -35,6 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+    @Bean
+public AuthenticationFailureHandler authenticationFailureHandler() {
+    return new CustomAuthenticationFailureHandler();
+}
      
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -52,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+    	
 
     	//access rights 
         httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
@@ -60,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 	.loginPage("/login")
                 	.successHandler(successHandler())
+                	.failureHandler(authenticationFailureHandler())
                 .and()
                 .logout().deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/")
                 .and()

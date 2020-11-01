@@ -2,5 +2,6 @@
 <drawer :user="user" ref="drawer"></drawer>
 <bar-search @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer" app></bar-search>
 <v-content>
+<%user%>
  </v-content>
 {{> include/footer}}

@@ -94,7 +94,7 @@ public class LodgementController {
 		if(user != null) {
 		vue.addData("user",user.getUser());
 		}else {
-		vue.addDataRaw("user", "{id:0,login:''}");
+		vue.addDataRaw("user", null);
 		}
 		vue.addData("lodgement",null);
 		vue.addDataRaw("images", "[]");
