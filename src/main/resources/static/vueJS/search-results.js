@@ -16,12 +16,12 @@ Vue.component('search-results',{
 			}
 		,"showPopup":function (i){
 			let self=this;
-			var text;
-			this.$http["get"]('/rest/image/lodgement/'+i.id).then(function(response){
-				self.photo=response.data;
-				text=+i.title.toString()+'<br>prix: '+i.price.toString()+'€';
-				self.markers[i.id].bindPopup(text).openPopup().addTo(self.map);
-			});
+			var text=i.title.toString()+'<br>prix: '+i.price.toString()+'€';
+			self.markers[i.id].bindPopup(text).openPopup().addTo(self.map);
+			}
+		,"closePopup":function (i){
+			let self=this;
+				self.markers[i.id].closePopup().addTo(self.map);
 			}
 		,"getImages":function (){
 			let self = this;
@@ -72,10 +72,10 @@ Vue.component('search-results',{
 							var text=self.result[i].title.toString()+'<br>prix: '+self.result[i].price.toString()+'€';
 							center=L.latLng(self.result[i].lat,self.result[i].lon);
 							var marker=L.marker(center);
-							marker.addTo(self.map);			
 							self.markers[self.result[i].id]=marker;
+							marker.bindPopup(text).openPopup().addTo(self.map);
 					}
 		}
-	,"template":"<v-data-iterator               :items=\"result\"               hide-default-footer               >               <v-row                  class=\"mb-6\"                  no-gutters                  >                  <v-card                     v-for=\"i in result\" :key=\"i.id\"                     class=\"mx-auto\"                     elevation=\"0\"                     style=\"margin:0!important;width:100%\"                     align=\"top\"                     @mouseenter.native=\"showPopup(i)\"                     @mouseleave.native=\"mouseleave\"                     >                     <v-list-item two-line>                           <v-col                              cols=\"4\"                              style=\"padding:0;\"                              >                            <v-list-item-content >                              <v-carousel style=\"border-radius:5px;width:300px;\"hide-delimiters height=\"200\" >                                 <v-carousel-item                                    v-for=\"item in i.images\"                                    :src=\"item.src\"                                    ></v-carousel-item>                              </v-carousel>                             </v-list-item-content>                           </v-col>                           <v-col                              cols=\"8\"                              @click=\"redirect(i.id)\"                              style=\"cursor: pointer;\"                                                            >                               <v-list-item-content>                              <v-list-item-title class=\"headline mb-1\">Description de la maison</v-list-item-title>                              <div class=\"overline mb-4\">{{i.type}} à {{i.city}}</div>                              <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>                              <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>                           </v-list-item-content>                           </v-col>                     </v-list-item>                     <v-divider></v-divider>                  </v-card>               </v-row>            </v-data-iterator>"
+	,"template":"<v-data-iterator               :items=\"result\"               hide-default-footer               >               <v-row                  class=\"mb-6\"                  no-gutters                  >                  <v-card                     v-for=\"i in result\" :key=\"i.id\"                     class=\"mx-auto\"                     elevation=\"0\"                     style=\"margin:0!important;width:100%\"                     align=\"top\"                     @mouseenter.native=\"showPopup(i)\"                     @mouseleave.native=\"closePopup(i)\"                     >                     <v-list-item two-line>                           <v-col                              cols=\"4\"                              style=\"padding:0;\"                              >                            <v-list-item-content >                              <v-carousel style=\"border-radius:5px;width:300px;\"hide-delimiters height=\"200\" >                                 <v-carousel-item                                    v-for=\"item in i.images\"                                    :src=\"item.src\"                                    ></v-carousel-item>                              </v-carousel>                             </v-list-item-content>                           </v-col>                           <v-col                              cols=\"8\"                              @click=\"redirect(i.id)\"                              style=\"cursor: pointer;\"                                                            >                               <v-list-item-content>                              <v-list-item-title class=\"headline mb-1\">Description de la maison</v-list-item-title>                              <div class=\"overline mb-4\">{{i.type}}</div>                              <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>                              <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>                           </v-list-item-content>                           </v-col>                     </v-list-item>                     <v-divider></v-divider>                  </v-card>               </v-row>            </v-data-iterator>"
 	}
 );
