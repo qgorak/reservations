@@ -36,18 +36,7 @@ public class LodgementController {
 		vue.onBeforeMount(""
 		+ "let self=this;"		
 		+ Http.get(restURL+"rest/lodgements/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,""
-				+ "self.result=response.data;"
-				+ "var element = document.getElementById('osm-map');"
-				+ "var map = L.map(element);"
-				+ "L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);"
-				+ "var center = L.latLng("+lat+","+lon+");"
-				+ "map.setView(center, 13);"
-				+ "var temp=(JSON.parse(JSON.stringify(self.$root.result)));"
-				+ "for(i=0;i<temp.length;i++){"
-					+ "console.log(temp[i].lat);"
-					+ "center=L.latLng(temp[i].lat,temp[i].lon);"
-					+ "L.marker(center).addTo(map);"
-				+ "}")
+		+ "self.result=response.data;")
 		);
 		return "searchResult";
 	}
