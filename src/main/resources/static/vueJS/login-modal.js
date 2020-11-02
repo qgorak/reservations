@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Sun Nov 01 18:01:17 CET 2020
+//Script generated with VueComponent at Mon Nov 02 16:01:23 CET 2020
 Vue.component('login-modal',{
 	"props":[],"data":function() {
 		 return {
@@ -46,6 +46,10 @@ Vue.component('login-modal',{
 						 self.
 				$set(self.
 				$root.user,'mail',result.headers.mail);
+						 document.cookie ='user='+JSON.stringify({
+					 id:result.headers.userid,login:result.headers.username , mail: result.headers.mail 
+					}
+				);
 						 self.dialog=false;
 							self.query=false;
 							self.showProgressBar=false;

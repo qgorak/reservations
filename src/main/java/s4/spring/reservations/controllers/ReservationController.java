@@ -18,6 +18,7 @@ public class ReservationController {
 	
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
+		this.vue.addDataRaw("user", "{id:'',login:''}");
 		return this.vue;
 	}
 

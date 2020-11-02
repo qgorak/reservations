@@ -36,6 +36,7 @@ public class LoginModal {
         	    + "		 self.$set(self.$root.user,'id',result.headers.userid);"
         	    + "		 self.$set(self.$root.user,'login',result.headers.username);"
         	    + "		 self.$set(self.$root.user,'mail',result.headers.mail);"
+        	    + "		 document.cookie ='user='+JSON.stringify({ id:result.headers.userid,login:result.headers.username , mail: result.headers.mail });"
         	    + "		 self.dialog=false;"
         	    + "			self.query=false;"
         	    + "			self.showProgressBar=false;"

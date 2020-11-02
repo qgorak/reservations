@@ -22,6 +22,7 @@ public class UserController {
 	
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
+		this.vue.addDataRaw("user", "{id:'',login:''}");
 		return this.vue;
 	}
 	
@@ -42,7 +43,7 @@ public class UserController {
 				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
 				+ "      }})");
 		vue.addMethod("updateUser", "let self=this;" + Http.patch("'http://127.0.0.1:8080/rest/users/'+self.user.id", "self.user", "alert('votre compte a bien été mis a jour');", ""));
-		vue.onBeforeMount("let self=this;this.getMyAvatar();" + Http.get("http://127.0.0.1:8080/rest/users/me", ""
+		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/users/me", ""
 				+ "self.user=response.data;"));
         return "userSettings";
 		}

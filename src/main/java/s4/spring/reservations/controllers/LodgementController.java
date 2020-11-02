@@ -22,16 +22,13 @@ public class LodgementController {
 	
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
+		this.vue.addDataRaw("user", "{id:'',login:''}");
 		return this.vue;
 	}
 	
 	@RequestMapping("/lodgement/search")
 	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
-		if(user != null) {
-		vue.addData("user",user.getUser());
-		}else {
-		vue.addDataRaw("user", "{id:0,login:''}");
-		}
+
 		vue.addData("result", null);
 		vue.onBeforeMount(""
 		+ "let self=this;"		
@@ -57,7 +54,6 @@ public class LodgementController {
 	
 	public String lodgementDashboard(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		if(user != null) {	
-		vue.addData("user",user.getUser());
 		vue.addDataRaw("lodgements", "[]");
 		vue.addDataRaw("disabledLodgements", "[]");
 		vue.addData("draft");
@@ -82,7 +78,6 @@ public class LodgementController {
 			model.put("vue", vue);
 			return "lodgementDashboard";
 		}else{
-		vue.addDataRaw("user", "{id:0,login:''}");
 		vue.addData("error_message","vous devez etre connecté pour accéder a ce contenu");
 		return "error";
 	}
@@ -91,15 +86,10 @@ public class LodgementController {
 	
 	@RequestMapping("lodgement/{idLogement}")
     public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
-		if(user != null) {
-		vue.addData("user",user.getUser());
-		}else {
-		vue.addDataRaw("user", null);
-		}
 		vue.addData("lodgement",null);
 		vue.addDataRaw("images", "[]");
 		vue.onBeforeMount(""
-				+"let self=this;this.date = new Date().toLocaleDateString('fr-CA');" + Http.get("/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent,self.getHostAvatar();")
+				+"let self=this;" + Http.get("/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent")
 				+Http.get("/rest/image/lodgement/"+idLogement, ""
 						+ "for(k=0;k<response.data.length-1;k++){"
 						+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.id+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})"

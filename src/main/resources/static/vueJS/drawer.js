@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Sun Nov 01 18:02:45 CET 2020
+//Script generated with VueComponent at Mon Nov 02 16:31:34 CET 2020
 Vue.component('drawer',{
 	"props":["user"],"data":function() {
 		 return {
@@ -20,7 +20,8 @@ this.
 				$refs.register.registerModal;
 				    break;				
   case '3':
-window.location.href='/logout';
+document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+				window.location.href='/logout';
 					   break;
 				  default:
 				}
@@ -44,6 +45,6 @@ window.location.href='/logout';
 	,"beforeMount":function(){
 		this.getMenuItems();
 		}
-	,"template":"<v-navigation-drawer   v-model=\"drawer\"   left   temporary   app>   <login-modal ref=\"login\"></login-modal>   <register-modal ref=\"register\"></register-modal>          <v-list v-if=\"user.id!==0\">          <v-list-item>              <avatar :user=\"user\"></avatar>          </v-list-item>            <v-list-item link>            <v-list-item-content>              <v-list-item-title class=\"title\">                {{user.login}}              </v-list-item-title>              <v-list-item-subtitle>{{ user.mail }}</v-list-item-subtitle>            </v-list-item-content>           </v-list-item>           </v-list>   <v-divider></v-divider>      <v-list      v-if=\"user.id==0\"      dense      nav      >      <v-list-item @click=\"triggerModal('1')\">               <v-list-item-icon>            <v-icon>mdi-login-variant</v-icon>         </v-list-item-icon>         <v-list-item-content>            <v-list-item-title>Se Connecter</v-list-item-title>         </v-list-item-content>      </v-list-item>            <v-list-item @click=\"triggerModal('2')\">               <v-list-item-icon>            <v-icon>mdi-account-plus</v-icon>         </v-list-item-icon>         <v-list-item-content>            <v-list-item-title>Inscription</v-list-item-title>         </v-list-item-content>      </v-list-item>            </v-list>      <v-divider></v-divider>   <v-list      v-if=\"user.id!==0\"      dense      nav      >      <v-list-item         v-for=\"item in items\"         :key=\"item.title\"         :href=\"item.link\"         @click=\"triggerModal(item.action)\"         link         >         <v-list-item-icon>            <v-icon>{{item.icon}}</v-icon>         </v-list-item-icon>         <v-list-item-content>            <v-list-item-title>{{item.title}}</v-list-item-title>         </v-list-item-content>      </v-list-item>   </v-list></v-navigation-drawer>"
+	,"template":"<v-navigation-drawer   v-model=\"drawer\"   left   temporary   app>   <login-modal ref=\"login\"></login-modal>   <register-modal ref=\"register\"></register-modal>          <v-list v-if=\"user.id!==''\">          <v-list-item>              <avatar v-if=\"user.id!==''\" :user=\"user\"></avatar>          </v-list-item>            <v-list-item link>            <v-list-item-content>              <v-list-item-title class=\"title\">                {{user.login}}              </v-list-item-title>              <v-list-item-subtitle>{{ user.mail }}</v-list-item-subtitle>            </v-list-item-content>           </v-list-item>           </v-list>   <v-divider></v-divider>      <v-list      v-if=\"user.id==''\"      dense      nav      >      <v-list-item @click=\"triggerModal('1')\">               <v-list-item-icon>            <v-icon>mdi-login-variant</v-icon>         </v-list-item-icon>         <v-list-item-content>            <v-list-item-title>Se Connecter</v-list-item-title>         </v-list-item-content>      </v-list-item>            <v-list-item @click=\"triggerModal('2')\">               <v-list-item-icon>            <v-icon>mdi-account-plus</v-icon>         </v-list-item-icon>         <v-list-item-content>            <v-list-item-title>Inscription</v-list-item-title>         </v-list-item-content>      </v-list-item>            </v-list>      <v-divider></v-divider>   <v-list      v-if=\"user.id!==''\"      dense      nav      >      <v-list-item         v-for=\"item in items\"         :key=\"item.title\"         :href=\"item.link\"         @click=\"triggerModal(item.action)\"         link         >         <v-list-item-icon>            <v-icon>{{item.icon}}</v-icon>         </v-list-item-icon>         <v-list-item-content>            <v-list-item-title>{{item.title}}</v-list-item-title>         </v-list-item-content>      </v-list-item>   </v-list></v-navigation-drawer>"
 	}
 );

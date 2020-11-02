@@ -23,6 +23,7 @@ public class Drawer {
 				+ "this.$refs.register.registerModal = !this.$refs.register.registerModal;"
 				+ "    break;\r\n"
 				+ "  case '3':\r\n"
+				+ "document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';"
 				+ "window.location.href='/logout';"
 				+ "	   break;"
 				+ "  default:}","number");

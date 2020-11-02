@@ -17,16 +17,12 @@ public class MainController {
 	
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
+		this.vue.addDataRaw("user", "{id:'',login:''}");
 		return this.vue;
 	}
     
 	@GetMapping(value = "/")
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
-		if(user != null) {
-		vue.addData("user",user.getUser());
-		}else {
-		vue.addDataRaw("user", "{id:0,login:''}");
-		}
         return "index";
        }
 }
