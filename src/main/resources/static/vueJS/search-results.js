@@ -3,7 +3,8 @@ Vue.component('search-results',{
 	"props":["result"],"data":function() {
 		 return {
 			"map":null,
-			"markers":{}
+			"markers":{},
+			"photo":null
 			}
 		;
 		}
@@ -15,8 +16,12 @@ Vue.component('search-results',{
 			}
 		,"showPopup":function (i){
 			let self=this;
-			var text=i.title.toString()+'<br>prix: '+i.price.toString()+'€';
-			self.markers[i.id].bindPopup(text).openPopup().addTo(self.map);
+			var text;
+			this.$http["get"]('/rest/image/lodgement/'+i.id).then(function(response){
+				self.photo=response.data;
+				text=+i.title.toString()+'<br>prix: '+i.price.toString()+'€';
+				self.markers[i.id].bindPopup(text).openPopup().addTo(self.map);
+			});
 			}
 		,"getImages":function (){
 			let self = this;

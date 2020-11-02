@@ -23,12 +23,12 @@ public class LodgementController {
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
 		this.vue.addDataRaw("user", "{id:'',login:''}");
+		this.vue.onMounted("Vue.component('l-map',LMap);");
 		return this.vue;
 	}
 	
 	@RequestMapping("/lodgement/search")
 	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
-
 		vue.addData("result", null);
 		vue.onBeforeMount(""
 		+ "let self=this;"		

@@ -15,16 +15,15 @@
    <v-col
       cols="7"
       >
-
-
             <search-results v-if="result!==null" :result="result" ref="searchResults"></search-results>
-
    </v-col>
    <v-col
       cols="5"
       >
-      <div id="osm-map" ></div>
- 
+      <div id="osm-map"></div>
+      <client-only>
+  <l-map></l-map>
+</client-only>
    </v-col>
 </v-row>
 </v-container>
