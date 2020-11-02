@@ -5,9 +5,9 @@
    app>
    <login-modal ref="login"></login-modal>
    <register-modal ref="register"></register-modal>
-          <v-list v-if="user.id!==0">
+          <v-list v-if="user.id!==''">
           <v-list-item>
-              <avatar :user="user"></avatar>
+              <avatar v-if="user.id!==''" :user="user"></avatar>
           </v-list-item>
   
           <v-list-item link>
@@ -21,7 +21,7 @@
            </v-list>
    <v-divider></v-divider>
       <v-list
-      v-if="user.id==0"
+      v-if="user.id==''"
       dense
       nav
       >
@@ -45,7 +45,7 @@
       </v-list>
       <v-divider></v-divider>
    <v-list
-      v-if="user.id!==0"
+      v-if="user.id!==''"
       dense
       nav
       >

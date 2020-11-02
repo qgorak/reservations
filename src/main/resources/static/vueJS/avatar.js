@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Sat Oct 31 20:13:46 CET 2020
+//Script generated with VueComponent at Mon Nov 02 10:25:40 CET 2020
 Vue.component('avatar',{
 	"props":["user"],"data":function() {
 		 return {
@@ -20,7 +20,7 @@ Vue.component('avatar',{
 						self.avatar.src='/user-photos/'+self.user.id+'/avatar/'+response.data[0];
 						}
 					else{
-						this.avatar.initials=self.user.login.charAt(0).toUpperCase();
+						self.avatar.initials=self.user.login.charAt(0).toUpperCase();
 						}
 					}
 				);

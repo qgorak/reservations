@@ -16,7 +16,7 @@ public class Avatar {
 			+ "if(response.data[0]!=self.user.id){"
 			+ "self.avatar.src='/user-photos/'+self.user.id+'/avatar/'+response.data[0];"
 			+ "}else{"
-			+ "this.avatar.initials=self.user.login.charAt(0).toUpperCase();"
+			+ "self.avatar.initials=self.user.login.charAt(0).toUpperCase();"
 			+ "}"
 			+ "});"
 			+ "}");
