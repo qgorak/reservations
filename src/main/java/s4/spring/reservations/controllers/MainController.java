@@ -23,6 +23,12 @@ public class MainController {
     
 	@GetMapping(value = "/")
     public String index(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
+		this.vue.addMethod("explorer","fetch('https://jsonip.com', { mode: 'cors' })"
+		+ "  .then((resp) => resp.json())"
+		+ "  .then((response) => {"
+		+ "		var url='http://ip-api.com/json/'+response.ip;"
+		+ "		this.$http['get'](url).then(response => (window.location.replace('http://127.0.0.1:8080/lodgement/search?lon='+response.data.lon+'&lat='+response.data.lat)));"
+		+ "  })");
         return "index";
        }
 }

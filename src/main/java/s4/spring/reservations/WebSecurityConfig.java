@@ -58,7 +58,6 @@ public AuthenticationFailureHandler authenticationFailureHandler() {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
     	
-
     	//access rights 
         httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
                 .authorizeRequests().antMatchers("/console/**","/register", "assets/css/**", "/css/**").permitAll()
