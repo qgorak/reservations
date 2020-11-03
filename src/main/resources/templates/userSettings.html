@@ -6,42 +6,49 @@
 
 <v-row>
       <v-col
-         cols="6"
+      cols="6"
+       >
+       <!-- Besoin d'aide pour la fonction changer de mot de passe --> 
+         <v-text-field
+         v-model="user.password"
+         :counter="20"
+         label="password"
+         required
          >
-         
-    <v-text-field
-      v-model="user.login"
-      :counter="20"
-      label="login"
-      required
-    ></v-text-field>
+         </v-text-field>
 
-    <v-text-field
-      v-model="user.mail"
-      label="E-mail"
-      name="mail"
-      required
-    ></v-text-field>
+        <v-text-field
+        v-model="user.mail"
+        label="E-mail"
+        name="mail"
+        required
+        >
+        </v-text-field>
     
-    <v-btn
-      :disabled="!valid"
-      color="primary"
-      class="mr-4"
-      @click="updateUser()"
-    >
-      Submit
-    </v-btn>
+        <v-btn
+        :disabled="!valid"
+        color="primary"
+        class="mr-4"
+        @click="updateUser()"
+        >
+        Submit
+       </v-btn>
     </v-col>
-          <v-col
-         cols="6"
-         >
-              <v-file-input
-  v-model="file"
-  accept="image/*"
-  label="Ajouter un avatar"
-></v-file-input>
-<v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
-         </v-col>
+    
+    <v-col
+    cols="6"
+    >
+    <v-list-item>
+    	<avatar v-if="user.id!==''" :user="user"></avatar>
+    </v-list-item>
+      <v-file-input
+      v-model="file"
+      accept="image/*"
+      label="Changer d'avatar"
+      >
+      </v-file-input>
+      <v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
+    </v-col>
     
  </v-row>
 </v-container>

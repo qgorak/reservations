@@ -10,7 +10,9 @@
               <avatar v-if="user.id!==''" :user="user"></avatar>
           </v-list-item>
   
-          <v-list-item link>
+          <v-list-item link
+          href="/user/dashboard"
+          >
             <v-list-item-content>
               <v-list-item-title class="title">
                 {{user.login}}

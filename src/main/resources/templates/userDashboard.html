@@ -1,0 +1,39 @@
+{{> include/header}}
+<drawer :user="user" ref="drawer"></drawer>
+<bar @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer"></bar>
+<v-container>
+<h1>Hello <%user.login%></h1>
+
+ <v-col
+      cols="6"
+       >
+        <v-list-item>
+    	  <avatar v-if="user.id!==''" :user="user"></avatar>
+        </v-list-item>
+    
+         <v-text-field
+         v-model="user.login"
+         label="password"
+         disabled
+         >
+         </v-text-field>
+
+        <v-text-field
+        v-model="user.mail"
+        label="E-mail"
+        name="mail"
+        disabled
+        >
+        </v-text-field>
+    
+        <v-btn
+        color="primary"
+        class="mr-4"
+        href="/user/settings"
+        >
+        Go to settings
+       </v-btn>
+    </v-col>
+    
+
+{{> include/footer}}

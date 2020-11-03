@@ -12,6 +12,10 @@ html{
 #application{
 }
 
+.v-toolbar-title {
+	cursor: pointer;
+}
+
 .v-bottom-navigation{
 	bottom:0px;
 	position:absolute;

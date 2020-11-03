@@ -12,7 +12,7 @@ public class Drawer {
 				+"this.items=[{'title':'Logout','icon':'mdi-logout','action':'3',},"
     			+"{'title': 'Mes Logements','icon': 'mdi-home-city', 'link': '/lodgement',},"
     			+"{'title':'Mes Reservations','icon':'mdi-file-document-edit','link': '/reservation',},"
-    			+"{'title': 'Settings','icon': 'mdi-cog-outline','link': '/user/me',}]");
+    			+"{'title': 'Settings','icon': 'mdi-cog-outline','link': '/user/settings',}]");
 
 		compo.addData("drawer", false);
 		compo.addMethod("triggerModal", "switch (number) {\r\n"

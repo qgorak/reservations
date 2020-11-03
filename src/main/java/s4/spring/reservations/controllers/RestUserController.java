@@ -61,7 +61,4 @@ public class RestUserController extends AbstractRestController<User>{
 		toUpdateObject.setLogin(originalObject.getLogin());
 
 	}
-	
-
-	
 }
