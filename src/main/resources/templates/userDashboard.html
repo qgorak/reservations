@@ -1,39 +1,53 @@
 {{> include/header}}
 <drawer :user="user" ref="drawer"></drawer>
 <bar @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer"></bar>
-<v-container>
+<bar-search @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer" app></bar-search>
+<v-container style="margin-top:5em;">
 <h1>Hello <%user.login%></h1>
 
- <v-col
-      cols="6"
-       >
-        <v-list-item>
-    	  <avatar v-if="user.id!==''" :user="user"></avatar>
-        </v-list-item>
-    
-         <v-text-field
-         v-model="user.login"
-         label="password"
-         disabled
-         >
-         </v-text-field>
-
-        <v-text-field
-        v-model="user.mail"
-        label="E-mail"
-        name="mail"
-        disabled
-        >
-        </v-text-field>
-    
-        <v-btn
-        color="primary"
-        class="mr-4"
-        href="/user/settings"
-        >
-        Go to settings
-       </v-btn>
-    </v-col>
-    
-
+<div class="dashboard-flexbox-main">
+	<div style="margin:2em;">
+ 	<avatar v-if="user.id!==''" :user="user"></avatar>
+ 	<v-text-field
+ 	v-model="user.login"
+ 	label="Login"
+ 	disabled
+ 	>
+ 	</v-text-field>
+ 	
+ 	<v-text-field
+ 	value="*****"
+ 	label="Password"
+ 	disabled
+ 	>
+ 	</v-text-field>
+ 	
+ 	<v-text-field
+ 	v-model="user.mail"
+ 	label="E-mail"
+ 	name="mail"
+ 	disabled
+ 	>
+ 	</v-text-field>
+ 	
+ 	<v-btn
+ 	color="primary"
+	class="mr-4"
+	href="/user/settings"
+ 	>
+ 	Settings
+ 	</v-btn>
+ 	</div>
+ 	
+	<div class="dashboard-flexbox-lodgement">
+		<h2 >Logement :</h2><br>
+		<new-lodgement-button v-on:addtolist="addLodgementToList">Ajouter un logement</new-lodgement-button><br>
+		<v-btn color="green lighten-2" dark @click="explorer">Explorer les alentours</v-btn>
+	</div>
+	
+	<div>
+		<h2>Mettre les logements de l'utilisateur ?</h2>
+	</div>
+</div>
+</v-container>
 {{> include/footer}}

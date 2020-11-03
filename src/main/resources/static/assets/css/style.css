@@ -30,10 +30,6 @@ html{
 	max-width:300px;
 }
 
-
-
-
-
 .v-input{
 	color:red !important; 
 }
@@ -44,6 +40,23 @@ html{
 
 #navigation_drawer {
 	cursor: pointer !important;
+}
+
+.dashboard-flexbox-main {
+	display: flex;
+	justify-content: space-around;
+}
+
+.userSettings-flexbox-lodgement {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.dashboard-flexbox-lodgement {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 /* Extra small devices (phones, 600px and down) */

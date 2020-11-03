@@ -1,18 +1,27 @@
 {{> include/header}}
 <drawer :user="user" ref="drawer"></drawer>
 <bar @toggle-drawer="$refs.drawer.drawer = !$refs.drawer.drawer"></bar>
-<v-container>
+<v-container style="margin-top:5em;">
 <h1>Hello <%user.login%></h1>
-
-<v-row>
-      <v-col
-      cols="6"
-       >
-       <!-- Besoin d'aide pour la fonction changer de mot de passe --> 
-         <v-text-field
+	<!-- Besoin d'aide pour la fonction changer de mot de passe --> 
+	<div class="userSettings-flexbox-main">
+	<div style="margin:2em;">
+	
+	<avatar v-if="user.id!==''" :user="user"></avatar>
+	
+	<v-file-input
+	v-model="file"
+	accept="image/*"
+	label="Changer d'avatar"
+	>
+	</v-file-input>
+	<v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
+      
+      
+ 	<v-text-field
          v-model="user.password"
          :counter="20"
-         label="password"
+         label="Password"
          required
          >
          </v-text-field>
@@ -33,23 +42,7 @@
         >
         Submit
        </v-btn>
-    </v-col>
-    
-    <v-col
-    cols="6"
-    >
-    <v-list-item>
-    	<avatar v-if="user.id!==''" :user="user"></avatar>
-    </v-list-item>
-      <v-file-input
-      v-model="file"
-      accept="image/*"
-      label="Changer d'avatar"
-      >
-      </v-file-input>
-      <v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
-    </v-col>
-    
- </v-row>
+ 	</div>
+</div>
 </v-container>
 {{> include/footer}}
