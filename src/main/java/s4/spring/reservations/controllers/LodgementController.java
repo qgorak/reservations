@@ -23,11 +23,6 @@ public class LodgementController {
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
 		this.vue.addDataRaw("user", "{id:'',login:''}");
-		//this.vue.onCreated("Vue.component('l-map', window.Vue2Leaflet.LMap),Vue.component('l-tile-layer', window.Vue2Leaflet.LTileLayer),Vue.component('l-marker',window.Vue2Leaflet.LMarker)");
-		//this.vue.addDataRaw("zoom","13");
-		//this.vue.addDataRaw("center","L.latLng(47.413220, -1.219482)");
-	    //this.vue.addDataRaw("url","'http://{s}.tile.osm.org/{z}/{x}/{y}.png'");
-	    //this.vue.addDataRaw("marker","L.latLng(47.413220, -1.219482)");
 		return this.vue;
 	}
 	
@@ -39,9 +34,6 @@ public class LodgementController {
 		+ Http.get(restURL+"rest/lodgements/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,""
 		+ "self.result=response.data;")
 		);
-		vue.addMethod("fullLoad","setTimeout(() => {"
-		+ "        this.$refs.mymap.mapObject.invalidateSize();"
-		+ "      }, 100);");
 		return "searchResult";
 	}
 	
