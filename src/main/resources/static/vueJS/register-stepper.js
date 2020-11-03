@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Oct 29 00:58:03 CET 2020
+//Script generated with VueComponent at Tue Nov 03 16:55:47 CET 2020
 Vue.component('register-stepper',{
 	"props":[],"data":function() {
 		 return {
@@ -16,7 +16,7 @@ Vue.component('register-stepper',{
 		"registerUser":function (){
 			let self=this;
 			this.
-			$http['post']('http://127.0.0.1:8080/rest/users/', self.newUser).then(function(response){
+			$http['post']('/rest/users/', self.newUser).then(function(response){
 				self.
 				$emit('toggle-modal');
 				}

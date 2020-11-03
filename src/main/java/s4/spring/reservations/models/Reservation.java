@@ -1,12 +1,14 @@
 package s4.spring.reservations.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Reservation {
@@ -19,8 +21,9 @@ public class Reservation {
 	private User rented;
 	@ManyToOne
 	private Lodgement lodgement;
- 
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date start;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date end;
 	
 	public int getId() {

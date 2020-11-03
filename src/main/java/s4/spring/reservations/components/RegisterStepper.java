@@ -18,7 +18,7 @@ public class RegisterStepper {
 			+ "    ]");
 	compo.addDataRaw("passwordRules","[]");
 	compo.addDataRaw("newUser", "{login:'',password:'',mail:''}");
-	compo.addMethod("registerUser", "let self=this;" + Http.post( "http://127.0.0.1:8080/rest/users/","self.newUser", "self.$emit('toggle-modal');"));
+	compo.addMethod("registerUser", "let self=this;" + Http.post( "/rest/users/","self.newUser", "self.$emit('toggle-modal');"));
 	compo.addData("e1",1);
     compo.setDefaultTemplateFile();
     compo.createFile(false);

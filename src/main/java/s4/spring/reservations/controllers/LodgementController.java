@@ -18,7 +18,6 @@ public class LodgementController {
 	@Autowired
 	private VueJS vue;
 	
-	private String restURL = "http://127.0.0.1:8080/";
 	
 	@ModelAttribute(name = "vue")
 	private VueJS getVue() {
@@ -31,7 +30,7 @@ public class LodgementController {
 		vue.addData("result", null);
 		vue.onBeforeMount(""
 		+ "let self=this;"		
-		+ Http.get(restURL+"rest/lodgements/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,""
+		+ Http.get("/rest/lodgements/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,""
 		+ "self.result=response.data;")
 		);
 		return "searchResult";
