@@ -71,12 +71,16 @@ public AuthenticationFailureHandler authenticationFailureHandler() {
                 .and()
                 .csrf().disable();
         
-
         httpSecurity.headers().frameOptions().disable();
         
+        //redirect by role
+        httpSecurity.authorizeRequests()
+		.antMatchers("/lodgement").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
+		.antMatchers("/reservation").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
+		.antMatchers("/user/me").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
+		.and().formLogin().loginPage("/").and()
+        .exceptionHandling()
+        .accessDeniedPage("/access-denied");
         
- 
-
-
 }
 }

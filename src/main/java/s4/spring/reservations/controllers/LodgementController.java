@@ -41,7 +41,6 @@ public class LodgementController {
 	@RequestMapping("/lodgement")
 	
 	public String lodgementDashboard(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
-		if(user != null) {	
 		vue.addDataRaw("lodgements", "[]");
 		vue.addDataRaw("disabledLodgements", "[]");
 		vue.addData("draft");
@@ -65,10 +64,6 @@ public class LodgementController {
 					+ "}"));
 			model.put("vue", vue);
 			return "lodgementDashboard";
-		}else{
-		vue.addData("error_message","vous devez etre connecté pour accéder a ce contenu");
-		return "error";
-	}
 	}	
 
 	
