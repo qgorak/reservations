@@ -39,6 +39,9 @@ public class LodgementController {
 		+ Http.get(restURL+"rest/lodgements/search?lon="+lon+"&lat="+lat+"&start="+start+"&end="+end+"&nbr="+nbr,""
 		+ "self.result=response.data;")
 		);
+		vue.addMethod("fullLoad","setTimeout(() => {"
+		+ "        this.$refs.mymap.mapObject.invalidateSize();"
+		+ "      }, 100);");
 		return "searchResult";
 	}
 	

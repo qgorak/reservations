@@ -16,8 +16,9 @@ Vue.component('search-results',{
 			}
 		,"showPopup":function (i){
 			let self=this;
-			var text=i.title.toString()+'<br>prix: '+i.price.toString()+'€';
-			self.markers[i.id].bindPopup(text).openPopup().addTo(self.map);
+			console.log(i);
+			var text=i.title.toString()+'<br>prix: '+i.price.toString()+'€<br>Nombre de pièces: '+i.nbr_room+'<br>'+i.nbr_place+' Personne(s)<br>Description:<br>'+i.description;
+			self.markers[i.id].bindPopup(text,{closeButton:false,closeOnEscapeKey:false}).openPopup().addTo(self.map);
 			}
 		,"closePopup":function (i){
 			let self=this;
@@ -69,7 +70,8 @@ Vue.component('search-results',{
 					var center = L.latLng(params.get('lat'),params.get('lon'));
 					self.map.setView(center, 13);
 					for(i=0;i<self.result.length;i++){
-							var text=self.result[i].title.toString()+'<br>prix: '+self.result[i].price.toString()+'€';
+						
+							var text=self.result[i].title.toString()+'<br>prix: '+self.result[i].price.toString()+'€<br>Nombre de pièces: '+self.result[i].nbr_room+'<br>'+self.result[i].nbr_place+' Personne(s)<br>Description:<br>'+self.result[i].description;
 							center=L.latLng(self.result[i].lat,self.result[i].lon);
 							var marker=L.marker(center);
 							self.markers[self.result[i].id]=marker;
