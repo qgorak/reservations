@@ -11,6 +11,7 @@ public class SearchResults {
 		compo.setProps("result");
 		compo.addData("map",null);
 		compo.addDataRaw("markers","{}");
+		compo.addDataRaw("background","{}");
 		compo.addMethod("closePopup","let self=this;self.markers[i.id].closePopup().addTo(self.map);","i");
 		compo.addMethod("showPopup","let self=this;\r\n"
 				+ "			var text=i.title.toString()+'<br>prix: '+i.price.toString()+'€<br>Nombre de pièces: '+i.nbr_room+'<br>'+i.nbr_place+' Personne(s)<br>Description:<br>'+i.description;\r\n"
@@ -45,13 +46,14 @@ public class SearchResults {
 				+ "		var params=new URLSearchParams(window.location.search);\r\n"
 				+ "		var center = L.latLng(params.get('lat'),params.get('lon'));\r\n"
 				+ "		self.map.setView(center, 13);\r\n"
-				+ "		for(i=0;i<self.result.length;i++){			\r\n"
-				+ "			var text=self.result[i].title.toString()+'<br>prix: '+self.result[i].price.toString()+'€<br>Nombre de pièces: '+self.result[i].nbr_room+'<br>'+self.result[i].nbr_place+' Personne(s)<br>Description:<br>'+self.result[i].description;\r\n"
-				+ "			center=L.latLng(self.result[i].lat,self.result[i].lon);\r\n"
-				+ "			var marker=L.marker(center);\r\n"
-				+ "			self.markers[self.result[i].id]=marker;\r\n"
+				+ "		for(i=0;i<self.result.length;i++){"
+				+ "			var text=self.result[i].title.toString()+'<br>prix: '+self.result[i].price.toString()+'€<br>Nombre de pièces: '+self.result[i].nbr_room+'<br>'+self.result[i].nbr_place+' Personne(s)<br>Description:<br>'+self.result[i].description+'<br><a href=/lodgement/'+self.result[i].id+'>voir l\\'annonce</a>';	\r\n"
+				+ "			center=L.latLng(self.result[i].lat,self.result[i].lon);			\r\n"
+				+ "			var marker=L.marker(center);			\r\n"
+				+ "			self.markers[self.result[i].id]=marker;			\r\n"
+				+ "			self.background[self.result[i].id]='white';\r\n"
 				+ "			marker.bindPopup(text).openPopup().addTo(self.map);\r\n"
-				+ "		}");
+				+ "			}");
 		compo.onCreated("this.getImages();");
         compo.setDefaultTemplateFile();
         compo.createFile(false);
