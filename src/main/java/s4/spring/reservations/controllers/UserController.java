@@ -35,7 +35,6 @@ public class UserController {
 	
 	@RequestMapping("/user/me")
     public String userSettings(@AuthenticationPrincipal MyUserDetails user, ModelMap model,Principal principal) {
-		if(user != null) {
 		vue.addData("file",null);
 		vue.addMethod("postAvatar", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+"this.$http['post'](\"/rest/image/saveAvatar\", formData, {\r\n"
@@ -46,8 +45,5 @@ public class UserController {
 		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/users/me", ""
 				+ "self.user=response.data;"));
         return "userSettings";
-		}
-		vue.addData("error_message","vous devez etre connecté pour accéder a ce contenu");
-		return "error";
 	}
 }
