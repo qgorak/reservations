@@ -26,8 +26,8 @@ public class LodgementList {
 				+ "})"
 				+ "}"
 				);
-		compo.addMethod("redirectView", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id;","item");
-		compo.addMethod("redirectEdit", "window.location.href = \"http://127.0.0.1:8080/lodgement/\"+item.id+\"/edit\";","item");
+		compo.addMethod("redirectView", "window.location.pathname = \"/lodgement/\"+item.id;","item");
+		compo.addMethod("redirectEdit", "window.location.pathname = \"/lodgement/\"+item.id+\"/edit\";","item");
 		compo.onBeforeMount("this.getImages();");
         compo.setDefaultTemplateFile();
         compo.createFile(false);

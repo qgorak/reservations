@@ -67,21 +67,30 @@
                      color="grey lighten-1"
                      height="200px"
                      >
-                     <v-text-field
-                        v-model="newUser.password"
-                        :counter="10"
-                        label="Password"
-                        required
-                        ></v-text-field>
-                     <v-text-field
-                        v-model="passwordConfirm"
-                        :counter="10"
-                        label="Confirm password"
-                        required
-                        ></v-text-field>
+                                <v-text-field
+        v-model="newUser.password"
+        label="Password"
+        counter
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="showPassword ? 'text' : 'password'"
+        @click:append="showPassword = !showPassword"
+        :rules="passwordRules"
+        required
+      ></v-text-field>
+                                <v-text-field
+        v-model="passwordConfirm"
+        label="confirm Password"
+        counter
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="showPassword ? 'text' : 'password'"
+        @click:append="showPassword = !showPassword"
+        :rules="passwordRules"
+        required
+      ></v-text-field>
                   </v-card>
                   <v-btn
                      color="primary"
+                     :disabled="newUser.password!==passwordConfirm"
                      @click="registerUser()"
                      >
                      Continue

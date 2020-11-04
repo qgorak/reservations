@@ -10,13 +10,18 @@ public class RegisterStepper {
     VueComponent compo=new VueComponent("register-stepper");
 	compo.addData("valid",true);
 	compo.addData("passwordConfirm","");
+    compo.addData("showPassword",false);
+	compo.addData("timeOut",null);
+	compo.addData("usernameValid",false);
+    compo.addDataRaw("passwordRules","["
+            +"  v => !!v || 'Password is required',"
+            +"]");
 	compo.addDataRaw("usernameRules","[ v => !!v || 'Name is required',"
 	+ "      v => (v && v.length <= 10) || 'Name must be less than 10 characters',]");
 	compo.addDataRaw("emailRules","[\r\n"
 			+ "      v => !!v || 'E-mail is required',\r\n"
 			+ "      v => /.+@.+/.test(v) || 'E-mail must be valid',\r\n"
 			+ "    ]");
-	compo.addDataRaw("passwordRules","[]");
 	compo.addDataRaw("newUser", "{login:'',password:'',mail:''}");
 	compo.addMethod("registerUser", "let self=this;" + Http.post( "/rest/users/","self.newUser", "self.$emit('toggle-modal');"));
 	compo.addData("e1",1);

@@ -1,8 +1,8 @@
-//Script generated with VueComponent at Sat Oct 31 19:27:53 CET 2020
+//Script generated with VueComponent at Wed Nov 04 11:41:05 CET 2020
 Vue.component('lodgement-list',{
 	"props":["title","lodgements"],"methods":{
 		"redirectEdit":function (item){
-			window.location.href = "http://127.0.0.1:8080/lodgement/"+item.id+"/edit";
+			window.location.pathname = "/lodgement/"+item.id+"/edit";
 			}
 		,"getImages":function (){
 			let self = this;
@@ -37,7 +37,7 @@ Vue.component('lodgement-list',{
 				}
 			}
 		,"redirectView":function (item){
-			window.location.href = "http://127.0.0.1:8080/lodgement/"+item.id;
+			window.location.pathname = "/lodgement/"+item.id;
 			}
 		}
 	,"beforeMount":function(){
