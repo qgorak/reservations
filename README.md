@@ -4,8 +4,7 @@ Heroku :
 https://reservations-master-ld85zlrwp1.herokuapp.com/
 
 # Installation
-Maven project 
-Run ReservationsApplication.Java as springboot app
+Maven project  Run ReservationsApplication.Java as springboot app
 
 # Fonctionnalités 
 * Espace Membre
