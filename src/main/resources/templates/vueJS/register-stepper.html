@@ -22,7 +22,6 @@
                <v-stepper-content step="1">
                   <v-card
                      class="mb-12"
-                     color="grey lighten-1"
                      height="200px"
                      >
                      <v-text-field
@@ -43,19 +42,31 @@
                <v-stepper-content step="2">
                   <v-card
                      class="mb-12"
-                     color="grey lighten-1"
                      height="200px"
                      >
+                     <div v-if="usernameValid==true">
+                     Ce login est disponible
+                     </div>
+                     <div v-if="usernameValid==false">
+                     Ce login est indisponible
+                     </div>
+                     <v-row
+      class="mb-6"
+      no-gutters
+      >
                      <v-text-field
                         v-model="newUser.login"
+                        v-on:keyup="checkUserLogin"
                         :counter="10"
                         label="Username"
                         required
                         ></v-text-field>
+                        </v-row>
                   </v-card>
                   <v-btn
                      color="primary"
                      @click="e1 = 3"
+                     :disabled="!usernameValid"
                      >
                      Continue
                   </v-btn>
@@ -64,7 +75,6 @@
                <v-stepper-content step="3">
                   <v-card
                      class="mb-12"
-                     color="grey lighten-1"
                      height="200px"
                      >
                                 <v-text-field
