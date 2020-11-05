@@ -5,8 +5,9 @@
 <v-container style="margin-top:5em;">
 <h1>Hello <%user.login%></h1>
 
-<div class="dashboard-flexbox-main">
-	<div style="margin:2em;">
+<div class="userDashboard-flexbox">
+
+	<div style="margin:2em;display:flex;flex-direction:column;">
  	<avatar v-if="user.id!==''" :user="user"></avatar>
  	<v-text-field
  	v-model="user.login"
@@ -28,19 +29,36 @@
 	class="mr-4"
 	href="/user/settings"
  	>
- 	Settings
+ 	Go to settings
+ 	</v-btn>
+ 	
+ 	<v-btn
+ 	color="grey"
+ 	dark
+	class="mr-4"
+	href="/logout"
+	style="margin-top:1em;"
+ 	>
+ 	Logout
  	</v-btn>
  	</div>
  	
-	<div class="dashboard-flexbox-lodgement">
-		<h2 >Logement :</h2><br>
+ 	<div style="width:0.1em;height:15em;background-color:black;"></div>
+ 	
+	<div style="display:flex;flex-direction:column;align-items:center;justify-content:space-around;">
+		<h2>Moi</h2>
+		<v-btn color="grey" dark class="mr-4" href="/lodgement">Mes logements</v-btn>
+		<v-btn style="margin-top:1em;margin-bottom:1em" color="grey" dark class="mr-4" href="/reservation">Mes reservations</v-btn>
 		<new-lodgement-button v-on:addtolist="addLodgementToList">Ajouter un logement</new-lodgement-button><br>
-		<v-btn color="green lighten-2" dark @click="explorer">Explorer les alentours</v-btn>
 	</div>
 	
-	<div>
-		<h2>Mettre les logements de l'utilisateur ?</h2>
+	<div style="width:0.1em;height:15em;background-color:black;"></div>
+	
+	<div style="display:flex;flex-direction:column;align-items:center;justify-content:space-around;">
+		<h2>Explorer</h2>
+		<v-btn color="green lighten-2" dark @click="explorer">Logements autour de moi</v-btn>
 	</div>
+	
 </div>
 </v-container>
 {{> include/footer}}
