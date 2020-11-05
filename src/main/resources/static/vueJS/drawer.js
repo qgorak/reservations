@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Mon Nov 02 16:31:34 CET 2020
+//Script generated with VueComponent at Thu Nov 05 09:01:40 CET 2020
 Vue.component('drawer',{
 	"props":["user"],"data":function() {
 		 return {
@@ -37,7 +37,7 @@ document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 				'title':'Mes Reservations','icon':'mdi-file-document-edit','link': '/reservation',
 				}
 			,{
-				'title': 'Settings','icon': 'mdi-cog-outline','link': '/user/me',
+				'title': 'Paramètres','icon': 'mdi-cog-outline','link': '/user/me',
 				}
 			]
 			}
