@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Oct 29 00:50:42 CET 2020
+//Script generated with VueComponent at Thu Nov 05 08:26:01 CET 2020
 Vue.component('register-modal',{
 	"props":[],"data":function() {
 		 return {
