@@ -11,7 +11,7 @@ Vue.component('edit-lodgement-button',{
 			let self=this;
 			this.
 			$http['patch']('/rest/lodgements/'+self.lodgement.id, self.lodgement).then(function(response){
-				alert(self.lodgement.title+'a bien été mis a jour');
+				alert(self.lodgement.title+' a bien été mis a jour');
 				}
 			);
 			}

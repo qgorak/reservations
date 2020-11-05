@@ -1,9 +1,9 @@
-//Script generated with VueComponent at Thu Nov 05 06:11:17 CET 2020
+//Script generated with VueComponent at Thu Nov 05 06:17:57 CET 2020
 Vue.component('new-lodgement-button',{
 	"props":["draft"],"data":function() {
 		 return {
 			"dialog":false,"newLodgement":{
-				title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null,status:null
+				title:null,nb_place:null,nb_room:null,description:null,price:null,type:null,lat:null,lon:null,status:null
 				}
 			,"position":false,"type":['Maison','Appartement','Chambre'],"e1":1,"nbr":[1,2,3,4,5]
 			}
@@ -22,7 +22,7 @@ Vue.component('new-lodgement-button',{
 				self.
 				$emit('addtolist', lodgement);
 				self.newLodgement={
-					title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null,status:null
+					title:null,nb_place:null,nb_room:null,description:null,price:null,type:null,lat:null,lon:null,status:null
 					}
 				;
 				self.

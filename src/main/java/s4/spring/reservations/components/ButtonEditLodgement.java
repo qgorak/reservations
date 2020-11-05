@@ -10,7 +10,7 @@ public class ButtonEditLodgement {
         VueComponent compo=new VueComponent("edit-lodgement-button");
         compo.setProps("lodgement");
         compo.addData("dialog",false);
-		compo.addMethod("updateLodgement", "let self=this;" + Http.patch("'/rest/lodgements/'+self.lodgement.id", "self.lodgement", "alert(self.lodgement.title+'a bien été mis a jour');", ""), "lodgement");
+		compo.addMethod("updateLodgement", "let self=this;" + Http.patch("'/rest/lodgements/'+self.lodgement.id", "self.lodgement", "alert(self.lodgement.title+' a bien été mis a jour');", ""), "lodgement");
         compo.setDefaultTemplateFile();
         compo.createFile(false);
         
