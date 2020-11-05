@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 05 09:01:40 CET 2020
+//Script generated with VueComponent at Thu Nov 05 09:18:43 CET 2020
 Vue.component('drawer',{
 	"props":["user"],"data":function() {
 		 return {
@@ -28,7 +28,7 @@ document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 			}
 		,"getMenuItems":function (){
 			this.items=[{
-				'title':'Logout','icon':'mdi-logout','action':'3',
+				'title':'Déconnexion','icon':'mdi-logout','action':'3',
 				}
 			,{
 				'title': 'Mes Logements','icon': 'mdi-home-city', 'link': '/lodgement',

@@ -9,7 +9,7 @@ public class Drawer {
         VueComponent compo=new VueComponent("drawer");
         compo.setProps("user");
 		compo.addMethod("getMenuItems", ""
-				+"this.items=[{'title':'Logout','icon':'mdi-logout','action':'3',},"
+				+"this.items=[{'title':'Déconnexion','icon':'mdi-logout','action':'3',},"
     			+"{'title': 'Mes Logements','icon': 'mdi-home-city', 'link': '/lodgement',},"
     			+"{'title':'Mes Reservations','icon':'mdi-file-document-edit','link': '/reservation',},"
     			+"{'title': 'Paramètres','icon': 'mdi-cog-outline','link': '/user/me',}]");
