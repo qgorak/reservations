@@ -10,6 +10,7 @@ public class ButtonNewLodgement {
         VueComponent compo=new VueComponent("new-lodgement-button");
         compo.setProps("draft");
         compo.addData("dialog",false);
+        compo.addData("position",false);
 		compo.addDataRaw("type","['Maison','Appartement','Chambre']");
 		compo.addDataRaw("nbr","[1,2,3,4,5]");
 		compo.addDataRaw("newLodgement","{title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null,status:null}");
@@ -25,6 +26,9 @@ public class ButtonNewLodgement {
 						+ "self.$refs.adress.selected='';"
 						+ "self.$refs.adress.search=[];console.log(self.$refs.adress.search);"
 						+ "self.e1=1;","self.dialog=false;"));
+		compo.addMethod("verifySelected","setInterval(() => {\r\n"
+				+ "    	if(this.$refs.adress.selected!=''){this.position=true;}\r\n"
+				+ "  		}, 500);");
         compo.setDefaultTemplateFile();
         compo.createFile(false);
         
