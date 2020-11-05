@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Wed Nov 04 12:08:00 CET 2020
+//Script generated with VueComponent at Thu Nov 05 09:03:55 CET 2020
 Vue.component('bar-search',{
 	"props":[],"data":function() {
 		 return {
@@ -19,13 +19,13 @@ dates = this.
 dates=[];
 				}			
 if(this.nbTravellers!="null" && dates.length!=0){				
-window.location.replace(window.location.host+'/lodgement/search?lon='+selected+'&start='+dates[0]+'&end='+dates[1]+'&nbr='+this.nbTravellers);
+window.location.replace('/lodgement/search?lon='+selected+'&start='+dates[0]+'&end='+dates[1]+'&nbr='+this.nbTravellers);
 				}			
 else if(this.nbTravellers!="null"){				
-window.location.replace(window.location.host+'/lodgement/search?lon='+selected+'&nbr='+this.nbTravellers);
+window.location.replace('/lodgement/search?lon='+selected+'&nbr='+this.nbTravellers);
 				}			
 else if(dates.length!=0){				
-window.location.replace(window.location.host+'/lodgement/search?lon='+selected+'&start='+dates[0]+'&end='+dates[1]);
+window.location.replace('/lodgement/search?lon='+selected+'&start='+dates[0]+'&end='+dates[1]);
 				}			
 else{				
 window.location.replace('/lodgement/search?lon='+selected);
