@@ -36,10 +36,16 @@
             <v-stepper-step 
                :complete="e1 > 4"
                step="4">
+               Prix
+            </v-stepper-step>
+             <v-divider></v-divider>
+            <v-stepper-step 
+               :complete="e1 > 5"
+               step="5">
                Capacité
             </v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="5">
+            <v-stepper-step step="6">
                Photos
             </v-stepper-step>
          </v-stepper-header>
@@ -47,7 +53,6 @@
             <v-stepper-content step="1">
                <v-card
                   class="mb-12"
-                  color="grey lighten-1"
                   height="200px"
                   >
                   <v-row justify="center">
@@ -71,7 +76,6 @@
             <v-stepper-content step="2">
                <v-card
                   class="mb-12"
-                  color="grey lighten-1"
                   height="400px"
                   >
                   <v-row justify="center">
@@ -106,7 +110,6 @@
             <v-stepper-content step="3">
                <v-card
                   class="mb-12"
-                  color="grey lighten-1"
                   height="200px"
                   >
                   <v-row justify="center">
@@ -127,7 +130,73 @@
             <v-stepper-content step="4">
                <v-card
                   class="mb-12"
-                  color="grey lighten-1"
+                  height="500px"
+                  >
+                  
+                  <v-row class="ma-0 pa-0">
+      <v-col cols="12">
+         <v-card
+            class="mx-auto"
+            >
+            <v-toolbar
+               flat
+               dense
+               >
+               <v-toolbar-title>
+                  <span class="subheading">Prix par nuit</span>
+               </v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+               <v-row
+                  class="mb-4"
+                  justify="space-between"
+                  >
+                  <v-col class="text-left">
+                     <span
+                        class="display-3 font-weight-light"
+                        v-text="newLodgement.price"
+                        ></span>
+                     <span class="subheading font-weight-light mr-1">€ par nuit</span>
+                  </v-col>
+               </v-row>
+               <v-slider
+                  style="max-width:600px;"
+                  v-model="newLodgement.price"
+                  max="400"
+                  >
+                  <template v-slot:prepend>
+                     <v-icon
+                        >
+                        mdi-minus
+                     </v-icon>
+                  </template>
+                  <template v-slot:append>
+                     <v-icon
+                        >
+                        mdi-plus
+                     </v-icon>
+                  </template>
+               </v-slider>
+            </v-card-text>
+         </v-card>
+      </v-col>
+   </v-row>
+
+               </v-card>
+               <v-btn
+               	  :diabled="newLodgement.price>0"
+                  color="primary"
+                  @click="e1 = 5"
+                  >
+                  Continue
+               </v-btn>
+               <v-btn  @click="dialog = false" text>
+                  Cancel
+               </v-btn>
+            </v-stepper-content>
+            <v-stepper-content step="5">
+               <v-card
+                  class="mb-12"
                   height="200px"
                   >
                   <v-row justify="center">
@@ -152,14 +221,13 @@
                   >
                   Suivant
                </v-btn>
-               <v-btn @click="e1 = 3">
+               <v-btn @click="e1 = 4">
                   Cancel
                </v-btn>
             </v-stepper-content>
-            <v-stepper-content step="5">
+            <v-stepper-content step="6">
                <v-card
                   class="mb-12"
-                  color="grey lighten-1"
                   >
 			<images-manager ref="images" :lodgement="newLodgement"></images-manager>
 			               <v-btn
@@ -168,7 +236,7 @@
                   >
                   Post
                </v-btn>
-               <v-btn @click="e1 = 4">
+               <v-btn @click="e1 = 5">
                   Cancel
                </v-btn>
                </v-card>

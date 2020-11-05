@@ -37,11 +37,11 @@
             >
             <v-list-item three-line>
                <v-list-item-content>
-                  <%lodgement.price%> € la nuit
+                  
                   <date-picker ref="dates" class="elevation-0"></date-picker>
-                  <v-select    
-                     label="Voyageurs"
-                     ></v-select>
+                  <div v-if="$refs.dates !== undefined">
+ 					<%lodgement.price%> € la nuit
+ 					</div>
                </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>

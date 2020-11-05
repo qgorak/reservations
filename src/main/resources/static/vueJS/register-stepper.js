@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 05 09:10:31 CET 2020
+//Script generated with VueComponent at Thu Nov 05 09:41:26 CET 2020
 Vue.component('register-stepper',{
 	"props":[],"data":function() {
 		 return {
