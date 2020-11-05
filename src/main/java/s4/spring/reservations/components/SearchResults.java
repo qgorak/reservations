@@ -13,9 +13,7 @@ public class SearchResults {
 		compo.addDataRaw("markers","{}");
 		compo.addDataRaw("background","{}");
 		compo.addMethod("closePopup","let self=this;self.markers[i.id].closePopup().addTo(self.map);","i");
-		compo.addMethod("showPopup","let self=this;\r\n"
-				+ "			var text=i.title.toString()+'<br>prix: '+i.price.toString()+'€<br>Nombre de pièces: '+i.nbr_room+'<br>'+i.nbr_place+' Personne(s)<br>Description:<br>'+i.description;\r\n"
-				+ "			self.markers[i.id].bindPopup(text,{closeButton:false,closeOnEscapeKey:false}).openPopup().addTo(self.map);","i");
+		compo.addMethod("showPopup","let self=this;self.markers[i.id].openPopup();","i");
 		compo.addMethod("getImages", ""
 				+ "let self = this;"
 				+ "for(i=0;i<this.result.length;i++){"
@@ -52,7 +50,7 @@ public class SearchResults {
 				+ "			var marker=L.marker(center);			\r\n"
 				+ "			self.markers[self.result[i].id]=marker;			\r\n"
 				+ "			self.background[self.result[i].id]='white';\r\n"
-				+ "			marker.bindPopup(text).openPopup().addTo(self.map);\r\n"
+				+ "			marker.bindPopup(text).addTo(self.map);\r\n"
 				+ "			}");
 		compo.onCreated("this.getImages();");
         compo.setDefaultTemplateFile();

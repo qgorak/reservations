@@ -31,10 +31,9 @@ hide-default-footer>
          @click="redirect(i.id)"                              
          style="cursor: pointer;">                               
          <v-list-item-content>
-            <v-list-item-title class="headline mb-1">Description de la maison</v-list-item-title>
+            <v-list-item-title class="headline mb-1">{{i.description}}</v-list-item-title>
             <div class="overline mb-4">{{i.type}}</div>
-            <v-list-item-subtitle>Nbr de voyageurs - Nbr de pièces</v-list-item-subtitle>
-            <v-list-item-subtitle>Liste des équipements</v-list-item-subtitle>
+            <v-list-item-subtitle>{{i.nbr_place}} personnes - {{i.nbr_room}} pièces</v-list-item-subtitle>
          </v-list-item-content>
          </v-col>                     
       </v-list-item>

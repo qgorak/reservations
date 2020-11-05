@@ -23,8 +23,8 @@ public class ButtonNewLodgement {
 						+ "self.newLodgement={title:null,nb_place:null,nb_room:null,descrisption:null,price:null,type:null,lat:null,lon:null,status:null};"
 						+ "self.$refs.images.images=[];"
 						+ "self.$refs.adress.selected='';"
-						+ "self.e1=1;","alert('votre annonce est maintenant en ligne');"));
-        
+						+ "self.$refs.adress.search=[];console.log(self.$refs.adress.search);"
+						+ "self.e1=1;","self.dialog=false;"));
         compo.setDefaultTemplateFile();
         compo.createFile(false);
         
