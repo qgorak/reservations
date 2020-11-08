@@ -38,7 +38,6 @@ public class LodgementController {
 	
 
 	@RequestMapping("/lodgement")
-	
 	public String lodgementDashboard(ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		vue.addDataRaw("lodgements", "[]");
 		vue.addDataRaw("disabledLodgements", "[]");

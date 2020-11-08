@@ -39,8 +39,10 @@
   v-model="file"
   accept="image/*"
   label="Ajouter un avatar"
+  @change="fileInput"
 ></v-file-input>
-<v-btn v-if="file!=null" @click="postAvatar()">Post</v-btn>
+<v-btn v-if="file!=null" @click="postAvatar()">Changer d'avatar</v-btn><br>
+<span transition="fade-transition" v-show="isActive">Votre avatar a bien été changé</span>
          </v-col>
     
  </v-row>

@@ -36,11 +36,17 @@ public class UserController {
 	@RequestMapping("/user/me")
     public String userSettings(@AuthenticationPrincipal MyUserDetails user, ModelMap model,Principal principal) {
 		vue.addData("file",null);
+		vue.addData("isActive",false);
+		vue.addData("valid",true);
+		vue.addDataRaw("valid","'d-none'");
+		vue.addMethod("fileInput","if(this.file!=null){isActive=true;}");
 		vue.addMethod("postAvatar", "let self=this;let formData = new FormData();formData.append('file', this.file);"
 				+"this.$http['post'](\"/rest/image/saveAvatar\", formData, {\r\n"
 				+ "      headers: {\r\n"
 				+ "        \"Content-Type\": \"multipart/form-data\"\r\n"
-				+ "      }})");
+				+ "      }});"
+				+ "this.isActive=true;"
+				+ "setTimeout(function(){self.isActive=false;}, 3000);");
 		vue.addMethod("updateUser", "let self=this;" + Http.patch("'http://127.0.0.1:8080/rest/users/'+self.user.id", "self.user", "alert('votre compte a bien été mis a jour');", ""));
 		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/users/me", ""
 				+ "self.user=response.data;"));

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -57,23 +58,11 @@ public AuthenticationFailureHandler authenticationFailureHandler() {
  
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-    	
-    	//access rights 
-        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
-                .authorizeRequests().antMatchers("/console/**","/register", "assets/css/**", "/css/**").permitAll()
-                .and()
-                .formLogin()
-                	.loginPage("/login")
-                	.successHandler(successHandler())
-                	.failureHandler(authenticationFailureHandler())
-                .and()
-                .logout().deleteCookies("JSESSIONID").logoutUrl("/logout").logoutSuccessUrl("/")
-                .and()
-                .csrf().disable();
         
         httpSecurity.headers().frameOptions().disable();
         
         //redirect by role
+        httpSecurity.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
         httpSecurity.authorizeRequests()
 		.antMatchers("/lodgement").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
 		.antMatchers("/reservation").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
@@ -81,9 +70,20 @@ public AuthenticationFailureHandler authenticationFailureHandler() {
 		.antMatchers("/lodgement/").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
 		.antMatchers("/reservation/").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
 		.antMatchers("/user/me/").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
-		.and().formLogin().loginPage("/").and()
+		.and()
         .exceptionHandling()
-        .accessDeniedPage("/access-denied");
+        .accessDeniedPage("/error");
         
+    	//access rights 
+        httpSecurity.authorizeRequests().antMatchers("/console/**","/register", "assets/css/**", "/css/**").permitAll()
+                .and()
+                .formLogin()
+                	.loginPage("/")
+                	.successHandler(successHandler())
+                	.failureHandler(authenticationFailureHandler())
+                .and()
+                .logout().deleteCookies("JSESSIONID").logoutSuccessUrl("/")
+                .and()
+                .csrf().disable();
 }
 }
