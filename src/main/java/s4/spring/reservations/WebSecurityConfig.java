@@ -70,9 +70,10 @@ public AuthenticationFailureHandler authenticationFailureHandler() {
 		.antMatchers("/lodgement/").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
 		.antMatchers("/reservation/").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
 		.antMatchers("/user/me/").access("hasRole('ROLE_USER') or hasRole('ROLE_HOST') or hasRole('ROLE_ADMIN')")
+		.antMatchers("/rest/**").access("hasRole('ROLE_ADMIN')")
 		.and()
         .exceptionHandling()
-        .accessDeniedPage("/error");
+        .accessDeniedPage("/error"); 
         
     	//access rights 
         httpSecurity.authorizeRequests().antMatchers("/console/**","/register", "assets/css/**", "/css/**").permitAll()
