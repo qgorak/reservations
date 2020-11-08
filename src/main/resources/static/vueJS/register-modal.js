@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 05 08:26:01 CET 2020
+//Script generated with VueComponent at Sun Nov 08 11:57:13 CET 2020
 Vue.component('register-modal',{
 	"props":[],"data":function() {
 		 return {
@@ -6,6 +6,19 @@ Vue.component('register-modal',{
 			}
 		;
 		}
-	,"template":"<v-dialog   v-model=\"registerModal\"   persistent   max-width=\"600\"   >   <v-card>      <v-card-title class=\"headline\">         Register      </v-card-title>      <v-card-text>      <register-stepper @toggle-modal=\"registerModal = false\"></register-stepper>      </v-card-text>                        <v-btn                      @click=\"registerModal = false\"                     text>                     Cancel                  </v-btn>   </v-card></v-dialog>"
+	,"methods":{
+		"reset":function (){
+			this.registerModal = false;
+			this.
+			$refs.stepper.e1=1;
+			this.
+			$refs.stepper.newUser.mail='';
+			this.
+			$refs.stepper.newUser.password='';
+			this.
+			$refs.stepper.newUser.password=''
+			}
+		}
+	,"template":"<v-dialog   v-model=\"registerModal\"   persistent   max-width=\"600\"   >   <v-card>      <v-card-title class=\"headline\">         Register      </v-card-title>      <v-card-text>      <register-stepper ref=\"stepper\" @toggle-modal=\"registerModal = false\"></register-stepper>      </v-card-text>                        <v-btn                      @click=\"reset\"                     text>                     Cancel                  </v-btn>   </v-card></v-dialog>"
 	}
 );

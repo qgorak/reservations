@@ -8,10 +8,10 @@
          Register
       </v-card-title>
       <v-card-text>
-      <register-stepper @toggle-modal="registerModal = false"></register-stepper>
+      <register-stepper ref="stepper" @toggle-modal="registerModal = false"></register-stepper>
       </v-card-text>
                         <v-btn 
-                     @click="registerModal = false"
+                     @click="reset"
                      text>
                      Cancel
                   </v-btn>
