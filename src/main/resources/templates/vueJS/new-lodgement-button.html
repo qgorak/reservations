@@ -4,14 +4,17 @@
       hide-overlay
       >
         <template v-slot:activator="{ on }">
-    <v-btn color="red lighten-2" dark v-on="on"><slot></slot></v-btn>
+    <v-btn color="primary"><slot></slot></v-btn>
   </template>
   <v-card>
       <v-card-title class="headline">
          Ajoutons ensemble un logement
       </v-card-title>
-      <v-stepper v-model="e1" >
-         <v-stepper-header>
+      <v-stepper 
+      class="elevation-0"
+      v-model="e1" >
+         <v-stepper-header
+         class="elevation-0">
             <v-stepper-step
                :complete="e1 > 1"
                step="1"
@@ -30,7 +33,7 @@
                :complete="e1 > 3"
                step="3"
                >
-               localisation
+               Localisation
             </v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step 
@@ -52,8 +55,8 @@
          <v-stepper-items>
             <v-stepper-content step="1">
                <v-card
-                  class="mb-12"
-                  height="200px"
+                  class="mb-12 elevation-0"
+                  height="auto"
                   >
                   <v-row justify="center">
                      <v-select
@@ -66,16 +69,17 @@
                <v-btn
                   color="primary"
                   @click="e1 = 2"
+                  class="mx-auto"
                   >
-                  Continue
+                  Suivant
                </v-btn>
-               <v-btn  @click="dialog = false" text>
-                  Cancel
+               <v-btn  class="mx-auto" @click="dialog = false" text>
+                  Retour
                </v-btn>
             </v-stepper-content>
             <v-stepper-content step="2">
                <v-card
-                  class="mb-12"
+                  class="mb-12 elevation-0"
                   height="400px"
                   >
                   <v-row justify="center">
@@ -101,16 +105,16 @@
                   color="primary"
                   v-on:click="e1 = 3;verifySelected()"
                   >
-                  Continue
+                  Suivant
                </v-btn>
                <v-btn @click="e1 = 1">
-                  Cancel
+                  Retour
                </v-btn>
             </v-stepper-content>
             <v-stepper-content step="3">
                <v-card
-                  class="mb-12"
-                  height="200px"
+                  class="mb-12 elevation-0"
+                  height="auto"
                   >
                   <v-row justify="center">
                      <adress-autocomplete ref="adress"></adress-autocomplete>
@@ -121,15 +125,15 @@
                   color="primary"
                   @click="e1 = 4"
                   >
-                  Continue
+                  Suivant
                </v-btn>
                <v-btn @click="e1 = 2">
-                  Cancel
+                  Retour
                </v-btn>
             </v-stepper-content>
             <v-stepper-content step="4">
                <v-card
-                  class="mb-12"
+                  class="mb-12 elevation-0"
                   height="500px"
                   >
                   
@@ -156,7 +160,7 @@
                         class="display-3 font-weight-light"
                         v-text="newLodgement.price"
                         ></span>
-                     <span class="subheading font-weight-light mr-1">€ par nuit</span>
+                     <span class="subheading font-weight-light mr-1">â‚¬ par nuit</span>
                   </v-col>
                </v-row>
                <v-slider
@@ -188,16 +192,16 @@
                   color="primary"
                   @click="e1 = 5"
                   >
-                  Continue
+                  Suivant
                </v-btn>
                <v-btn  @click="dialog = false" text>
-                  Cancel
+                  Retour
                </v-btn>
             </v-stepper-content>
             <v-stepper-content step="5">
                <v-card
-                  class="mb-12"
-                  height="200px"
+                  class="mb-12 elevation-0"
+                  height="auto"
                   >
                   <v-row justify="center">
                      <v-select
@@ -218,16 +222,17 @@
                	  v-if="(newLodgement.nbr_room != null && newLodgement.nbr_place != null)"	
                   color="primary"
                   @click="postLodgement()"
+                  class="mx-auto"
                   >
                   Suivant
                </v-btn>
                <v-btn @click="e1 = 4">
-                  Cancel
+                  Retour
                </v-btn>
             </v-stepper-content>
             <v-stepper-content step="6">
                <v-card
-                  class="mb-12"
+                  class="mb-12 elevation-0"
                   >
 			<images-manager ref="images" :lodgement="newLodgement"></images-manager>
 			               <v-btn
@@ -237,7 +242,7 @@
                   Post
                </v-btn>
                <v-btn @click="e1 = 5">
-                  Cancel
+                  Retour
                </v-btn>
                </v-card>
 

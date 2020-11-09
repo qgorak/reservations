@@ -13,20 +13,20 @@
       ></v-progress-linear>
     </div>
       <v-card-title class="headline">
-         Login
+         Connexion
       </v-card-title>
       <v-card-text>
       <div v-if="errorLogin!==null">{{errorLogin}}</div>
       
                  <v-text-field
         v-model="username"
-        label="Username"
+        label="Nom d'utilisateur"
         :rules="usernameRules"
         required
       ></v-text-field>
                                 <v-text-field
         v-model="password"
-        label="Password"
+        label="Mot de passe"
         counter
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :type="showPassword ? 'text' : 'password'"
@@ -43,7 +43,7 @@
          text
          @click="dialog = false"
          >
-      Cancel
+      Retour
       </v-btn>
       <v-btn
          color="green darken-1"
@@ -51,7 +51,7 @@
          :disabled="!valid"
          @click="login()"
          >
-      Login
+      Connexion
       </v-btn>
 
       </v-card-actions>

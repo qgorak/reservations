@@ -1,13 +1,13 @@
                   <v-data-iterator
+                  	 style="width:100%;"
                      :items="images"
                      hide-default-footer
                      >
                      <template v-slot:header>
                         <v-toolbar
-                           class="mb-2"
-                           color="indigo darken-5"
-                           dark
-                           flat
+                           color="primary"
+                           class="mb-2 white--text"
+                           dense
                            >
                            <v-toolbar-title>Photos de l'annonce</v-toolbar-title>
                         </v-toolbar>
@@ -46,8 +46,7 @@
                      <template v-slot:footer>
                         <v-toolbar
                            class="mt-2"
-                           color="indigo"
-                           dark
+                           color="primary"
                            flat
                            >
                            Ajouter une photo

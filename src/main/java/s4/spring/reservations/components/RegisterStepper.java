@@ -13,6 +13,7 @@ public class RegisterStepper {
     compo.addData("showPassword",false);
 	compo.addData("timeOut",null);
 	compo.addData("usernameValid",false);
+	compo.addMethod("test","this.$emit('toggle-modal');");
     compo.addDataRaw("passwordRules","["
             +"  v => !!v || 'Password is required',"
             +"]");

@@ -5,7 +5,7 @@
       transition="dialog-bottom-transition"
       >
         <template v-slot:activator="{ on }">
-    <v-btn color="red lighten-2" dark v-on="on"><slot></slot></v-btn>
+    <v-btn color="primary" dark v-on="on"><slot></slot></v-btn>
   </template>
 <v-card>
          <v-btn
@@ -24,22 +24,11 @@
                dense
                >
                <v-toolbar-title>
-                  <span class="subheading">Type</span>
+                  <span class="subheading">Récapitulatif</span>
                </v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-               {{lodgement.type}}
-            </v-card-text>
-            <v-toolbar
-               flat
-               dense
-               >
-               <v-toolbar-title>
-                  <span class="subheading">Caractéristiques</span>
-               </v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-               {{lodgement.nbr_place}} voyageurs, {{lodgement.nbr_room}} pièce(s)
+               {{lodgement.type}}, {{lodgement.nbr_place}} voyageurs, {{lodgement.nbr_room}} pièce(s)
             </v-card-text>
          </v-card>
       </v-col>
@@ -47,7 +36,7 @@
    <v-row class="ma-0 pa-0">
       <v-col cols="12">
          <v-card
-            class="mx-auto"
+            class="mx-auto elevation-0"
             >
             <v-toolbar
                flat
@@ -70,7 +59,7 @@
    <v-row class="ma-0 pa-0">
       <v-col cols="12">
          <v-card
-            class="mx-auto"
+            class="mx-auto elevation-0"
             >
             <v-toolbar
                flat
@@ -120,7 +109,7 @@
    <v-row class="ma-0 pa-0">
       <v-col cols="12">
          <v-card
-            class="mx-auto"
+            class="mx-auto elevation-0"
             >
             <v-toolbar
                flat
@@ -140,15 +129,15 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-text>
-               <v-btn  color="green" @click="updateLodgement(lodgement)" >Mettre à jour l'annonce</v-btn>
+               <v-btn  class="white--text" color="green" @click="updateLodgement(lodgement)" >Mettre à jour l'annonce</v-btn>
             </v-card-text>
          </v-card>
       </v-col>
    </v-row>
    <v-row class="ma-0 pa-0">
       <images-manager v-if="lodgement!==null" :lodgement="lodgement"></images-manager>
-   <v-btn v-if="lodgement.status=='ONLINE'" color="green" @click="lodgement.status='OFFLINE';updateLodgement(lodgement)" >Desactiver l'annonce</v-btn>
-   <v-btn v-if="lodgement.status=='OFFLINE'" color="green" @click="lodgement.status='ONLINE';updateLodgement(lodgement)" >Mettre l'annonce en ligne</v-btn>
+   <v-btn v-if="lodgement.status=='ONLINE'" class="white--text" color="green" @click="lodgement.status='OFFLINE';updateLodgement(lodgement)" >Désactiver l'annonce</v-btn>
+   <v-btn v-if="lodgement.status=='OFFLINE'" class="white--text" color="green" @click="lodgement.status='ONLINE';updateLodgement(lodgement)" >Mettre l'annonce en ligne</v-btn>
    </v-row>
 </v-card>
    </v-dialog>
