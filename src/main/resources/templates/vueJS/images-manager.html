@@ -44,17 +44,12 @@
                         </v-row>
                      </template>
                      <template v-slot:footer>
-                        <v-toolbar
-                           class="mt-2"
-                           color="primary"
-                           flat
-                           >
-                           Ajouter une photo
                            <v-file-input
                               v-model="file"
                               accept="image/*"
+                              class="mx-2"
+                              label="Ajouter une image"
                               ></v-file-input>
                            <v-btn v-if="file != null" @click="postImage()">Ajouter</v-btn>
-                        </v-toolbar>
                      </template>
                   </v-data-iterator>

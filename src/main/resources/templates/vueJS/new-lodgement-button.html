@@ -4,7 +4,7 @@
       hide-overlay
       >
         <template v-slot:activator="{ on }">
-    <v-btn color="primary"><slot></slot></v-btn>
+    <v-btn color="primary" v-on="on"><slot></slot></v-btn>
   </template>
   <v-card>
       <v-card-title class="headline">
