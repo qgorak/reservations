@@ -7,16 +7,14 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class MyErrorController implements ErrorController  {
 
 	@RequestMapping("/error")
-	public String handleError(HttpServletRequest request,ModelMap model) {
-	    Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-	    Integer statusCode = Integer.valueOf(status.toString());
-	    model.addAttribute("error",statusCode);
-	    return "error";
+	public RedirectView handleError(HttpServletRequest request,ModelMap model) {
+		return new RedirectView("/");
 	}
 @Override
 public String getErrorPath() {
