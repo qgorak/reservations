@@ -7,7 +7,7 @@ import io.github.jeemv.springboot.vuejs.components.VueComponent;
 public class Avatar {
     public static void main(String[]args) throws IOException {
     VueComponent compo=new VueComponent("avatar");
-    compo.setProps("user");
+    compo.setProps("user","size");
     compo.addDataRaw("avatar","{src:null,initials:null}");
 	compo.addMethod("getAvatar",""
 			+ "let self = this;"

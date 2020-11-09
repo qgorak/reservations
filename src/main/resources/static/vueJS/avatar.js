@@ -1,6 +1,6 @@
-//Script generated with VueComponent at Mon Nov 02 10:25:40 CET 2020
+//Script generated with VueComponent at Mon Nov 09 16:55:28 CET 2020
 Vue.component('avatar',{
-	"props":["user"],"data":function() {
+	"props":["size","user"],"data":function() {
 		 return {
 			"avatar":{
 				src:null,initials:null
@@ -30,6 +30,6 @@ Vue.component('avatar',{
 	,"beforeMount":function(){
 		this.getAvatar();
 		}
-	,"template":"<div><v-avatar        v-if=\"avatar.src!=null\"          color=\"white\"          size=\"56\">        <img          v-bind:src=\"avatar.src\"          alt=\"John\"        ></v-avatar>         <v-avatar                 v-if=\"avatar.initials!=null\"                color=\"brown\"                size=\"56\"              >                <span class=\"white--text headline\">{{ avatar.initials}} </span>              </v-avatar>              </div>"
+	,"template":"<div><v-avatar        v-if=\"avatar.src!=null\"          color=\"white\"          :size=\"size\">        <img          v-bind:src=\"avatar.src\"          alt=\"John\"        ></v-avatar>         <v-avatar                 v-if=\"avatar.initials!=null\"                color=\"brown\"                :size=\"size\"              >                <span class=\"white--text headline\">{{ avatar.initials}} </span>              </v-avatar>              </div>"
 	}
 );
