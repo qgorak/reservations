@@ -34,7 +34,7 @@
     </v-col>
           <v-col
          cols="6"
-         >
+         > <avatar v-if="user.id!==''" :user="user" :size=160></avatar>
               <v-file-input
   v-model="file"
   accept="image/*"
