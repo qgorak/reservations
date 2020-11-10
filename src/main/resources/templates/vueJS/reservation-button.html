@@ -21,7 +21,7 @@
             <v-col
                cols="6"
                >
-               <h1>Confirmez et payer</h1>
+               <h1>Confirmer et payer</h1>
                <v-divider></v-divider>
             </v-col>
          </v-row>
@@ -32,18 +32,17 @@
             <v-col
                cols="6"
                >
-               <H2>Votre voyage:</H2>
-               <H3>Dates:</H3>
+               <h2>Votre voyage:</h2>
+               <h3>Dates:</h3>
 				{{dates[0]}} au {{dates[1]}}
-               <H3>Voyageurs:</H3>
-               <%nbTravellers%>
+               <h3>Voyageurs:</h3>
+               {{nbTravellers}}
                <v-divider></v-divider>
-               <H3>Requis:</H3>
+               <h3>Requis:</h3>
                <v-textarea
                   rounded
                   label="Envoyez un message à l'hôte"
-                  value="Communiquez votre heure d'arrivée et le motif de votre voyage à votre hôte."
-                  outlined
+                  solo
                   ></v-textarea>
                <v-btn
                   color="primary"
@@ -67,9 +66,9 @@
                   </v-carousel>
                   <v-divider></v-divider>
                   <v-list-item-content>
-                     <H3>Details du prix</H3>
+                     <h3>Détails du prix</h3>
                   </v-list-item-content>
-                  <v-list-item-content>{{lodgement.price}}</v-list-item-content>
+                  <v-list-item-content>{{lodgement.price}} €</v-list-item-content>
                   </v-card>
             </v-col>
          </v-row>

@@ -8,7 +8,7 @@ import io.github.jeemv.springboot.vuejs.utilities.Http;
 public class SearchResults {
     public static void main(String[]args) throws IOException {
         VueComponent compo=new VueComponent("search-results");
-		compo.setProps("result");
+		compo.setProps("result","nbTravellers");
 		compo.addData("map",null);
 		compo.addDataRaw("markers","{}");
 		compo.addDataRaw("background","{}");
