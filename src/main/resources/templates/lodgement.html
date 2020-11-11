@@ -36,17 +36,27 @@
             outlined
             >
             <v-list-item three-line>
-               <v-list-item-content>
-                  
+               <v-list-item-content>           
                   <date-picker @dates-change="validReservation=true" ref="datesRes" class="elevation-0"></date-picker>
-                  <div v-if="validReservation">
- 					<%lodgement.price%> € la nuit
- 					</div>
                </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+            	<v-list-item-content>
+            		   <v-select    
+					      :items="nb"
+					      v-model="finalNbr"
+					      :hind="finalNbr"
+					      prepend-icon="mdi-account"
+					      dense
+					      hide-details
+					      label="Nombre de voyageurs"
+					      ></v-select>
+            	</v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
             <v-card-actions v-if="validReservation">
-               <reservation-button :nbr="nbr" :lodgement="lodgement" :images="images" :nbr="nbr" :dates="$refs.datesRes.dates" >Reserver</reservation-button>
+ 				<!-- <%lodgement.price%> € la nuit -->
+               <reservation-button :nbr="finalNbr" :lodgement="lodgement" :images="images" :dates="$refs.datesRes.dates" >Réserver</reservation-button>
             </v-card-actions>
          </v-card>
       </v-col>

@@ -1,6 +1,6 @@
-//Script generated with VueComponent at Wed Nov 11 17:48:53 CET 2020
+//Script generated with VueComponent at Wed Nov 11 18:48:39 CET 2020
 Vue.component('reservation-button',{
-	"props":["images","lodgement","nbr"],"data":function() {
+	"props":["images","lodgement","dates","nbr"],"data":function() {
 		 return {
 			"dialog":false,"reservation":{
 				start:'',end:'',lodgement:''

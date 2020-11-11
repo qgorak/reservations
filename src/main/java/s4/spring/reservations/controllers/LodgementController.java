@@ -25,7 +25,7 @@ public class LodgementController {
 	}
 	
 	@RequestMapping("/lodgement/search")
-	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
+	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,@RequestParam(name="nbr" ) String nbr,@RequestParam(name="start" ) String start,@RequestParam(name="end" ) String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
 		vue.addData("result", null);
 		vue.addData("nbr",nbr);
 		vue.addData("start",start);
@@ -66,10 +66,12 @@ public class LodgementController {
 	}	
 
 	@RequestMapping("lodgement/{idLogement}")
-    public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user,@RequestParam(name="nbr", defaultValue="null") String nbr,@RequestParam(name="start", defaultValue="null") String start,@RequestParam(name="end", defaultValue="null") String end) {
+    public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user,@RequestParam(name="nbr") String nbr,@RequestParam(name="start" ) String start,@RequestParam(name="end" ) String end) {
 		vue.addData("lodgement",null);
 		vue.addDataRaw("images", "[]");
-		vue.addData("nbr",nbr);
+		vue.addDataRaw("nb","['1','2','3','4','5']");
+		nbr=(!nbr.equals("null")) ? nbr : new String("");
+		vue.addData("finalNbr",nbr);
 		vue.addDataRaw("choosenDates","['"+start+"','"+end+"']");
 		vue.addData("validReservation",false);
 		vue.onBeforeMount("let self=this;" + Http.get("/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent")

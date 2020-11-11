@@ -8,7 +8,7 @@ import io.github.jeemv.springboot.vuejs.utilities.Http;
 public class ButtonReservation {
     public static void main(String[]args) throws IOException {
         VueComponent compo=new VueComponent("reservation-button");
-        compo.setProps("lodgement","images","nbr");
+        compo.setProps("lodgement","images","dates","nbr");
         compo.addData("dialog",false);
         compo.addDataRaw("reservation","{start:'',end:'',lodgement:''}");
 		compo.addMethod("postReservation", "let self=this;this.reservation.start=this.dates[0];"
