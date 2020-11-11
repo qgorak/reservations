@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Sat Oct 31 20:43:57 CET 2020
+//Script generated with VueComponent at Wed Nov 11 15:27:14 CET 2020
 Vue.component('date-picker',{
 	"props":[],"data":function() {
 		 return {
@@ -61,9 +61,17 @@ return date;
 			return this.dates.join(' au ')
 			}
 		}
-	,"beforeMount":function(){
-		this.datemin=new Date().toLocaleDateString('fr-CA');
+	,"watch":{
+		"dates":function (val,oldVal){
+			if(this.dates.length==2){
+				this.
+				$emit('date-change');
+				}
+			}
 		}
-	,"template":"      <v-date-picker          v-model=\"dates\"         range         :min=\"datemin\"         no-title         ></v-date-picker>"
+	,"beforeMount":function(){
+		this.datemin=new Date().toLocaleDateString('fr-FR');
+		}
+	,"template":"<v-date-picker v-model=\"dates\" range :min=\"datemin\" no-title locale=\"fr-FR\"></v-date-picker>"
 	}
 );

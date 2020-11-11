@@ -38,15 +38,15 @@
             <v-list-item three-line>
                <v-list-item-content>
                   
-                  <date-picker ref="dates" class="elevation-0"></date-picker>
+                  <date-picker @date-change="validReservation=true" ref="dates" class="elevation-0"></date-picker>
                   <div v-if="$refs.dates !== undefined">
  					<%lodgement.price%> € la nuit
  					</div>
                </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
-            <v-card-actions>
-               <reservation-button v-if="$refs.dates !== undefined" :lodgement="lodgement" :images="images" :dates="$refs.dates.dates" >Reserver</reservation-button>
+            <v-card-actions v-show="validReservation">
+               <reservation-button v-if="$refs.dates !== undefined" :nbr="nbr" :lodgement="lodgement" :images="images" :dates="$refs.dates.dates" >Reserver</reservation-button>
             </v-card-actions>
          </v-card>
       </v-col>

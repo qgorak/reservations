@@ -23,7 +23,8 @@ public class DatePicker {
 		catch (IOException e) {e.printStackTrace();}
 		try {compo.addMethod("parseDate",JavascriptResource.create("parseDate").parseContent(),"date");}
 		catch (IOException e) {e.printStackTrace();}
-		compo.onBeforeMount("this.datemin=new Date().toLocaleDateString('fr-CA');");
+		compo.onBeforeMount("this.datemin=new Date().toLocaleDateString('fr-FR');");
+		compo.addWatcher("dates","if(this.dates.length==2){this.$emit('date-change');}");
         compo.setDefaultTemplateFile();
         compo.createFile(false);
     }
