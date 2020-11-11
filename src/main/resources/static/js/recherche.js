@@ -1,5 +1,5 @@
 selected = this.$refs.adress.selected.geometry.coordinates.join('&lat=');
-if(this.$refs.dats!=null){
+if(this.$refs.dates!=null){
 dates = this.$refs.dates.dates;
 }else{
 dates=[];

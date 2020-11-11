@@ -70,11 +70,9 @@ public class LodgementController {
 		vue.addData("lodgement",null);
 		vue.addDataRaw("images", "[]");
 		vue.addData("nbr",nbr);
-		vue.addData("start",start);
-		vue.addData("end",end);
+		vue.addDataRaw("choosenDates","['"+start+"','"+end+"']");
 		vue.addData("validReservation",false);
-		vue.onBeforeMount(""
-				+"let self=this;" + Http.get("/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent")
+		vue.onBeforeMount("let self=this;" + Http.get("/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent")
 				+Http.get("/rest/image/lodgement/"+idLogement, ""
 				+ "for(k=0;k<response.data.length-1;k++){"
 				+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.id+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})"
