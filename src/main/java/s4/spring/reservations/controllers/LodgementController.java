@@ -25,7 +25,7 @@ public class LodgementController {
 	}
 	
 	@RequestMapping("/lodgement/search")
-	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,@RequestParam(name="nbr" ) String nbr,@RequestParam(name="start" ) String start,@RequestParam(name="end" ) String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
+	public String resultSearch(@AuthenticationPrincipal MyUserDetails user,ModelMap model,@RequestParam(name="nbr",defaultValue="null") String nbr,@RequestParam(name="start",defaultValue="null") String start,@RequestParam(name="end" ,defaultValue="null") String end,@RequestParam(name="lat") String lat,@RequestParam(name="lon") String lon) {
 		vue.addData("result", null);
 		vue.addData("nbr",nbr);
 		vue.addData("start",start);

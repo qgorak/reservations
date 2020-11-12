@@ -14,7 +14,7 @@
    <v-divider></v-divider>
    <H2>
       <%lodgement.type%>. Hote: <%host.login%>                      
-     <avatar :user="lodgement.rent"></avatar>
+     <avatar v-if="lodgement!==null" :user="lodgement.rent"></avatar>
    </H2>
    <H3><%lodgement.nbr_place%> voyageurs, <%lodgement.nbr_room%> pièce(s)</H3>
    <v-divider></v-divider>
