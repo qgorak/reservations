@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 12 09:31:45 CET 2020
+//Script generated with VueComponent at Thu Nov 12 21:39:28 CET 2020
 Vue.component('date-picker',{
 	"props":[],"data":function() {
 		 return {
@@ -18,9 +18,14 @@ Vue.component('date-picker',{
 		this.datemin=new Date().toLocaleDateString('fr-CA');
 		var urlParams = new URLSearchParams(window.location.search);
 		var start = urlParams.get('start');
-		this.dates[0]=start;
 		var end = urlParams.get('end');
-		this.dates[1]=end;
+		if(start!=null && end!=null){
+			this.dates[0]=start;
+			this.dates[1]=end;
+			console.log(this.dates);
+			this.
+			$emit('dates-change');
+			}
 		}
 	,"template":"      <v-date-picker          v-model=\"dates\"         range         :min=\"datemin\"         no-title         locale=\"fr-FR\"         ></v-date-picker>"
 	}

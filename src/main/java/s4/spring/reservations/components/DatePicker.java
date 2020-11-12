@@ -15,9 +15,13 @@ public class DatePicker {
 		compo.onBeforeMount("this.datemin=new Date().toLocaleDateString('fr-CA');"
 				+ "var urlParams = new URLSearchParams(window.location.search);"
 				+ "var start = urlParams.get('start');"
-				+ "this.dates[0]=start;"
 				+ "var end = urlParams.get('end');"
-				+ "this.dates[1]=end;");
+				+ "if(start!=null && end!=null){"
+				+ "this.dates[0]=start;"
+				+ "this.dates[1]=end;"
+				+ "console.log(this.dates);"
+				+ "this.$emit('dates-change');"
+				+ "}");
 		compo.addWatcher("dates","if(this.dates.length==2){this.$emit('dates-change');}");
         compo.setDefaultTemplateFile();
         compo.createFile(false);
