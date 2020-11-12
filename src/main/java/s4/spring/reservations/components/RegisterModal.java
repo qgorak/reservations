@@ -44,6 +44,7 @@ public class RegisterModal {
 			+"	this.destination={name:null,loc:null};"
 			+"	this.search=[];"
 			+"}");
+	compo.addWatcher("newUser.mail","this.disableEmail=true;var temp=this.newUser.mail.split('@');if(temp.length==2 && temp[0].length>=1 && temp[1].length>=1){temp=temp[1].split('.');if(temp.length==2 && temp[0].length>=1 && temp[1].length>=1){this.disableEmail=false}}");
 	compo.addMethod("registerUser", "let self=this;" + Http.post( "/rest/users/","self.newUser", "self.$emit('toggle-modal');"));
 	//compo.addMethod("validEmail","");
     compo.setDefaultTemplateFile();
