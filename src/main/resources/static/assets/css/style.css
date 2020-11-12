@@ -42,6 +42,10 @@ html{
 	cursor: pointer !important;
 }
 
+.v-toolbar-title {
+	cursor: pointer;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 	.autoSuggest xl{

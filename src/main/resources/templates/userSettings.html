@@ -15,6 +15,14 @@
       label="login"
       required
     ></v-text-field>
+    
+    <v-text-field
+         v-model="user.password"
+         :counter="20"
+         label="password"
+         required
+         >
+     </v-text-field>
 
     <v-text-field
       v-model="user.mail"

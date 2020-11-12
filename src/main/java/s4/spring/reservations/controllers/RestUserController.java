@@ -59,6 +59,7 @@ public class RestUserController extends AbstractRestController<User>{
 	protected void updateObject(User toUpdateObject, User originalObject) {
 		toUpdateObject.setMail(originalObject.getMail());
 		toUpdateObject.setLogin(originalObject.getLogin());
+		toUpdateObject.setPassword(passwordEncoder.encode(originalObject.getPassword()));
 
 	}
 	
