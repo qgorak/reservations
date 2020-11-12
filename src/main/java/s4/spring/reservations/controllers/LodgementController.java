@@ -66,7 +66,7 @@ public class LodgementController {
 	}	
 
 	@RequestMapping("lodgement/{idLogement}")
-    public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user,@RequestParam(name="nbr") String nbr,@RequestParam(name="start" ) String start,@RequestParam(name="end" ) String end) {
+    public String lodgementPage(@PathVariable int idLogement, ModelMap model,@AuthenticationPrincipal MyUserDetails user,@RequestParam(name="nbr" ,defaultValue="null") String nbr,@RequestParam(name="start" ,defaultValue="null") String start,@RequestParam(name="end" ,defaultValue="null") String end) {
 		vue.addData("lodgement",null);
 		vue.addDataRaw("images", "[]");
 		vue.addDataRaw("nb","['1','2','3','4','5']");
