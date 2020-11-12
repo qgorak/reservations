@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 12 21:39:28 CET 2020
+//Script generated with VueComponent at Thu Nov 12 21:51:55 CET 2020
 Vue.component('date-picker',{
 	"props":[],"data":function() {
 		 return {

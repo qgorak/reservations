@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Mon Nov 09 21:23:03 CET 2020
+//Script generated with VueComponent at Thu Nov 12 22:06:12 CET 2020
 Vue.component('new-lodgement-button',{
 	"props":["draft"],"data":function() {
 		 return {
