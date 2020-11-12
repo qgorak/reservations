@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 12 09:47:36 CET 2020
+//Script generated with VueComponent at Thu Nov 12 20:40:45 CET 2020
 Vue.component('search-results',{
 	"props":["result","start","end","nbr"],"data":function() {
 		 return {
