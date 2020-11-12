@@ -32,7 +32,20 @@ public class SearchResults {
 				+ "})"
 				+ "}"
 				);
-		compo.addMethod("redirect", "window.location.href='/lodgement/'+id+'?start='+this.end+'&end='+this.start+'&nbr='+this.nbr;"
+		compo.addMethod("redirect", ""
+				+
+				"if(this.nbr!=='null' && this.start!=='null' && this.end!=='null'){" + 
+				"window.location.href='/lodgement/'+id+'?start='+this.start+'&end='+this.end+'&nbr='+this.nbr;" + 
+				"}\r\n" + 
+				"else if(this.nbr!=='null'){" + 
+				"window.location.href='/lodgement/'+id+'?nbr='+this.nbr;"+
+				"}" + 
+				"else if(this.start!=='null' && this.end!=='null'){" + 
+				"window.location.href='/lodgement/'+id+'?start='+this.start+'&end='+this.end;" + 
+				"}" + 
+				"else{" + 
+				"window.location.href='/lodgement/'+id" + 
+				"}"
 				,"id");
 		compo.onBeforeMount("let self=this;"
 				+ "		var element = document.getElementById('osm-map');"

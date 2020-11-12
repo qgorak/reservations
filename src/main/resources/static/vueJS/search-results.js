@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Wed Nov 11 14:24:01 CET 2020
+//Script generated with VueComponent at Thu Nov 12 09:47:36 CET 2020
 Vue.component('search-results',{
 	"props":["result","start","end","nbr"],"data":function() {
 		 return {
@@ -12,7 +12,18 @@ Vue.component('search-results',{
 		}
 	,"methods":{
 		"redirect":function (id){
-			window.location.href='/lodgement/'+id+'?start='+this.end+'&end='+this.start+'&nbr='+this.nbr;
+			if(this.nbr!=='null' && this.start!=='null' && this.end!=='null'){
+				window.location.href='/lodgement/'+id+'?start='+this.start+'&end='+this.end+'&nbr='+this.nbr;
+				}			
+else if(this.nbr!=='null'){
+				window.location.href='/lodgement/'+id+'?nbr='+this.nbr;
+				}
+			else if(this.start!=='null' && this.end!=='null'){
+				window.location.href='/lodgement/'+id+'?start='+this.start+'&end='+this.end;
+				}
+			else{
+				window.location.href='/lodgement/'+id
+				}
 			}
 		,"showPopup":function (i){
 			let self=this;
