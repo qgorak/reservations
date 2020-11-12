@@ -77,7 +77,7 @@ public class LodgementController {
 		vue.onBeforeMount("let self=this;" + Http.get("/rest/lodgements/"+idLogement, "self.lodgement=response.data;self.host=response.data.rent")
 				+Http.get("/rest/image/lodgement/"+idLogement, ""
 				+ "for(k=0;k<response.data.length-1;k++){"
-				+ "self.images.push({src: '/user-photos/'+self.lodgement.rent.id+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})"
+				+ "self.images.push({src: '/user-photos/'+self.host.id+'/lodgement/'+self.lodgement.id+'/'+response.data[k]})"
 				+ "};"));
         return "lodgement";
        }

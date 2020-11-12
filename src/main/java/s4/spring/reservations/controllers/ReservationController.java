@@ -25,7 +25,7 @@ public class ReservationController {
 	@RequestMapping("/reservation")
     public String lodgementPage( ModelMap model,@AuthenticationPrincipal MyUserDetails user) {
 		vue.addDataRaw("reservations","''");
-		vue.onBeforeMount("let self=this;" + Http.get("http://127.0.0.1:8080/rest/reservations/my", "self.reservations=response.data"));
+		vue.onBeforeMount("let self=this;" + Http.get("/rest/reservations/my", "self.reservations=response.data"));
         return "reservation";
        }
 	
