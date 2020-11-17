@@ -3,6 +3,7 @@ package s4.spring.reservations.components;
 import java.io.IOException;
 
 import io.github.jeemv.springboot.vuejs.components.VueComponent;
+import io.github.jeemv.springboot.vuejs.utilities.Http;
 
 public class Drawer {
     public static void main(String[]args) throws IOException {
@@ -24,7 +25,8 @@ public class Drawer {
 				+ "    break;\r\n"
 				+ "  case '3':\r\n"
 				+ "document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';"
-				+ "window.location.href='/logout';"
+				+ Http.post("/logout", "")
+				+ "document.location.reload(true);"
 				+ "	   break;"
 				+ "  default:}","number");
 		compo.onBeforeMount("this.getMenuItems();");

@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Tue Nov 17 14:07:28 CET 2020
+//Script generated with VueComponent at Tue Nov 17 15:15:23 CET 2020
 Vue.component('drawer',{
 	"props":["user"],"data":function() {
 		 return {
@@ -21,7 +21,13 @@ this.
 				    break;				
   case '3':
 document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-				window.location.href='/logout';
+				this.
+				$http['post']('/logout', {
+					}
+				).then(function(response){
+					}
+				);
+				document.location.reload(true);
 					   break;
 				  default:
 				}

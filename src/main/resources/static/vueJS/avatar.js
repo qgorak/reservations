@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Mon Nov 09 16:55:28 CET 2020
+//Script generated with VueComponent at Tue Nov 17 14:34:07 CET 2020
 Vue.component('avatar',{
 	"props":["size","user"],"data":function() {
 		 return {

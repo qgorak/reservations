@@ -40,12 +40,14 @@ public class LoginModal {
         	    + "		 self.dialog=false;"
         	    + "			self.query=false;"
         	    + "			self.showProgressBar=false;"
+        	    + "			self.$root.$refs.alert.triggerAlert('success','Successful Log in')"
         	    + "     })"
         	    + "   .catch((error) => {"
         	    + "		 if(error.response!=null){"
         	    + "			self.errorLogin = error.response.data.exception;"
         	    + "			self.query=false;"
         	    + "			self.showProgressBar=false;"
+        	    + "			self.$root.$refs.alert.triggerAlert('error','Log in failed')"
         	    + "		  }"
         	    + "})");
         compo.onBeforeDestroy("clearInterval(this.interval)");

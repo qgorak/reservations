@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Thu Nov 12 20:27:24 CET 2020
+//Script generated with VueComponent at Tue Nov 17 15:00:14 CET 2020
 Vue.component('register-modal',{
 	"props":[],"data":function() {
 		 return {
@@ -19,6 +19,9 @@ Vue.component('register-modal',{
 			$http['post']('/rest/users/', self.newUser).then(function(response){
 				self.
 				$emit('toggle-modal');
+				self.
+				$root.
+				$refs.alert.triggerAlert('success','vous avez bien été inscrit sous le nom de:'+self.newUser.login)
 				}
 			);
 			}

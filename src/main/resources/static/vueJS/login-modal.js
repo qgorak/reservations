@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Mon Nov 09 18:36:52 CET 2020
+//Script generated with VueComponent at Tue Nov 17 14:54:19 CET 2020
 Vue.component('login-modal',{
 	"props":[],"data":function() {
 		 return {
@@ -53,12 +53,18 @@ Vue.component('login-modal',{
 						 self.dialog=false;
 							self.query=false;
 							self.showProgressBar=false;
+							self.
+				$root.
+				$refs.alert.triggerAlert('success','Successful Log in')     
 				}
 			)   .catch((error) => {
 						 if(error.response!=null){
 								self.errorLogin = error.response.data.exception;
 								self.query=false;
 								self.showProgressBar=false;
+								self.
+					$root.
+					$refs.alert.triggerAlert('error','Log in failed')		  
 					}
 				}
 			)
