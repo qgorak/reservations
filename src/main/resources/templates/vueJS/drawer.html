@@ -4,7 +4,7 @@
    temporary
    app>
    <login-modal ref="login"></login-modal>
-   <register-modal ref="register"></register-modal>
+   <register-modal @toggle-modal="$refs.register.registerModal = false" ref="register"></register-modal>
           <v-list v-if="user.id!==''">
           <v-list-item>
               <avatar v-if="user.id!==''" :user="user" :size="56"></avatar>
