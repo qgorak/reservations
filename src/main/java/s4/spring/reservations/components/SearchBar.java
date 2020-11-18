@@ -12,6 +12,15 @@ public class SearchBar {
 		compo.addData("nbTravellers","null");
 		compo.addData("menuDate",false);
 		compo.addData("datesText");
+		compo.addData("shrinkOnScroll",true);
+		compo.addData("shrinked",false);
+		compo.onMounted("window.onscroll = () => {this.changeColor();};");
+		compo.addMethod("changeColor",
+				"if (document.body.scrollTop > 72 ||document.documentElement.scrollTop > 72) {"
+		        + "this.shrinked = true;"
+		        +"} else {"
+		        + "this.shrinked = false;"
+		        +"}");
 		try {compo.addMethod("recherche",JavascriptResource.create("recherche").parseContent());}
 		catch (IOException e) {e.printStackTrace();}
 		compo.addMethod("datesTextMethod","this.datesText=this.$refs.dates.dates.join(' au ');");

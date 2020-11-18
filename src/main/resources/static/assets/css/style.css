@@ -44,8 +44,28 @@ html{
 
 .v-toolbar-title {
 	cursor: pointer;
+	margin-top:10px;
+}
+.toolbar-button {
+	height:36px;
+}
+label {
+	font-weight:bold!important;
+}
+.v-autocomplete__content{
+	border-radius:30px!important;
+	overflow-y:hidden;
+}
+.v-menu__content--fixed{
+	border-radius:30px;
+}
+.v-app-bar--is-scrolled .v-app-bar--shrink-on-scroll{
+	margin-top:0px!important;
 }
 
+.appbar.elevation-10{
+	margin-top:0px!important;
+}
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 	.autoSuggest xl{

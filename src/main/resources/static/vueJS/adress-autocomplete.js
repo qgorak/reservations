@@ -1,4 +1,4 @@
-//Script generated with VueComponent at Tue Nov 03 18:48:10 CET 2020
+//Script generated with VueComponent at Wed Nov 18 12:30:33 CET 2020
 Vue.component('adress-autocomplete',{
 	"props":[],"data":function() {
 		 return {
@@ -48,6 +48,6 @@ else{
 						this.selected='';
 			}
 		}
-	,"template":" <v-autocomplete      v-model=\"selected\"      :items=\"search\"      v-on:keyup=\"suggestion\"      label=\"Select\"      no-filter      hide-details      return-object      item-text=\"properties.name\"      item-value=\"properties.id\"      >      <template v-slot:selection=\"data\">         <v-chip            v-bind=\"data.attrs\"            close            @click=\"data.select\"            @click:close=\"remove(data.item)\"            >            {{ data.item.properties.name }}         </v-chip>      </template>      <template v-slot:item=\"data\">         <v-list-item-content>            <v-list-item-title v-html=\"data.item.properties.name\"></v-list-item-title>            <v-list-item-subtitle v-if=\"data.item.properties.label!=data.item.properties.city\" v-html=\"data.item.properties.city\"></v-list-item-subtitle>            <v-list-item-subtitle v-html=\"data.item.properties.postcode\"></v-list-item-subtitle>         </v-list-item-content>      </template>      </template>   </v-autocomplete>"
+	,"template":" <v-autocomplete      v-model=\"selected\"      :items=\"search\"      v-on:keyup=\"suggestion\"      label=\"Adresse\"      outlined      rounded      placeholder=\"Où allez-vous ?\"      :background-color=\"'white'\"      no-filter      hide-details      return-object      item-text=\"properties.name\"      append-icon=\"\"      item-value=\"properties.id\"      >      <template v-slot:selection=\"data\">         <v-chip            v-bind=\"data.attrs\"            close            @click=\"data.select\"            @click:close=\"remove(data.item)\"            >            {{ data.item.properties.name }}         </v-chip>      </template>      <template id=\"scrolling-techniques-7\" style=\"border-radius:30;\" :rounded=\"30\" v-slot:item=\"data\">         <v-list-item-content>            <v-list-item-title v-html=\"data.item.properties.name\"></v-list-item-title>            <v-list-item-subtitle v-if=\"data.item.properties.label!=data.item.properties.city\" v-html=\"data.item.properties.city\"></v-list-item-subtitle>            <v-list-item-subtitle v-html=\"data.item.properties.postcode\"></v-list-item-subtitle>         </v-list-item-content>      </template>   </v-autocomplete>"
 	}
 );
