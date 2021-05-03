@@ -11,7 +11,7 @@
 	<groupId>s4</groupId>
 	<artifactId>spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>reservations</name>
 	<description>Spring reservations project</description>
 
@@ -91,6 +91,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+                	<executable>true</executable>
+            	</configuration>
 			</plugin>
 		</plugins>
 	</build>
